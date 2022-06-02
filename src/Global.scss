@@ -1,0 +1,36 @@
+html,
+body,
+#app {
+  width: 100vw;
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: lightblue;
+}
+
+.text {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 40px;
+}
+
+.builder {
+  width: 80%;
+  height: 400px;
+  background-color: #FFFFFF;
+  border-radius: 6px;
+}
