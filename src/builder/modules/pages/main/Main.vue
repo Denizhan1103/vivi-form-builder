@@ -14,7 +14,9 @@
             <p class="item__footer-delete">Delete</p>
           </div>
         </div>
-        <div class="item item__add"><span>+</span> Add new item</div>
+        <div @click="routeToBuilder()" class="item item__add">
+          <span>+</span> Add new item
+        </div>
       </div>
     </div>
   </div>

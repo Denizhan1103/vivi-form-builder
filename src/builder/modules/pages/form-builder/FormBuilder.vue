@@ -9,7 +9,9 @@
       />
       <div class="formbuilder__header-btns">
         <p class="formbuilder__header-btns-create">Create</p>
-        <p class="formbuilder__header-btns-goback">Go back</p>
+        <p @click="routeToMain()" class="formbuilder__header-btns-goback">
+          Go back
+        </p>
       </div>
     </div>
     <div class="formbuilder__content">
@@ -54,9 +56,12 @@
         <div class="navbar__content">
           <div v-if="navbarStatus == 'Input'" class="navbar__content-item">
             <div
+              draggable="true"
               v-for="inputType of inputTypes"
               :key="inputType.id"
+              :id="inputType.id"
               class="navbar__content-btn"
+              @dragstart="(e) => onDragStart(e)"
             >
               {{ inputType.name }}
             </div>

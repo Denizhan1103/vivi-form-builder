@@ -1,4 +1,5 @@
-import { reactive, ref } from "vue"
+import { inject, reactive, ref } from "vue"
+import { CurrentPage, type AppState } from "../../interfaces/AppState";
 
 enum InputType {
     text = 'Text',
@@ -22,6 +23,8 @@ interface InputTypes {
 
 export default {
     setup() {
+        const appState = inject('appState') as AppState
+
         const inputTypes = reactive<InputTypes[]>([
             { id: 0, type: InputType.text, name: 'Text' },
             { id: 1, type: InputType.number, name: 'Number' },
@@ -32,10 +35,20 @@ export default {
 
         const navbarStatus = ref<NavbarStatus>(NavbarStatus.input)
 
+        const routeToMain = () => {
+            appState.currentPage = CurrentPage.main
+        }
+
+        const onDragStart = (e: any) => {
+            console.log(e.target)
+        }
+
         return {
             inputTypes,
             navbarStatus,
-            NavbarStatus
+            NavbarStatus,
+            routeToMain,
+            onDragStart
         }
     },
 }
