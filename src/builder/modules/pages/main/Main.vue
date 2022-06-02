@@ -5,16 +5,16 @@
       <p class="main__header-description">You can create form how you want!</p>
     </div>
     <div class="main__content">
-      <p class="main__content-title">Your forms</p>
+      <p class="main__content-title">Your forms;</p>
       <div class="main__content-items">
-        <div class="item">
-          <p class="item__title">Form1</p>
-          <p class="item__count">Input Count: <span>6</span></p>
+        <div class="item" v-for="item in 8" :key="item">
+          <p class="item__title">Form {{ item }}</p>
           <div class="item__footer">
             <p class="item__footer-edit">Edit</p>
             <p class="item__footer-delete">Delete</p>
           </div>
         </div>
+        <div class="item item__add"><span>+</span> Add new item</div>
       </div>
     </div>
   </div>

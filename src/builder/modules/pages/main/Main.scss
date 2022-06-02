@@ -1,0 +1,121 @@
+.main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        height: 10%;
+        max-height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 12px;
+    
+        &-title {
+            font-size: 18px;
+            color: #5E5873;
+        }
+
+        &-description {
+            font-size: 14px;
+            color: #5E5873;
+        }
+    }
+
+    &__content {
+        height: 90%;
+        padding: 0 12px;
+        display: flex;
+        flex-direction: column;
+
+        &-title {
+            font-size: 14px;
+            color: #5E5873;
+            margin-bottom: 6px;
+        }
+
+        &-items {
+            width: 100%;
+            display: flex;
+            overflow-y: auto;
+            flex-wrap: wrap;
+        }
+    }
+}
+
+.item {
+    width: 140px;
+    height: 50px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    background: #858389;
+    transition: 0.2s ease all;
+    padding: 4px 6px;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease background-color;
+    margin-right: 12px;
+    margin-bottom: 12px;
+
+    &:hover {
+        background-color: #7367f0;
+    }
+
+    &__title {
+        font-size: 14px;
+        color: #ffffff;
+    }
+
+    &__footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &-edit,
+        &-delete {
+            color: #FFFFFF;
+            font-size: 13px;
+            text-decoration: underline;
+            margin-right: 8px;
+            cursor: pointer;
+            transition: 0.2s ease transform;
+
+            &:hover {
+                transform: scaleX(1.1);
+            }
+        }
+    }
+
+    &__add {
+        background: #7367f0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        color: #FFFFFF;
+        font-weight: 600;
+        transition: 0.2s ease background-color;
+
+        &:hover {
+            background-color: #655ad4;
+        }
+
+        span {
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            background: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            color: #7367f0;
+            font-weight: 800;
+            font-size: 24px;
+            align-items: center;
+            margin-right: 8px;
+        }
+    }
+}
