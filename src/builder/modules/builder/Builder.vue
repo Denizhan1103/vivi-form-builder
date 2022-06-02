@@ -1,5 +1,8 @@
 <template>
-  <div class="s">alo</div>
+  <div>
+    <Main v-if="appState.currentPage == CurrentPage.main" />
+    <FormBuilder v-if="appState.currentPage == CurrentPage.builder" />
+  </div>
 </template>
 
 <script lang="ts">
