@@ -93,23 +93,23 @@ export default {
             }
             // Change locs
             else if (itemId) {
-                const virtualListedItems = listedItems.value
+                // const virtualListedItems = listedItems.value
 
-                let selectedItem = undefined
-                // @ts-ignore
-                for (let item of virtualListedItems) { if (item.id == itemId) selectedItem = item }
-                console.log('SelectedItem', selectedItem)
+                // let selectedItem = undefined
+                // // @ts-ignore
+                // for (let item of virtualListedItems) { if (item.id == itemId) selectedItem = item }
 
-                for (let item of virtualListedItems) {
-                    // @ts-ignore
-                    if (item.id > Number(lastOveredItemId)) item.id = item.id + 1
-                }
-                for (let item of virtualListedItems) {
-                    // @ts-ignore
-                    if (item.id == Number(itemId) + 1) item.id = Number(lastOveredItemId) + 1
-                }
-                listedItems.value = virtualListedItems
-                console.log(`Item ${itemId} moved from ${itemId} to ${lastOveredItemId}`)
+
+                // for (let item of virtualListedItems) {
+                //     // @ts-ignore
+                //     if (item.id > Number(lastOveredItemId) && item.id <= Number(itemId)) item.id = item.id + 1
+                // }
+                // for (let item of virtualListedItems) {
+                //     // @ts-ignore
+                //     if (item.id == Number(itemId) + 1) item.id = Number(lastOveredItemId) + 1
+                // }
+                // listedItems.value = virtualListedItems
+                // console.log(`Item ${itemId} moved from ${itemId} to ${lastOveredItemId}`)
             }
             // Last
             sortListedItems()
