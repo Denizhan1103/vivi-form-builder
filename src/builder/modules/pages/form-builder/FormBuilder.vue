@@ -29,6 +29,7 @@
           :id="item.id"
           @dragenter="(e) => onDragEnter(e)"
           @dragleave="(e) => onDragLeave(e)"
+          @dragstart="(e) => onDragStart(e, 'areaItem')"
         >
           <div class="area__item-layer"></div>
           <p class="area__item-index">{{ item.id }}</p>

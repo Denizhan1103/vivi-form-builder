@@ -52,9 +52,13 @@ export default {
             appState.currentPage = CurrentPage.main
         }
 
-        const onDragStart = (e: any) => {
+        const onDragStart = (e: any, isAreaItem: boolean) => {
             // console.log(e.target)
-            e.dataTransfer.setData('type', e.target.id)
+            if (isAreaItem) {
+                const parentNode = findAreaItem(e.target)
+                e.dataTransfer.setData('itemId', parentNode.id)
+            }
+            else e.dataTransfer.setData('type', e.target.id)
         }
 
         const onDragEnter = (e: any) => {
@@ -71,6 +75,7 @@ export default {
         const onDrop = (e: any) => {
             // Drop into area
             const currentItemType = e.dataTransfer.getData('type')
+            const itemId = e.dataTransfer.getData('itemId')
             if (currentItemType && e.target.id == 'area') {
                 // @ts-ignore
                 listedItems.value.push({ id: availableItemId, type: currentItemType })
@@ -87,7 +92,25 @@ export default {
                 listedItems.value = virtualListedItems
             }
             // Change locs
+            else if (itemId) {
+                const virtualListedItems = listedItems.value
 
+                let selectedItem = undefined
+                // @ts-ignore
+                for (let item of virtualListedItems) { if (item.id == itemId) selectedItem = item }
+                console.log('SelectedItem', selectedItem)
+
+                for (let item of virtualListedItems) {
+                    // @ts-ignore
+                    if (item.id > Number(lastOveredItemId)) item.id = item.id + 1
+                }
+                for (let item of virtualListedItems) {
+                    // @ts-ignore
+                    if (item.id == Number(itemId) + 1) item.id = Number(lastOveredItemId) + 1
+                }
+                listedItems.value = virtualListedItems
+                console.log(`Item ${itemId} moved from ${itemId} to ${lastOveredItemId}`)
+            }
             // Last
             sortListedItems()
             availableItemId++
