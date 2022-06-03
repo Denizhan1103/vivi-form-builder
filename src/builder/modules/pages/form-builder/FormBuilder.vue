@@ -15,10 +15,24 @@
       </div>
     </div>
     <div class="formbuilder__content">
-      <div class="formbuilder__content-area">
-        <div v-for="item in 16" :key="item" class="area__item">
-          <p class="area__item-index">{{ item }}</p>
-          <div class="area__item-input"></div>
+      <div
+        @drop="(e) => onDrop(e)"
+        @dragover="(e) => allowDrop(e)"
+        class="formbuilder__content-area"
+        id="area"
+      >
+        <div
+          v-for="item in listedItems"
+          :key="item.id"
+          class="area__item"
+          draggable="true"
+          :id="item.id"
+          @dragenter="(e) => onDragEnter(e)"
+          @dragleave="(e) => onDragLeave(e)"
+        >
+          <div class="area__item-layer"></div>
+          <p class="area__item-index">{{ item.id }}</p>
+          <div class="area__item-input">{{ item.type }}</div>
           <div class="area__item-btns">
             <p class="area__item-btns-item">Up</p>
             <div class="area__item-btns-item">Down</div>
@@ -59,7 +73,7 @@
               draggable="true"
               v-for="inputType of inputTypes"
               :key="inputType.id"
-              :id="inputType.id"
+              :id="inputType.type"
               class="navbar__content-btn"
               @dragstart="(e) => onDragStart(e)"
             >
