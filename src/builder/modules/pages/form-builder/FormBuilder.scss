@@ -128,6 +128,15 @@
         overflow-y: auto;
 
         &-item {
+
+            &-not {
+                text-align: center;
+                color: #5E5873;
+                font-weight: 600;
+                padding: 12px 0;
+                border: 1px solid #5E5873;
+                border-radius: 6px;
+            }
             
         }
 
@@ -156,7 +165,7 @@
         grid-template-columns: 50px 1fr 140px;
         border-bottom: 1px dashed #5E5873;
         padding: 2px 0;
-        height: 40px;
+        min-height: 40px;
         cursor: pointer;
         position: relative;
         transition: 0.3s ease margin-bottom;
@@ -193,13 +202,14 @@
                 font-size: 14px;
                 text-decoration: underline;
                 transition: 0.2s ease color;
+                margin-right: 8px;
                 
                 &:hover {
                     color: #7367f0;
                 }
 
-                &:first-child {
-                    margin-right: 8px;
+                &:last-child {
+                    margin-right: 0;
                 }
             }
         }

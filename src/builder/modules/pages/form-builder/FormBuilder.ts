@@ -1,6 +1,8 @@
 import { inject, reactive, ref, watch } from "vue"
 import { CurrentPage, type AppState } from "../../interfaces/AppState";
 
+import Input from "../../components/input/Input.vue"
+
 enum InputType {
     text = 'Text',
     number = 'Number',
@@ -22,6 +24,9 @@ interface InputTypes {
 }
 
 export default {
+    components: {
+        Input
+    },
     setup() {
         const appState = inject('appState') as AppState
 
@@ -32,6 +37,7 @@ export default {
         ])
         let availableItemId: number = listedItems.value.length
         let lastOveredItemId: number | undefined = undefined
+        let lastSelectedItemId = ref<number | undefined>(undefined)
 
         const sortListedItems = () => {
             // @ts-ignore
@@ -148,12 +154,13 @@ export default {
             navbarStatus,
             NavbarStatus,
             listedItems,
+            lastSelectedItemId,
             routeToMain,
             onDragStart,
             onDragEnter,
             onDragLeave,
             onDrop,
-            allowDrop
+            allowDrop,
         }
     },
 }
