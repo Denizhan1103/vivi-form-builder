@@ -1,6 +1,6 @@
 <template>
     <div class="input">
-        <p class="input__header">{{ properties.header || `${type.charAt(0).toUpperCase() + type.substr(1)} Header` }}
+        <p class="input__header">{{ properties.header || `Header Text` }}
         </p>
         <input v-model="properties.text" :placeholder="properties.placeholder" :type="type" class="input__input" />
         <p class="input__validation">Validation Message</p>
