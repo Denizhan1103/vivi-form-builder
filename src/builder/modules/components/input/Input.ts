@@ -7,6 +7,11 @@ enum Type {
     time = 'Time'
 }
 
+enum Size {
+    half = 'Half',
+    full = 'Full'
+}
+
 interface Style {
     bgColor?: string;
     color?: string;
@@ -37,9 +42,10 @@ interface Validation {
 }
 
 interface Properties {
-    text?: string;
+    startingText?: string;
     placeholder?: string;
     header?: string;
+    size?: Size;
 }
 
 interface ComponentProperties {

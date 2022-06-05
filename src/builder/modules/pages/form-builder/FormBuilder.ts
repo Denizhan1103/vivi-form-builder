@@ -54,6 +54,12 @@ export default {
 
         const navbarStatus = ref<NavbarStatus>(NavbarStatus.input)
 
+        const propertyInputs = reactive([
+            { type: 'Text', size: 'Full', header: 'Header', startingText: '', placeholder: 'Please write header text...' },
+            { type: 'Text', size: 'Full', header: 'Placeholder', startingText: '', placeholder: 'Please write placeholder text...' },
+            { type: 'Text', size: 'Full', header: 'Starting Text', startingText: '', placeholder: 'Please write starting text...' },
+        ])
+
         const routeToMain = () => {
             appState.currentPage = CurrentPage.main
         }
@@ -173,6 +179,7 @@ export default {
             NavbarStatus,
             listedItems,
             lastSelectedItemId,
+            propertyInputs,
             routeToMain,
             onDragStart,
             onDragEnter,

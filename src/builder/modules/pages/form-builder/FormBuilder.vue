@@ -55,7 +55,7 @@
             </p>
             <div v-else class="content">
               <p class="content__header">Properties for item id {{ lastSelectedItemId }}</p>
-              <Input type="text" :properties="{ text: 'Header Text', text: '', placeholder: 'Header text...' }" />
+              <Input v-for="input in propertyInputs" :key="input.header" :property="input" />
             </div>
           </div>
           <div v-if="navbarStatus == 'Advanced'" class="navbar__content-item">

@@ -2,7 +2,8 @@
     <div class="input">
         <p class="input__header">{{ properties.header || `Header Text` }}
         </p>
-        <input v-model="properties.text" :placeholder="properties.placeholder" :type="type" class="input__input" />
+        <input v-model="properties.startingText" :placeholder="properties.placeholder" :type="type"
+            class="input__input" />
         <p class="input__validation">Validation Message</p>
     </div>
 </template>
