@@ -1,6 +1,7 @@
 export enum CurrentPage {
     main = 'Main',
-    builder = 'FormBuilder'
+    builder = 'FormBuilder',
+    componentTest = 'ComponentTest'
 }
 
 export interface AppState {

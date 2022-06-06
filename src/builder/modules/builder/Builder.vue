@@ -2,6 +2,7 @@
   <div>
     <Main v-if="appState.currentPage == CurrentPage.main" />
     <FormBuilder v-if="appState.currentPage == CurrentPage.builder" />
+    <ComponentTest v-if="appState.currentPage == CurrentPage.componentTest" />
   </div>
 </template>
 

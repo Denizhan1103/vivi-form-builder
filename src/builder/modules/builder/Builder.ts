@@ -2,6 +2,7 @@ import { provide, reactive, watch } from "vue"
 
 import Main from "../pages/main/Main.vue";
 import FormBuilder from "../pages/form-builder/FormBuilder.vue";
+import ComponentTest from "../pages/component-test/ComponentTest.vue"
 
 import { CurrentPage } from "../interfaces/AppState"
 
@@ -12,11 +13,12 @@ export interface AppState {
 export default {
     components: {
         Main,
-        FormBuilder
+        FormBuilder,
+        ComponentTest
     },
     setup() {
         const appState = reactive<AppState>({
-            currentPage: CurrentPage.main
+            currentPage: CurrentPage.componentTest
         })
 
         provide('appState', appState)

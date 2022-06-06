@@ -1,6 +1,8 @@
 import { inject, reactive, ref, watch } from "vue"
 import { CurrentPage, type AppState } from "../../interfaces/AppState";
 
+import Input from "../../components/input/Input.vue"
+
 enum InputType {
     text = 'Text',
     number = 'Number',
@@ -22,6 +24,9 @@ interface InputTypes {
 }
 
 export default {
+    components: {
+        Input
+    },
     setup() {
         const appState = inject('appState') as AppState
 
@@ -32,6 +37,7 @@ export default {
         ])
         let availableItemId: number = listedItems.value.length
         let lastOveredItemId: number | undefined = undefined
+        let lastSelectedItemId = ref<number | undefined>(undefined)
 
         const sortListedItems = () => {
             // @ts-ignore
@@ -47,6 +53,12 @@ export default {
         ])
 
         const navbarStatus = ref<NavbarStatus>(NavbarStatus.input)
+
+        const propertyInputs = reactive([
+            { type: 'Text', size: 'Full', header: 'Header', startingText: '', placeholder: 'Please write header text...' },
+            { type: 'Text', size: 'Full', header: 'Placeholder', startingText: '', placeholder: 'Please write placeholder text...' },
+            { type: 'Text', size: 'Full', header: 'Starting Text', startingText: '', placeholder: 'Please write starting text...' },
+        ])
 
         const routeToMain = () => {
             appState.currentPage = CurrentPage.main
@@ -93,23 +105,41 @@ export default {
             }
             // Change locs
             else if (itemId) {
-                // const virtualListedItems = listedItems.value
+                const virtualListedItems = listedItems.value
+                // Getting selected ıtem 
+                let selectedItem = undefined
+                let overedItem = undefined
 
-                // let selectedItem = undefined
-                // // @ts-ignore
-                // for (let item of virtualListedItems) { if (item.id == itemId) selectedItem = item }
+                for (let [index, item] of virtualListedItems.entries()) {
+                    // @ts-ignore
+                    if (item.id == itemId) {
+                        selectedItem = item
+                        virtualListedItems.splice(index, 1)
+                    }
+                    // @ts-ignore
+                    if (item.id == Number(lastOveredItemId) + 1) overedItem = item
+                }
+                // selectedItem = selected item ; lastOveredItemId = overed item
+                console.log(selectedItem)
+                console.log(overedItem)
 
-
+                // 1 den sonraki ve selectedItem.id den önceki herşeyi 1 arttır OK
+                for (let item of virtualListedItems) {
+                    // @ts-ignore
+                    if (item.id >= Number(overedItem.id) && item.id < Number(selectedItem.id)) item.id = item.id + 1
+                }
+                // @ts-ignore
+                console.log({ type: selectedItem.type, id: overedItem.id - 1 })
+                // @ts-ignore   
+                virtualListedItems.push({ type: selectedItem.type, id: overedItem.id - 1 })
+                // selectedItem.id + 1 i bul ve id sini selectedItem.id ile değiştir
                 // for (let item of virtualListedItems) {
                 //     // @ts-ignore
-                //     if (item.id > Number(lastOveredItemId) && item.id <= Number(itemId)) item.id = item.id + 1
+                //     if (item.id == Number(selectedItem.id) + 1) item.id = selectedItem.id
                 // }
-                // for (let item of virtualListedItems) {
-                //     // @ts-ignore
-                //     if (item.id == Number(itemId) + 1) item.id = Number(lastOveredItemId) + 1
-                // }
-                // listedItems.value = virtualListedItems
-                // console.log(`Item ${itemId} moved from ${itemId} to ${lastOveredItemId}`)
+                listedItems.value = virtualListedItems
+                availableItemId--
+                console.log(listedItems.value)
             }
             // Last
             sortListedItems()
@@ -148,12 +178,14 @@ export default {
             navbarStatus,
             NavbarStatus,
             listedItems,
+            lastSelectedItemId,
+            propertyInputs,
             routeToMain,
             onDragStart,
             onDragEnter,
             onDragLeave,
             onDrop,
-            allowDrop
+            allowDrop,
         }
     },
 }
