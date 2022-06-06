@@ -5,12 +5,7 @@
     flex-direction: column;
 
     &__header {
-        max-height: 50px;
         height: 12%;
-        display: flex;
-        align-items: center;
-        padding: 0 12px;
-        box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
 
         &-title {
             font-size: 16px;

@@ -1,0 +1,30 @@
+.button {
+    width: 122px;
+    height: 36px;
+    box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    background-color: #1D7775;
+    color: #FFFFFF;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: 0.3s ease background-color;
+
+    &:hover {
+        background-color: #186462;
+    }
+
+    &:active {
+        background-color: #13514f;
+        transition: 0s ease background-color;
+    }
+
+    &__full {
+        width: 100%;
+    }
+
+    &__half {
+        width: 50%;
+    }
+}

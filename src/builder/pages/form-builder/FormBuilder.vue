@@ -1,6 +1,6 @@
 <template>
   <div class="formbuilder">
-    <div class="formbuilder__header">
+    <!-- <div class="formbuilder__header">
       <h2 class="formbuilder__header-title">Form name:</h2>
       <input placeholder="Not set yet" type="text" class="formbuilder__header-input" />
       <div class="formbuilder__header-btns">
@@ -9,7 +9,8 @@
           Go back
         </p>
       </div>
-    </div>
+    </div> -->
+    <Header @onGoBack="routeToMain()" class="formbuilder__header"/>
     <div class="formbuilder__content">
       <div @drop="(e) => onDrop(e)" @dragover="(e) => allowDrop(e)" class="formbuilder__content-area" id="area">
         <div v-for="item in listedItems" :key="item.id" class="area__item" draggable="true" :id="item.id"

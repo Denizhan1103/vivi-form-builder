@@ -2,6 +2,7 @@ import { inject, reactive, ref, watch } from "vue"
 import { CurrentPage, type AppState } from "../../interfaces/AppState";
 
 import Input from "../../components/input/Input.vue"
+import Header from "../../modules/form-builder/header/Header.vue";
 
 enum InputType {
     text = 'Text',
@@ -25,7 +26,8 @@ interface InputTypes {
 
 export default {
     components: {
-        Input
+        Input,
+        Header
     },
     setup() {
         const appState = inject('appState') as AppState
