@@ -1,58 +1,5 @@
-import type { PropType } from "vue";
-
-enum Type {
-    text = 'Text',
-    number = 'Number',
-    date = 'Date',
-    time = 'Time'
-}
-
-enum Size {
-    half = 'Half',
-    full = 'Full'
-}
-
-interface Style {
-    bgColor?: string;
-    color?: string;
-    fontSize?: number;
-    fontWeight?: number;
-    height?: number;
-    borderColor?: string;
-    borderWidth?: number;
-    borderRadius?: number;
-    headerColor?: string;
-    headerSize?: number;
-    placeholderColor?: string;
-    placeholderSize?: number;
-    hoverBgColor?: string;
-    hoverBorderColor?: string;
-    hoverColor?: string;
-}
-
-interface Validation {
-    maxLength?: number;
-    minLength?: number;
-    min?: number;
-    max?: number;
-    maxDate?: string;
-    minDate?: string;
-    maxTime?: string;
-    minTime?: string;
-}
-
-interface Properties {
-    startingText?: string;
-    placeholder?: string;
-    header?: string;
-    size?: Size;
-}
-
-interface ComponentProperties {
-    type: Type;
-    style: Style;
-    properties: Properties;
-}
+import { onMounted, ref, watch, type PropType } from "vue";
+import type { Type, Properties, Style, Validation, ComponentProperties } from "../ComponentInterfaces"
 
 export default {
     props: {
@@ -63,7 +10,7 @@ export default {
         properties: {
             type: Object as PropType<Properties>,
             required: false,
-            default: { text: '', placeholder: 'Placeholder Message', header: undefined }
+            default: { startingText: '', placeholder: 'Placeholder Message', header: undefined, size: 'Full' }
         },
         style: {
             type: Object as PropType<Style>,
@@ -71,8 +18,18 @@ export default {
         },
         validation: {
             type: Object as PropType<Validation>,
-            required: false
+            required: false,
         }
     },
-    setup(props: ComponentProperties) { },
+    setup(props: ComponentProperties, { emit }: any) {
+        const inputText = ref<string>(props.properties.startingText || '')
+
+        watch(inputText, (newValue: string) => {
+            emit('onInputChanged', newValue)
+        })
+
+        return {
+            inputText
+        }
+    },
 }

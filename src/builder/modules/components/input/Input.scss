@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    grid-column: auto / span 2;
 
     &__header {
         font-size: 16px;
@@ -31,4 +32,9 @@
         font-size: 14px;
         color: red;
     }
+
+    &__half {
+        grid-column: auto / span 1
+    }
+
 }

@@ -1,10 +1,8 @@
 <template>
-    <div class="input">
-        <p class="input__header">{{ properties.header || `Header Text` }}
-        </p>
-        <input v-model="properties.startingText" :placeholder="properties.placeholder" :type="type"
-            class="input__input" />
-        <p class="input__validation">Validation Message</p>
+    <div :class="{'input__half': properties.size == 'Half'}" class="input">
+        <p :style="style.header" class="input__header">{{ properties.header || `Header Text` }}</p>
+        <input v-model="inputText" :placeholder="properties.placeholder" :type="type" :style="style.input" class="input__input" />
+        <p v-if="validation.enable" :style="style.validation" class="input__validation">Validation Message</p>
     </div>
 </template>
 
