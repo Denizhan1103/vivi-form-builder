@@ -18,7 +18,7 @@ export default {
     },
     setup() {
         const appState = reactive<AppState>({
-            currentPage: CurrentPage.componentTest
+            currentPage: CurrentPage.builder
         })
 
         provide('appState', appState)

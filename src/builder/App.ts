@@ -1,4 +1,4 @@
-import Builder from "./modules/builder/Builder.vue"
+import Builder from "./builder/Builder.vue"
 
 export default {
     // Todo fix typing
