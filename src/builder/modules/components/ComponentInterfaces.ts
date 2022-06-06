@@ -39,7 +39,7 @@ export interface Style {
 }
 
 export interface Validation {
-    enable?: boolean;
+    enabled?: boolean;
     maxLength?: number;
     minLength?: number;
     min?: number;

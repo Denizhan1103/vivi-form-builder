@@ -1,8 +1,10 @@
 import Input from "../../components/input/Input.vue"
+import TextArea from "../../components/text-area/TextArea.vue"
 
 export default {
     components: {
         Input,
+        TextArea
     },
     setup() {
         const inputTestData = [
@@ -25,7 +27,7 @@ export default {
                     }
                 },
                 validation: {
-                    enable: false
+                    enabled: false
                 }
             },
             {
@@ -47,7 +49,7 @@ export default {
                     }
                 },
                 validation: {
-                    enable: true
+                    enabled: true
                 }
             },
 

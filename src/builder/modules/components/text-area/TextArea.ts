@@ -1,12 +1,14 @@
-import { ref, watch, type PropType } from "vue";
-import type { Type, Properties, Style, Validation, ComponentProperties } from "../ComponentInterfaces"
+import { ref, watch, type PropType } from "vue"
+import type { Properties, Style, Validation } from "../ComponentInterfaces"
+
+interface ComponentProperties {
+    properties: Properties;
+    style?: Style;
+    validation?: Validation
+}
 
 export default {
     props: {
-        type: {
-            type: String as PropType<Type>,
-            required: true
-        },
         properties: {
             type: Object as PropType<Properties>,
             required: false,
@@ -24,14 +26,14 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
-        const inputText = ref<string>(props.properties.startingText || '')
+        const textAreaText = ref<string>(props.properties.startingText || '')
 
-        watch(inputText, (newValue: string) => {
-            emit('onInputChanged', newValue)
+        watch(textAreaText, (newValue: String) => {
+            emit('onTextAreaChanged', newValue)
         })
 
         return {
-            inputText
+            textAreaText
         }
     },
 }

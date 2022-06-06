@@ -2,6 +2,7 @@
     <div class="test">
         <Input v-for="input in inputTestData" :key="input.type" :type="input.type" :properties="input.properties" :validation="input.validation"
             :style="input.style" />
+        <TextArea/>
     </div>
 </template>
 
