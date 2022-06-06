@@ -12,7 +12,8 @@
     </div> -->
     <Header @onGoBack="routeToMain()" class="formbuilder__header"/>
     <div class="formbuilder__content">
-      <div @drop="(e) => onDrop(e)" @dragover="(e) => allowDrop(e)" class="formbuilder__content-area" id="area">
+      <FormLayout :formItems="listedItems"/>
+      <!-- <div @drop="(e) => onDrop(e)" @dragover="(e) => allowDrop(e)" class="formbuilder__content-area" id="area">
         <div v-for="item in listedItems" :key="item.id" class="area__item" draggable="true" :id="item.id"
           @dragenter="(e) => onDragEnter(e)" @dragleave="(e) => onDragLeave(e)" @dragstart="(e) => onDragStart(e, true)"
           @click="lastSelectedItemId = item.id">
@@ -25,7 +26,7 @@
             <p class="area__item-btns-item">Del</p>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="formbuilder__content-navbar">
         <div class="navbar__header">
           <div :class="{ 'navbar__header-item-selected': navbarStatus == 'Input' }" class="navbar__header-item"

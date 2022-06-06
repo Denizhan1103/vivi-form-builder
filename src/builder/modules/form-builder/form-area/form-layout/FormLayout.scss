@@ -1,0 +1,29 @@
+.formlayout {
+    scroll-behavior: smooth;
+    flex: 1;
+    overflow: auto;
+
+    &__scroll {
+        scroll-behavior: smooth;
+        width: 100%;
+        min-width: 530px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: min-content;
+        overflow: hidden;
+        padding-bottom: 80px;
+    }
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        background-color: #dcdcdc;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #1D7775;
+        border-radius: 8px;
+    }
+}

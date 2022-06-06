@@ -3,6 +3,7 @@ import { CurrentPage, type AppState } from "../../interfaces/AppState";
 
 import Input from "../../components/input/Input.vue"
 import Header from "../../modules/form-builder/header/Header.vue";
+import FormLayout from "../../modules/form-builder/form-area/form-layout/FormLayout.vue"
 
 enum InputType {
     text = 'Text',
@@ -27,15 +28,16 @@ interface InputTypes {
 export default {
     components: {
         Input,
-        Header
+        Header,
+        FormLayout
     },
     setup() {
         const appState = inject('appState') as AppState
 
         const listedItems = ref([
-            // { id: 0, type: InputType.number },
-            // { id: 1, type: InputType.text },
-            // { id: 2, type: InputType.date }
+            { id: 0, type: InputType.number },
+            { id: 1, type: InputType.text },
+            { id: 2, type: InputType.date }
         ])
         let availableItemId: number = listedItems.value.length
         let lastOveredItemId: number | undefined = undefined
