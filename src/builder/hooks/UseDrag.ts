@@ -70,6 +70,7 @@ export const useDrag = () => {
         state.availableItemId++
     }
 
+    // TODO: refactor this code
     const changeItemLoc = (currentItemId: number) => {
         let selectedLayoutItem: Item | undefined = undefined
         let overedLayoutItem: Item | undefined = undefined
@@ -82,6 +83,14 @@ export const useDrag = () => {
             }
             // Üstüne bırakılan itemin 1 altındaki itemi almak için +1 var
             if (item.id == Number(state.lastOveredItemId) + 1) overedLayoutItem = item
+        }
+
+        // Fixed : TODO: fix issue when item dropped into first upper item
+        if (selectedLayoutItem && overedLayoutItem) {
+            if (selectedLayoutItem.id == overedLayoutItem.id) {
+                state.itemList.push(selectedLayoutItem)
+                return true
+            }
         }
 
         // If item dropped into itself
