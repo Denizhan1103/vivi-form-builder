@@ -84,6 +84,9 @@ export const useDrag = () => {
             if (item.id == Number(state.lastOveredItemId) + 1) overedLayoutItem = item
         }
 
+        // If item dropped into itself
+        if (!overedLayoutItem && selectedLayoutItem) overedLayoutItem = { id: selectedLayoutItem.id + 1, type: selectedLayoutItem.type }
+
         // Calc all of layout item new id
         for (const item of state.itemList) {
             if (overedLayoutItem && selectedLayoutItem) {
