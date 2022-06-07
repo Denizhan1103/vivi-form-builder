@@ -1,6 +1,6 @@
 import type { PropType } from "vue"
 
-import { useDrag } from "@/hooks/UseDrag"
+import { useDrag } from "@/builder/hooks/UseDrag";
 
 import Input from "@/builder/components/input/Input.vue";
 import TextArea from "@/builder/components/text-area/TextArea.vue";

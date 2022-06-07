@@ -1,5 +1,7 @@
 import { reactive } from "vue"
 
+import { findParentNode } from "../utils/FindParentNode";
+
 enum DataTransferKey {
     type = 'type',
     id = 'itemId'
@@ -96,30 +98,22 @@ export const useDrag = () => {
         }
     }
 
-    const sortAllItems = () => {
-        state.itemList = state.itemList.sort((a, b) => a.id - b.id)
-    }
-
     const allowDrop = (event: any) => {
         event.preventDefault()
     }
 
     // Drag Enter & Leave || TODO: FIX PARAMETER TYPING
     const onDragEnter = ({ event, className }: { event: any; className: string; }) => {
-        const targetNode = findAreaItem(event.target)
+        const targetNode = findParentNode({ targetNode: event.target, parentClassName: 'formitem' })
         targetNode.classList.add(className)
         state.lastOveredItemId = targetNode.id
         setLayoutItemClassName(className)
     }
 
     const onDragLeave = ({ event, className }: { event: any; className: string; }) => {
-        const targetNode = findAreaItem(event.target)
+        const targetNode = findParentNode({ targetNode: event.target, parentClassName: 'formitem' })
         targetNode.classList.remove(className)
         setLayoutItemClassName(className)
-    }
-
-    const setLayoutItemClassName = (className: string) => {
-        state.layoutItemClassName = className
     }
 
     const clearItemEffects = () => {
@@ -127,28 +121,22 @@ export const useDrag = () => {
         if (state.layoutItemClassName !== '') nodeList.forEach(perNode => perNode.classList.remove(state.layoutItemClassName))
     }
 
-    const findAreaItem = (targetNode: HTMLElement): any => {
-        // Check element has 'area__item' class
-        let isAreaItem: boolean | undefined = undefined
-        targetNode.classList.forEach(className => { if (className == 'formitem') isAreaItem = true })
-        if (isAreaItem) return targetNode
-        // Check parent node
-        let areaItem: HTMLElement | undefined = undefined
-        const parentNode = targetNode.parentElement
-        if (parentNode) parentNode.classList.forEach(className => { if (className == 'formitem') areaItem = parentNode })
-        if (areaItem) return areaItem
-        // Check element is HTML
-        if (parentNode?.tagName == 'HTML') return false
-        // Recall function
-        if (!areaItem && parentNode) return findAreaItem(parentNode)
-    }
-
     // Drag Start
     // TODO: FIX TYPING
     const onDragStart = ({ event, isLayoutItem }: { event: any, isLayoutItem: boolean }) => {
-        if (isLayoutItem) event.dataTransfer.setData(DataTransferKey.id, findAreaItem(event.target).id)
+        if (isLayoutItem) event.dataTransfer.setData(DataTransferKey.id, findParentNode({ targetNode: event.target, parentClassName: 'formitem' }).id)
         else event.dataTransfer.setData('type', event.target.id)
     }
+
+    // General
+    const sortAllItems = () => {
+        state.itemList = state.itemList.sort((a, b) => a.id - b.id)
+    }
+
+    const setLayoutItemClassName = (className: string) => {
+        state.layoutItemClassName = className
+    }
+
 
     // Return
     return {

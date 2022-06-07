@@ -4,7 +4,7 @@ import { CurrentPage, type AppState } from "../../interfaces/AppState";
 import Input from "../../components/input/Input.vue"
 import Header from "../../modules/form-builder/header/Header.vue";
 import FormLayout from "../../modules/form-builder/form-area/form-layout/FormLayout.vue"
-import { useDrag } from "@/hooks/UseDrag";
+import { useDrag } from "@/builder/hooks/UseDrag";
 
 enum InputType {
     text = 'Text',
