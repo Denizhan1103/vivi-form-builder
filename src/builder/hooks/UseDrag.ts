@@ -70,7 +70,7 @@ export const useDrag = () => {
         state.availableItemId++
     }
 
-    // TODO: refactor this code
+    // TODO: refactor this code also has some bugs  
     const changeItemLoc = (currentItemId: number) => {
         let selectedLayoutItem: Item | undefined = undefined
         let overedLayoutItem: Item | undefined = undefined
@@ -99,8 +99,11 @@ export const useDrag = () => {
         // Calc all of layout item new id
         for (const item of state.itemList) {
             if (overedLayoutItem && selectedLayoutItem) {
-                if (item.id >= Number(overedLayoutItem.id) && item.id < Number(selectedLayoutItem.id)) {
+                if ((item.id >= Number(overedLayoutItem.id) && item.id < Number(selectedLayoutItem.id))) {
                     item.id = item.id + 1
+                }
+                if (item.id < Number(overedLayoutItem.id) && item.id >= Number(selectedLayoutItem.id)) {
+                    item.id = item.id - 1
                 }
             }
         }
