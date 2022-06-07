@@ -9,6 +9,7 @@
     cursor: pointer;
     grid-column: auto / span 2;
     transition: 0.3s ease all;
+    padding: 4px 0;
 
     &:nth-child(2n+1) {
         background-color: #efefef;
@@ -101,8 +102,19 @@
             font-size: 14px;
             font-weight: 600;
             color: #1D7775;
-            text-decoration: underline;
             width: 120px;
+            display: grid;
+            place-items: center;
+            grid-gap: 8px;
+
+            &-item {
+                text-decoration: underline;
+
+                &:last-child {
+                    color: #DC143C;
+                    text-decoration: none;
+                }
+            }
         }
     }
 
@@ -134,8 +146,22 @@
             }
 
             &:active {
-                transition: 0s ease color;
+                transition: 0s ease background-color;
                 background-color: #13514f;
+            }
+
+            &:last-child {
+                color: #DC143C;
+
+                &:hover {
+                    background-color: #DC143C;
+                    color: #FFFFFF;
+                }
+
+                &:active {
+                    transition: 0s ease background-color;
+                    background-color: #be1234;
+                }
             }
         }
     }
