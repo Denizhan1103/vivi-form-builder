@@ -1,32 +1,8 @@
 <template>
   <div class="formbuilder">
-    <!-- <div class="formbuilder__header">
-      <h2 class="formbuilder__header-title">Form name:</h2>
-      <input placeholder="Not set yet" type="text" class="formbuilder__header-input" />
-      <div class="formbuilder__header-btns">
-        <p class="formbuilder__header-btns-create">Create</p>
-        <p @click="routeToMain()" class="formbuilder__header-btns-goback">
-          Go back
-        </p>
-      </div>
-    </div> -->
     <Header @onGoBack="routeToMain()" class="formbuilder__header"/>
     <div class="formbuilder__content">
       <FormLayout :formItems="listedItems"/>
-      <!-- <div @drop="(e) => onDrop(e)" @dragover="(e) => allowDrop(e)" class="formbuilder__content-area" id="area">
-        <div v-for="item in listedItems" :key="item.id" class="area__item" draggable="true" :id="item.id"
-          @dragenter="(e) => onDragEnter(e)" @dragleave="(e) => onDragLeave(e)" @dragstart="(e) => onDragStart(e, true)"
-          @click="lastSelectedItemId = item.id">
-          <div class="area__item-layer"></div>
-          <p class="area__item-index">{{ item.id }}</p>
-          <div class="area__item-input"><Input :type="item.type" /></div>
-          <div class="area__item-btns">
-            <p class="area__item-btns-item">Up</p>
-            <p class="area__item-btns-item">Down</p>
-            <p class="area__item-btns-item">Del</p>
-          </div>
-        </div>
-      </div> -->
       <div class="formbuilder__content-navbar">
         <div class="navbar__header">
           <div :class="{ 'navbar__header-item-selected': navbarStatus == 'Input' }" class="navbar__header-item"
@@ -73,7 +49,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import FormBuilder from "./FormBuilder.ts";
+import FormBuilder from "./FormBuilder";
 
 export default defineComponent(FormBuilder);
 </script>
