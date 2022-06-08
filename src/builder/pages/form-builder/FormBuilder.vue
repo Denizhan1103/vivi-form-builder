@@ -2,8 +2,9 @@
   <div class="formbuilder">
     <Header @onGoBack="routeToMain()" class="formbuilder__header"/>
     <div class="formbuilder__content">
-      <FormLayout :formItems="listedItems"/>
-      <div class="formbuilder__content-navbar">
+      <FormLayout/>
+      <NavbarLayout/>
+      <!-- <div class="formbuilder__content-navbar">
         <div class="navbar__header">
           <div :class="{ 'navbar__header-item-selected': navbarStatus == 'Input' }" class="navbar__header-item"
             @click="navbarStatus = 'Input'">
@@ -42,7 +43,7 @@
             </p>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

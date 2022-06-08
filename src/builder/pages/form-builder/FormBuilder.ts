@@ -4,6 +4,8 @@ import { CurrentPage, type AppState } from "../../interfaces/AppState";
 import Input from "../../components/input/Input.vue"
 import Header from "../../modules/form-builder/header/Header.vue";
 import FormLayout from "../../modules/form-builder/form-area/form-layout/FormLayout.vue"
+import NavbarLayout from "@/builder/modules/form-builder/navbar/navbar-layout/NavbarLayout.vue";
+
 import { useDrag } from "@/builder/hooks/UseDrag";
 
 enum InputType {
@@ -30,7 +32,8 @@ export default {
     components: {
         Input,
         Header,
-        FormLayout
+        FormLayout,
+        NavbarLayout
     },
     setup() {
         const appState = inject('appState') as AppState
@@ -43,8 +46,6 @@ export default {
         ])
 
         provide('formItems', { list: [{ id: 0, type: InputType.number }] })
-
-
 
         const inputTypes = reactive<InputTypes[]>([
             { id: 0, type: InputType.text, name: 'Text' },
