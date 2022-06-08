@@ -2,7 +2,7 @@ import type { PropType } from "vue";
 
 enum NavbarHeaderNames {
     inputs = 'Inputs',
-    prototype = 'Prototype',
+    protoperty = 'Protoperty',
     style = 'Style',
     validation = 'Validation'
 }
