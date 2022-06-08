@@ -15,12 +15,15 @@
             </div>
             <p class="formitem__id">{{item.id}}</p>
             <div class="formitem__input">
-                <div class="formitem__input-item">
+                <div 
+                    class="formitem__input-item"
+                    :class="{'formitem__input-item-half': item.properties && item.properties.size == 'Half'}"
+                >
                     <TextArea v-if="item.type == 'TextArea'" :properties="item.properties"/>
                     <Input v-else :properties="item.properties"/>
                 </div>
                 <div class="formitem__input-size">
-                    <span class="formitem__input-size-item">Half</span>
+                    <span class="formitem__input-size-item">{{(item.properties && item.properties.size) ? item.properties.size : 'Full'}}</span>
                     <span class="formitem__input-size-item">{{item.type}}</span>
                 </div>
             </div>

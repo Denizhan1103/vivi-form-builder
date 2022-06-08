@@ -96,6 +96,11 @@
             flex: 1;
             height: 100%;
             padding: 4px 0;
+            width: 50%;
+
+            &-half {
+                flex: initial;
+            }
         }
 
         &-size {

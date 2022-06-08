@@ -173,10 +173,14 @@ export const useDrag = () => {
         })
     }
 
-    const getProperties = (): ItemProperties | void => {
+    const getProperties = (): ItemProperties | undefined => {
+        let currentItem: ItemProperties | undefined = undefined;
         state.itemList.forEach((perItem: Item) => {
-            if (perItem.id == state.lastSelectedItemId) return perItem.properties
+            if (perItem.id == state.lastSelectedItemId) {
+                currentItem = perItem.properties
+            }
         })
+        return currentItem
     }
 
     // General

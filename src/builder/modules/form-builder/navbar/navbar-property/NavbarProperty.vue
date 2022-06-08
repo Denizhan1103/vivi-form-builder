@@ -12,6 +12,12 @@
                 :style="input.style"
                 @onInputChanged="(newValue) => setInputProperties(index,newValue)"
             />
+            <Switch 
+                :title="switchValues.title" 
+                :keys="switchValues.keys" 
+                :activeKey="switchValues.activeKey"
+                @onSwitch="(newValue) => setSwitchStatus(newValue)"
+            />
         </div>
     </div>
 </template>

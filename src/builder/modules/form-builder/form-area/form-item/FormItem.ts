@@ -16,6 +16,19 @@ enum ItemTypes {
 interface Item {
     id: number;
     type: ItemTypes;
+    properties: ItemProperties;
+}
+
+interface ItemProperties {
+    header?: string;
+    placeholder?: string;
+    startingText?: string;
+    size: ItemSize;
+}
+
+enum ItemSize {
+    half = 'Half',
+    full = 'Full'
 }
 
 export default {
