@@ -1,8 +1,12 @@
 <template>
-    <div class="formitem">
+    <div 
+        class="formitem"
+        :class="{'formitem__selected':state.lastSelectedItemId == item.id}"
+    >
         <div 
             draggable="true" 
             @dragstart="(event) => onDragStart({event,isLayoutItem:true})"
+            @click="state.lastSelectedItemId == item.id ? clearSelectedItem() : setLastSelectedItem(item.id)" 
             class="formitem__draggable">
             <div 
                 @dragenter="(event) => onDragEnter({event, className:'formitem__over'})" 
@@ -12,8 +16,8 @@
             <p class="formitem__id">{{item.id}}</p>
             <div class="formitem__input">
                 <div class="formitem__input-item">
-                    <TextArea v-if="item.type == 'TextArea'"/>
-                    <Input v-else/>
+                    <TextArea v-if="item.type == 'TextArea'" :properties="item.properties"/>
+                    <Input v-else :properties="item.properties"/>
                 </div>
                 <div class="formitem__input-size">
                     <span class="formitem__input-size-item">Half</span>

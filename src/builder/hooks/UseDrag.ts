@@ -26,6 +26,19 @@ interface State {
 interface Item {
     id: number;
     type: ItemTypes;
+    properties?: ItemProperties;
+}
+
+interface ItemProperties {
+    startingText?: string;
+    placeholder?: string;
+    header?: string;
+    size?: ItemSize;
+}
+
+enum ItemSize {
+    half = 'Half',
+    full = 'Full'
 }
 
 const state = reactive<State>({
@@ -143,6 +156,29 @@ export const useDrag = () => {
         else event.dataTransfer.setData('type', event.target.id)
     }
 
+    // Selection
+    const setLastSelectedItem = (itemId: number) => {
+        state.lastSelectedItemId = itemId
+    }
+
+    const clearSelectedItem = () => {
+        state.lastSelectedItemId = undefined
+    }
+
+    // Properties
+    // TODO: refactor this code
+    const setProperties = (itemProperty: ItemProperties) => {
+        state.itemList.forEach((perItem: Item) => {
+            if (perItem.id == state.lastSelectedItemId) perItem.properties = itemProperty
+        })
+    }
+
+    const getProperties = (): ItemProperties | void => {
+        state.itemList.forEach((perItem: Item) => {
+            if (perItem.id == state.lastSelectedItemId) return perItem.properties
+        })
+    }
+
     // General
     const sortAllItems = () => {
         state.itemList = state.itemList.sort((a, b) => a.id - b.id)
@@ -160,6 +196,10 @@ export const useDrag = () => {
         onDragEnter,
         onDragLeave,
         onDragStart,
-        allowDrop
+        allowDrop,
+        setLastSelectedItem,
+        clearSelectedItem,
+        setProperties,
+        getProperties
     }
 }

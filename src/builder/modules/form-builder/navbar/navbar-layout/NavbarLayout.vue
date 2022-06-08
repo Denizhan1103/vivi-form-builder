@@ -7,7 +7,7 @@
         />
         <div class="navbar__content">
             <NavbarInput v-if="selectedHeaderItem == NavbarHeaderNames.inputs"/>
-            <NavbarProtoperty v-if="selectedHeaderItem == NavbarHeaderNames.protoperty"/>
+            <NavbarProperty v-if="selectedHeaderItem == NavbarHeaderNames.property"/>
             <NavbarStyle v-if="selectedHeaderItem == NavbarHeaderNames.style" />
             <NavbarValidation v-if="selectedHeaderItem == NavbarHeaderNames.validation"/>
         </div>

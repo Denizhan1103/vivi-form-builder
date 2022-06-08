@@ -30,12 +30,15 @@ export default {
         }
     },
     setup() {
-        const { onDragEnter, onDragLeave, onDragStart } = useDrag()
+        const { state, onDragEnter, onDragLeave, onDragStart, setLastSelectedItem, clearSelectedItem } = useDrag()
 
         return {
+            state,
             onDragEnter,
             onDragLeave,
-            onDragStart
+            onDragStart,
+            setLastSelectedItem,
+            clearSelectedItem
         }
     },
 }
