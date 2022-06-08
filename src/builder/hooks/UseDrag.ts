@@ -107,7 +107,7 @@ export const useDrag = () => {
         }
 
         // If item dropped into itself
-        if (!overedLayoutItem && selectedLayoutItem) overedLayoutItem = { id: selectedLayoutItem.id + 1, type: selectedLayoutItem.type }
+        if (!overedLayoutItem && selectedLayoutItem) overedLayoutItem = { ...selectedLayoutItem, id: selectedLayoutItem.id + 1, type: selectedLayoutItem.type }
 
         // Calc all of layout item new id
         for (const item of state.itemList) {
@@ -122,8 +122,9 @@ export const useDrag = () => {
         }
 
         if (overedLayoutItem && selectedLayoutItem) {
-            state.itemList.push({ id: overedLayoutItem.id - 1, type: selectedLayoutItem.type })
+            state.itemList.push({ ...selectedLayoutItem, id: overedLayoutItem.id - 1, type: selectedLayoutItem.type })
         }
+
     }
 
     const allowDrop = (event: any) => {
@@ -152,6 +153,7 @@ export const useDrag = () => {
     // Drag Start
     // TODO: FIX TYPING
     const onDragStart = ({ event, isLayoutItem }: { event: any, isLayoutItem: boolean }) => {
+        clearSelectedItem()
         if (isLayoutItem) event.dataTransfer.setData(DataTransferKey.id, findParentNode({ targetNode: event.target, parentClassName: 'formitem' }).id)
         else event.dataTransfer.setData('type', event.target.id)
     }
