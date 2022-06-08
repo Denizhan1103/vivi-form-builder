@@ -38,23 +38,6 @@ export default {
     setup() {
         const appState = inject('appState') as AppState
 
-
-        const listedItems = ref([
-            { id: 0, type: InputType.number },
-            { id: 1, type: InputType.text },
-            { id: 2, type: InputType.date }
-        ])
-
-        provide('formItems', { list: [{ id: 0, type: InputType.number }] })
-
-        const inputTypes = reactive<InputTypes[]>([
-            { id: 0, type: InputType.text, name: 'Text' },
-            { id: 1, type: InputType.number, name: 'Number' },
-            { id: 2, type: InputType.date, name: 'Date' },
-            { id: 3, type: InputType.time, name: 'Time' },
-            { id: 4, type: InputType.textarea, name: 'Text Area' },
-        ])
-
         const navbarStatus = ref<NavbarStatus>(NavbarStatus.input)
 
         const propertyInputs = reactive([
@@ -94,16 +77,9 @@ export default {
             if (!areaItem && parentNode) return findAreaItem(parentNode)
         }
 
-
-
-
-
-
         return {
-            inputTypes,
             navbarStatus,
             NavbarStatus,
-            listedItems,
             propertyInputs,
             routeToMain,
             onDragStart,
