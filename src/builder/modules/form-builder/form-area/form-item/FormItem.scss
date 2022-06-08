@@ -9,7 +9,6 @@
     cursor: pointer;
     grid-column: auto / span 2;
     transition: 0.3s ease all;
-    padding: 4px 0;
 
     &:nth-child(2n+1) {
         background-color: #efefef;
@@ -96,6 +95,7 @@
         &-item {
             flex: 1;
             height: 100%;
+            padding: 4px 0;
         }
 
         &-size {

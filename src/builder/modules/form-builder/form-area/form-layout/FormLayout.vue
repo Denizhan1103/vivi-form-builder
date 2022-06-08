@@ -1,8 +1,11 @@
 <template>
-    <div @drop="(e) => onDrop(e)" @dragover="(e) => allowDrop(e)" id="formlayout"  class="formlayout">
+    <div @drop="(e) => onDrop(e)" @dragover="(e) => allowDrop(e)" id="formlayout" class="formlayout">
         <div id="formlayout" class="formlayout__scroll">
             <FormItem v-for="perItem in state.itemList" :key="perItem.id" :id="perItem.id" :item="perItem"/>  
         </div>
+        <!-- <div class="formlayout__trash">
+            <img src="../../../../assets/form-layout/trash.svg" alt="" class="formlayout__trash-img">
+        </div> -->
     </div>
 </template>
 
