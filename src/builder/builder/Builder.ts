@@ -1,4 +1,4 @@
-import { provide, reactive, ref, watch } from "vue"
+import { provide, reactive } from "vue"
 
 import Main from "../pages/main/Main.vue";
 import FormBuilder from "../pages/form-builder/FormBuilder.vue";
@@ -14,10 +14,6 @@ enum InputType {
     textarea = 'TextArea'
 }
 
-interface FormItems {
-    id: number;
-    type: InputType;
-}
 
 export interface AppState {
     currentPage: CurrentPage;
@@ -34,15 +30,7 @@ export default {
             currentPage: CurrentPage.builder
         })
 
-        provide('appState', reactive({
-            currentPage: CurrentPage.main,
-            currentForm: {
-                itemList: [],
-                availableItemId: 0,
-                lastOveredItemId: undefined,
-                lastSelectedItemId: undefined
-            }
-        }))
+        provide('appState', appState)
 
         return {
             appState,
