@@ -1,4 +1,4 @@
-import { provide, reactive, watch } from "vue"
+import { provide, reactive } from "vue"
 
 import Main from "../pages/main/Main.vue";
 import FormBuilder from "../pages/form-builder/FormBuilder.vue";
@@ -18,7 +18,7 @@ export default {
     },
     setup() {
         const appState = reactive<AppState>({
-            currentPage: CurrentPage.componentTest
+            currentPage: CurrentPage.builder
         })
 
         provide('appState', appState)

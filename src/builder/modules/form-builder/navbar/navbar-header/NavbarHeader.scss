@@ -1,0 +1,52 @@
+.navbarheader {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 6px;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        background-color: #dcdcdc;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #1D7775;
+        border-radius: 8px;
+    }
+
+    &__item {
+        height: 30px;
+        padding: 0 8px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        color: #1D7775;
+        font-weight: 600;
+        transition: 0.2s ease color, background-color;
+        cursor: pointer;
+
+        &:hover {
+            color: #13514f;
+        }
+
+        &:active {
+            color: #0d3837;
+        }
+
+        &-selected {
+            color: #FFFFFF !important;
+            background-color: #1D7775;
+
+            &:hover {
+                background-color: #186462;
+            }
+
+            &:active {
+                background-color: #13514f;
+            }
+        }
+    }
+}

@@ -5,67 +5,7 @@
     flex-direction: column;
 
     &__header {
-        max-height: 50px;
         height: 12%;
-        display: flex;
-        align-items: center;
-        padding: 0 12px;
-        box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
-
-        &-title {
-            font-size: 16px;
-            color: #5E5873;
-            margin-right: 6px;
-        }
-
-        &-input {
-            outline: none;
-            border: 1px solid #5E5873;
-            border-radius: 6px;
-            padding: 2px 12px;
-            transition: 0.2s ease transform;
-
-            &:hover {
-                transform: scaleX(1.01);
-            }
-        }
-
-        &-btns {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-
-            &-create {
-                height: 26px;
-                width: 80px;
-                display: grid;
-                place-items: center;
-                cursor: pointer;
-                border-radius: 6px;
-                background-color: #7367f0;
-                color: #FFFFFF;
-                font-weight: 600;
-                margin-right: 12px;
-                transition: 0.2s ease background-color;
-
-                &:hover {
-                    background-color: #655ad4;
-                }
-            }
-
-            &-goback {
-                cursor: pointer;
-                font-size: 14px;
-                color: #5E5873;
-                text-decoration: underline;
-                transition: 0.2s ease color;
-
-                &:hover {
-                    color: #7367f0;
-                }
-            }
-        }
     }
 
     &__content {

@@ -1,0 +1,49 @@
+.formlayout {
+    scroll-behavior: smooth;
+    flex: 1;
+    overflow: auto;
+
+    &__scroll {
+        scroll-behavior: smooth;
+        width: 100%;
+        min-width: 530px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: min-content;
+        overflow: hidden;
+        padding: 16px 0 80px 0;
+    }
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        background-color: #dcdcdc;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #1D7775;
+        border-radius: 8px;
+    }
+
+    &__trash {
+        position: sticky;
+        bottom: 20px;
+        left: 88%;
+        display: grid;
+        place-items: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        background: rgb(29 119 117 / 60%);
+        box-shadow: 1px 1px 6px rgb(29 119 117 / 80%);
+        cursor: pointer;
+        padding-bottom: 18px;
+
+        &-img {
+            width: 48px;
+            height: 48px;
+        }
+    }
+}

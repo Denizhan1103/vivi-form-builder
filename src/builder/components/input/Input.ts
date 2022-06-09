@@ -9,8 +9,7 @@ export default {
         },
         properties: {
             type: Object as PropType<Properties>,
-            required: false,
-            default: { startingText: '', placeholder: 'Placeholder Message', header: undefined, size: 'Full' }
+            required: false
         },
         style: {
             type: Object as PropType<Style>,
@@ -24,7 +23,11 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
-        const inputText = ref<string>(props.properties.startingText || '')
+        const inputText = ref<string>((props.properties && props.properties.startingText) ? props.properties.startingText : '')
+
+        watch(props, (newValue) => {
+            inputText.value = (props.properties && props.properties.startingText) ? props.properties.startingText : ''
+        })
 
         watch(inputText, (newValue: string) => {
             emit('onInputChanged', newValue)

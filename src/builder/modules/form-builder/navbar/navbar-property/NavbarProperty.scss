@@ -1,0 +1,25 @@
+.navbarproperty {
+
+    &__noitem {
+        height: 60px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        border: 6px solid #1D7775;
+        cursor: pointer;
+        width: 100%;
+        
+        &-text {
+            font-weight: 600;
+            color: #1D7775;
+            text-transform: capitalize;
+            text-align: center;
+        }
+    }
+
+    &__inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
