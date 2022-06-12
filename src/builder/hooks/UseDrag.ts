@@ -34,6 +34,7 @@ interface ItemProperties {
     placeholder?: string;
     header?: string;
     size?: ItemSize;
+    values?: { id: number, value: string }[];
 }
 
 enum ItemSize {
@@ -192,6 +193,53 @@ export const useDrag = () => {
         })
     }
 
+    const setProperty = (key: string, value: any) => {
+        console.log('in')
+        state.itemList.forEach((perItem: Item) => {
+            // TODO: write an enum
+            if (perItem.id == state.lastSelectedItemId) {
+                if (!perItem.properties) perItem.properties = {}
+                // @ts-ignore
+                perItem.properties[key] = value
+            }
+        })
+    }
+
+    const findAvailableKeyValue = (values: { id: number, value: string }[]) => {
+        let availableItemId = 1
+        values.forEach((perItem) => {
+            if (perItem.id >= availableItemId) availableItemId = perItem.id + 1
+        })
+        return availableItemId
+    }
+
+    const setValueProperty = ({ type, newValue, key }: { type: 'Push' | 'Del' | 'Change', newValue?: string, key?: number }) => {
+        state.itemList.forEach((perItem: Item, index) => {
+            if (perItem.id == state.lastSelectedItemId) {
+                if (!perItem.properties) perItem.properties = {}
+                if (!perItem.properties.values) perItem.properties.values = []
+
+                if (type == 'Push') {
+                    const values = Object.assign([], perItem.properties.values)
+                    values.push({ id: findAvailableKeyValue(perItem.properties.values), value: '' })
+                    perItem.properties.values = values
+                    // perItem.properties.values.push({ id: findAvailableKeyValue(perItem.properties.values), value: '' })
+
+                }
+                if (type == 'Del' && key) {
+                    perItem.properties.values.forEach((item, index) => {
+                        if (item.id == key) perItem.properties?.values?.splice(index, 1)
+                    })
+                }
+                if (type == 'Change') {
+                    perItem.properties.values.forEach((item) => {
+                        if (item.id == key) item.value = newValue || ''
+                    })
+                }
+            }
+        })
+    }
+
     const getProperties = (): ItemProperties | undefined => {
         let currentItem: ItemProperties | undefined = undefined;
         state.itemList.forEach((perItem: Item) => {
@@ -224,6 +272,8 @@ export const useDrag = () => {
         clearSelectedItem,
         setProperties,
         getProperties,
-        removeItem
+        removeItem,
+        setProperty,
+        setValueProperty
     }
 }

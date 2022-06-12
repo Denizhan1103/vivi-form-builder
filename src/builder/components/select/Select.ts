@@ -5,7 +5,7 @@ interface Validation {
 }
 
 interface Option {
-    key: number;
+    id: number;
     value: string;
 }
 
@@ -44,9 +44,9 @@ export default {
     },
     setup(props: ComponentProperties, { emit }: any) {
 
-        const onChange = (optionkey: string) => {
+        const onChange = (optionKey: string) => {
             props.options.forEach((option: Option) => {
-                if (String(option.key) == optionkey) emit('onChange', option)
+                if (String(option.id) == optionKey) emit('onChange', option)
             })
         }
 

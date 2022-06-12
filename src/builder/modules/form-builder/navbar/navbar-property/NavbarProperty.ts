@@ -2,6 +2,9 @@ import { onMounted, reactive, ref, watch } from "vue"
 
 import Input from "@/builder/components/input/Input.vue"
 import Switch from "@/builder/modules/global/switch/Switch.vue"
+import Select from "@/builder/components/select/Select.vue";
+
+import Select2 from "./property-types/Select.vue"
 
 import { useDrag } from "@/builder/hooks/UseDrag";
 import { computed } from "@vue/reactivity";
@@ -50,7 +53,9 @@ enum SwitchKeys {
 export default {
     components: {
         Input,
-        Switch
+        Switch,
+        Select,
+        Select2
     },
     setup() {
 
@@ -108,42 +113,6 @@ export default {
             keys: [SwitchKeys.full, SwitchKeys.half],
             activeKey: SwitchKeys.full
         })
-
-        const selectProperties = ref([
-            {
-                type: Type.text,
-                properties: {
-                    startingText: undefined,
-                    placeholder: 'Header name...',
-                    header: 'Input header name'
-                },
-                style: {
-                    input: { height: "28px" }
-                }
-            },
-            {
-                type: Type.text,
-                properties: {
-                    startingText: undefined,
-                    placeholder: 'Placeholder name...',
-                    header: 'Input placeholder name'
-                },
-                style: {
-                    input: { height: "28px" }
-                }
-            },
-            {
-                type: Type.select,
-                properties: {
-                    startingText: undefined,
-                    placeholder: 'Placeholder name...',
-                    header: 'Input placeholder name'
-                },
-                style: {
-                    input: { height: "28px" }
-                }
-            },
-        ])
 
         const getInputProperties = () => {
             const itemProperties = getProperties()
