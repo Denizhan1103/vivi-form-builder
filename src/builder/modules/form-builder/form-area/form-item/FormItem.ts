@@ -50,7 +50,7 @@ export default {
         }
     },
     setup() {
-        const { state, onDragEnter, onDragLeave, onDragStart, setLastSelectedItem, clearSelectedItem } = useDrag()
+        const { state, onDragEnter, onDragLeave, onDragStart, setLastSelectedItem, clearSelectedItem, removeItem } = useDrag()
 
         const setCurrentEditItem = (itemId: number) => {
             setLastSelectedItem(itemId)
@@ -64,7 +64,8 @@ export default {
             onDragStart,
             setLastSelectedItem,
             clearSelectedItem,
-            setCurrentEditItem
+            setCurrentEditItem,
+            removeItem
         }
     },
 }

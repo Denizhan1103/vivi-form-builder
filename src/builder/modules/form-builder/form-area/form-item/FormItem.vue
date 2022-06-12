@@ -32,7 +32,7 @@
         </div>
         <div class="formitem__navbar">
             <p @click="setCurrentEditItem(item.id)" class="formitem__navbar-item">Edit</p>
-            <p class="formitem__navbar-item">Delete</p>
+            <p @click="removeItem(item.id)" class="formitem__navbar-item">Delete</p>
         </div>
     </div>
 </template>
