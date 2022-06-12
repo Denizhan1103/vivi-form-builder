@@ -4,12 +4,14 @@ import Input from "@/builder/components/input/Input.vue"
 import Switch from "@/builder/modules/global/switch/Switch.vue"
 
 import { useDrag } from "@/builder/hooks/UseDrag";
+import { computed } from "@vue/reactivity";
 
 export enum Type {
     text = 'Text',
     number = 'Number',
     date = 'Date',
-    time = 'Time'
+    time = 'Time',
+    select = 'Select'
 }
 
 export enum Size {
@@ -53,6 +55,17 @@ export default {
 
         const { state, getProperties, setProperties } = useDrag()
 
+        const currentItem = computed(() => {
+            if (state.lastSelectedItemId !== undefined) {
+                let currentItem = undefined
+                state.itemList.forEach((perItem) => {
+                    if (perItem.id == state.lastSelectedItemId) currentItem = perItem
+                })
+                return currentItem
+            }
+            return undefined
+        })
+
         const inputValues = ref<InputValue[]>([
             {
                 type: Type.text,
@@ -77,7 +90,7 @@ export default {
                 }
             },
             {
-                type: Type.text,
+                type: Type.select,
                 properties: {
                     startingText: undefined,
                     placeholder: 'Input starting text...',
@@ -94,6 +107,42 @@ export default {
             keys: [SwitchKeys.full, SwitchKeys.half],
             activeKey: SwitchKeys.full
         })
+
+        const selectProperties = ref([
+            {
+                type: Type.text,
+                properties: {
+                    startingText: undefined,
+                    placeholder: 'Header name...',
+                    header: 'Input header name'
+                },
+                style: {
+                    input: { height: "28px" }
+                }
+            },
+            {
+                type: Type.text,
+                properties: {
+                    startingText: undefined,
+                    placeholder: 'Placeholder name...',
+                    header: 'Input placeholder name'
+                },
+                style: {
+                    input: { height: "28px" }
+                }
+            },
+            {
+                type: Type.select,
+                properties: {
+                    startingText: undefined,
+                    placeholder: 'Placeholder name...',
+                    header: 'Input placeholder name'
+                },
+                style: {
+                    input: { height: "28px" }
+                }
+            },
+        ])
 
         const getInputProperties = () => {
             const itemProperties = getProperties()
@@ -149,7 +198,8 @@ export default {
             state,
             setInputProperties,
             switchValues,
-            setSwitchStatus
+            setSwitchStatus,
+            currentItem
         }
     },
 }

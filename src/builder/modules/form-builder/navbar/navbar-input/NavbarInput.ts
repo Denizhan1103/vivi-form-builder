@@ -7,7 +7,9 @@ enum ItemTypes {
     number = 'Number',
     date = 'Date',
     time = 'Time',
-    textArea = 'TextArea'
+    textArea = 'TextArea',
+    select = 'Select',
+    checkBox = 'CheckBox'
 }
 
 interface ButtonItem {
@@ -28,7 +30,9 @@ export default {
             { id: ItemTypes.number, name: 'Number' },
             { id: ItemTypes.date, name: 'Date' },
             { id: ItemTypes.time, name: 'Time' },
-            { id: ItemTypes.textArea, name: 'Text Area' }
+            { id: ItemTypes.textArea, name: 'Text Area' },
+            { id: ItemTypes.select, name: 'Select' },
+            { id: ItemTypes.checkBox, name: 'Check Box' }
         ]
 
         return {
