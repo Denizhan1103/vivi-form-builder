@@ -4,13 +4,18 @@ import { useDrag } from "@/builder/hooks/UseDrag";
 
 import Input from "@/builder/components/input/Input.vue";
 import TextArea from "@/builder/components/text-area/TextArea.vue";
+import Select from "@/builder/components/select/Select.vue";
+import CheckBox from "@/builder/components/check-box/CheckBox.vue";
+import eventBus from "@/builder/utils/EventBus";
 
 enum ItemTypes {
     text = 'Text',
     number = 'Number',
     date = 'Date',
     time = 'Time',
-    textArea = 'Text Area'
+    textArea = 'Text Area',
+    select = 'Select',
+    checkBox = 'CheckBox'
 }
 
 interface Item {
@@ -34,7 +39,9 @@ enum ItemSize {
 export default {
     components: {
         Input,
-        TextArea
+        TextArea,
+        Select,
+        CheckBox
     },
     props: {
         item: {
@@ -43,7 +50,12 @@ export default {
         }
     },
     setup() {
-        const { state, onDragEnter, onDragLeave, onDragStart, setLastSelectedItem, clearSelectedItem } = useDrag()
+        const { state, onDragEnter, onDragLeave, onDragStart, setLastSelectedItem, clearSelectedItem, removeItem } = useDrag()
+
+        const setCurrentEditItem = (itemId: number) => {
+            setLastSelectedItem(itemId)
+            eventBus.dispatch('changeActiveNavbar', 'Property')
+        }
 
         return {
             state,
@@ -51,7 +63,9 @@ export default {
             onDragLeave,
             onDragStart,
             setLastSelectedItem,
-            clearSelectedItem
+            clearSelectedItem,
+            setCurrentEditItem,
+            removeItem
         }
     },
 }

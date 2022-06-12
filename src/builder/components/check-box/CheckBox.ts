@@ -1,19 +1,18 @@
-import type { PropType } from "vue";
-
-interface Validation {
-    enabled: boolean
-}
+import { onMounted, ref, watch, type PropType } from "vue";
 
 interface Option {
-    key: number;
+    key: number | string;
     value: string;
+}
+
+interface Validation {
+    enabled: boolean;
 }
 
 interface ComponentProperties {
     title?: string;
-    placeholder?: string;
     options: Option[];
-    activeOption?: string | number;
+    activeOption?: number;
     validation?: Validation;
 }
 
@@ -24,16 +23,12 @@ export default {
             required: false,
             default: 'Header Text'
         },
-        placeholder: {
-            type: String,
-            required: false
-        },
         options: {
             type: Array as PropType<Option[]>,
             required: true
         },
         activeOption: {
-            type: [String, Number],
+            type: Number,
             required: false
         },
         validation: {
@@ -43,15 +38,22 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
+        const currentActiveOption = ref<number>(-1)
 
-        const onChange = (optionkey: string) => {
-            props.options.forEach((option: Option) => {
-                if (String(option.key) == optionkey) emit('onChange', option)
-            })
-        }
+        watch(currentActiveOption, (newValue: number) => {
+            emit('optionChanged', newValue)
+        })
+
+        watch(props, () => {
+            if (props.activeOption) currentActiveOption.value = props.activeOption
+        })
+
+        onMounted(() => {
+            if (props.activeOption) currentActiveOption.value = props.activeOption
+        })
 
         return {
-            onChange
+            currentActiveOption
         }
     },
 }

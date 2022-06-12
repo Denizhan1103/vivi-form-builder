@@ -167,6 +167,23 @@ export const useDrag = () => {
         state.lastSelectedItemId = undefined
     }
 
+    // Remove
+    const removeItem = (itemId: number) => {
+        // Remove Item
+        state.itemList.forEach((perItem: Item, index: number) => {
+            if (perItem.id == itemId) state.itemList.splice(index, 1)
+        })
+
+        // Set new index
+        state.itemList.forEach((perItem: Item) => {
+            if (perItem.id > itemId) perItem.id--
+        })
+
+        sortAllItems()
+        clearSelectedItem()
+        state.availableItemId--
+    }
+
     // Properties
     // TODO: refactor this code
     const setProperties = (itemProperty: ItemProperties) => {
@@ -206,6 +223,7 @@ export const useDrag = () => {
         setLastSelectedItem,
         clearSelectedItem,
         setProperties,
-        getProperties
+        getProperties,
+        removeItem
     }
 }

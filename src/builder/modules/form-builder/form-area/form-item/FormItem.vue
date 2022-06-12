@@ -20,7 +20,9 @@
                     :class="{'formitem__input-item-half': item.properties && item.properties.size == 'Half'}"
                 >
                     <TextArea v-if="item.type == 'TextArea'" :properties="item.properties"/>
-                    <Input v-else :properties="item.properties"/>
+                    <Select v-if="item.type == 'Select'"/>
+                    <CheckBox v-if="item.type == 'CheckBox'"/>
+                    <Input v-if="item.type !== 'Select' && item.type !== 'TextArea' && item.type !== 'CheckBox'" :properties="item.properties"/>
                 </div>
                 <div class="formitem__input-size">
                     <span class="formitem__input-size-item">{{(item.properties && item.properties.size) ? item.properties.size : 'Full'}}</span>
@@ -29,8 +31,8 @@
             </div>
         </div>
         <div class="formitem__navbar">
-            <p class="formitem__navbar-item">Edit</p>
-            <p class="formitem__navbar-item">Delete</p>
+            <p @click="setCurrentEditItem(item.id)" class="formitem__navbar-item">Edit</p>
+            <p @click="removeItem(item.id)" class="formitem__navbar-item">Delete</p>
         </div>
     </div>
 </template>

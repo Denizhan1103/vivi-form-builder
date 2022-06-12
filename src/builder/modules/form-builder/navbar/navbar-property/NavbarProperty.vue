@@ -1,23 +1,29 @@
 <template>
     <div class="navbarproperty">
+        {{currentItem}}
         <div v-if="state.lastSelectedItemId == undefined" class="navbarproperty__noitem">
             <p class="navbarproperty__noitem-text">You are not selected any item.</p>
         </div>
         <div v-else class="navbarproperty__inputs">
-            <Input 
-                v-for="(input,index) in inputValues" 
-                :key="input.type"
-                :type="input.type"
-                :properties="input.properties"
-                :style="input.style"
-                @onInputChanged="(newValue) => setInputProperties(index,newValue)"
-            />
-            <Switch 
-                :title="switchValues.title" 
-                :keys="switchValues.keys" 
-                :activeKey="switchValues.activeKey"
-                @onSwitch="(newValue) => setSwitchStatus(newValue)"
-            />
+            <div v-if="currentItem.type == 'Select'" class="navbarproperty__type">
+                Select
+            </div>
+            <div v-else class="navbarproperty__type">
+                <Input 
+                    v-for="(input,index) in inputValues" 
+                    :key="input.type"
+                    :type="input.type"
+                    :properties="input.properties"
+                    :style="input.style"
+                    @onInputChanged="(newValue) => setInputProperties(index,newValue)"
+                />
+                <Switch 
+                    :title="switchValues.title" 
+                    :keys="switchValues.keys" 
+                    :activeKey="switchValues.activeKey"
+                    @onSwitch="(newValue) => setSwitchStatus(newValue)"
+                />
+            </div>
         </div>
     </div>
 </template>

@@ -1,4 +1,5 @@
-import { ref } from "vue";
+import eventBus from "@/builder/utils/EventBus";
+import { onMounted, onUnmounted, ref } from "vue";
 
 import NavbarHeader from "../navbar-header/NavbarHeader.vue"
 import NavbarInput from "../navbar-input/NavbarInput.vue";
@@ -13,7 +14,7 @@ enum NavbarHeaderNames {
     validation = 'Validation'
 }
 
-interface NavbarHeaders {
+interface NavbarHeader {
     type: NavbarHeaderNames;
     name: string;
 }
@@ -28,7 +29,7 @@ export default {
     },
     setup() {
 
-        const navbarHeaders = ref<NavbarHeaders[]>([
+        const navbarHeaders = ref<NavbarHeader[]>([
             { type: NavbarHeaderNames.inputs, name: 'Inputs' },
             { type: NavbarHeaderNames.property, name: 'Property' },
             { type: NavbarHeaderNames.style, name: 'Style' },
@@ -37,10 +38,23 @@ export default {
 
         const selectedHeaderItem = ref<NavbarHeaderNames>(NavbarHeaderNames.inputs)
 
+        const changeActiveNavbar = (item: NavbarHeaderNames) => {
+            selectedHeaderItem.value = item
+        }
+
+        onMounted(() => {
+            eventBus.on('changeActiveNavbar', changeActiveNavbar)
+        })
+
+        onUnmounted(() => {
+            eventBus.remove('changeActiveNavbar', changeActiveNavbar)
+        })
+
         return {
             navbarHeaders,
             NavbarHeaderNames,
-            selectedHeaderItem
+            selectedHeaderItem,
+            changeActiveNavbar
         }
     },
 }

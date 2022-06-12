@@ -1,6 +1,7 @@
 <template>
     <div class="navbarstyle">
-        style
+        <Select :options="[{key:1,value:'Alo1'},{key:2,value:'Alo2'}]" :activeOption="2"/>
+        <Radio title="aloo" :options="[{key:1,value:'Alo1'},{key:2,value:'Alo2'}]" activeOption="2"/>
     </div>
 </template>
 
