@@ -6,6 +6,7 @@ import Input from "@/builder/components/input/Input.vue";
 import TextArea from "@/builder/components/text-area/TextArea.vue";
 import Select from "@/builder/components/select/Select.vue";
 import CheckBox from "@/builder/components/check-box/CheckBox.vue";
+import eventBus from "@/builder/utils/EventBus";
 
 enum ItemTypes {
     text = 'Text',
@@ -51,13 +52,19 @@ export default {
     setup() {
         const { state, onDragEnter, onDragLeave, onDragStart, setLastSelectedItem, clearSelectedItem } = useDrag()
 
+        const setCurrentEditItem = (itemId: number) => {
+            setLastSelectedItem(itemId)
+            eventBus.dispatch('changeActiveNavbar', 'Property')
+        }
+
         return {
             state,
             onDragEnter,
             onDragLeave,
             onDragStart,
             setLastSelectedItem,
-            clearSelectedItem
+            clearSelectedItem,
+            setCurrentEditItem
         }
     },
 }

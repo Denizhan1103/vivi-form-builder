@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="formitem__navbar">
-            <p class="formitem__navbar-item">Edit</p>
+            <p @click="setCurrentEditItem(item.id)" class="formitem__navbar-item">Edit</p>
             <p class="formitem__navbar-item">Delete</p>
         </div>
     </div>
