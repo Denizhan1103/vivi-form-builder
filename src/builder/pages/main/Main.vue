@@ -1,17 +1,28 @@
 <template>
   <div class="main">
     <div class="main__header">
-      <h2 class="main__header-title">Welcome to form builder</h2>
-      <p class="main__header-description">You can create form how you want!</p>
+      <div class="main__header-describe">
+         <h2 class="main__header-describe-title">Welcome to form builder</h2>
+        <p class="main__header-describe-description">You can create form how you want!</p>
+      </div>
+      <div class="main__header-navbar">
+        <Button 
+          width="136px"
+          @onButtonClicked="routeToBuilder()"
+        >Create New One</Button>
+      </div>
     </div>
     <div class="main__content">
       <p class="main__content-title">Your forms;</p>
       <div class="main__content-items">
         <div class="item" v-for="item in 8" :key="item">
-          <p class="item__title">Form {{ item }}</p>
-          <div class="item__footer">
-            <p class="item__footer-edit">Edit</p>
-            <p class="item__footer-delete">Delete</p>
+          <div class="item__describe">
+            <div class="item__describe-title">Form {{item}}</div>
+            <div class="item__describe-description">Description</div>
+          </div>
+          <div class="item__navbar">
+            <p class="item__navbar-item">Edit</p>
+            <p class="item__navbar-item">Delete</p>
           </div>
         </div>
         <div @click="routeToBuilder()" class="item item__add">
@@ -24,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Main from "./Main.ts";
+import Main from "./Main";
 
 export default defineComponent(Main);
 </script>
