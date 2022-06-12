@@ -12,7 +12,7 @@ export default {
         properties: {
             type: Object as PropType<Properties>,
             required: false,
-            default: { startingText: '', placeholder: 'Placeholder Message', header: undefined, size: 'Full' }
+            default: { startingText: undefined, placeholder: 'Placeholder Message', header: undefined, size: 'Full' }
         },
         style: {
             type: Object as PropType<Style>,
@@ -26,9 +26,13 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
-        const textAreaText = ref<string>(props.properties.startingText || '')
+        const textAreaText = ref<string | undefined>(props.properties.startingText || undefined)
 
-        watch(textAreaText, (newValue: String) => {
+        watch(props, (newValue: ComponentProperties) => {
+            textAreaText.value = newValue.properties.startingText || undefined
+        })
+
+        watch(textAreaText, (newValue: string | undefined) => {
             emit('onTextAreaChanged', newValue)
         })
 

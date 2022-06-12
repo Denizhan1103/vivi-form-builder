@@ -1,6 +1,6 @@
 <template>
     <div class="navbarproperty">
-        {{currentItem}}
+        {{currentItem}} {{state.lastSelectedItemId}}
         <div v-if="state.lastSelectedItemId == undefined" class="navbarproperty__noitem">
             <p class="navbarproperty__noitem-text">You are not selected any item.</p>
         </div>
@@ -8,7 +8,8 @@
             <div v-if="currentItem.type == 'Select'" class="navbarproperty__type">
                 Select
             </div>
-            <div v-else class="navbarproperty__type">
+            <div v-if="currentItem.type == 'CheckBox'" class="navbarproperty__type">Check box</div>
+            <div v-if="currentItem.type !== 'Select' && currentItem.type !== 'CheckBox'" class="navbarproperty__type">
                 <Input 
                     v-for="(input,index) in inputValues" 
                     :key="input.type"

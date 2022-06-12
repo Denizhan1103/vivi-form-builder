@@ -11,7 +11,8 @@ export enum Type {
     number = 'Number',
     date = 'Date',
     time = 'Time',
-    select = 'Select'
+    select = 'Select',
+    checkBox = 'CheckBox'
 }
 
 export enum Size {
@@ -90,7 +91,7 @@ export default {
                 }
             },
             {
-                type: Type.select,
+                type: Type.text,
                 properties: {
                     startingText: undefined,
                     placeholder: 'Input starting text...',
