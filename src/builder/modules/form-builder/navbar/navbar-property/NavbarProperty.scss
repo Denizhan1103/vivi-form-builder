@@ -44,6 +44,8 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 2px;
+        align-items: flex-end;
+        gap: 6px;
     }
 
     &__item {
@@ -75,7 +77,8 @@
             cursor: pointer;
             font-size: 12px;
             transition: 0.2s ease background-color;
-            
+            margin-bottom: 4px;
+
             &:hover {
                 background-color: #be1234;
             }

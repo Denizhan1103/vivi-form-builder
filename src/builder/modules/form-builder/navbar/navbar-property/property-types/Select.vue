@@ -1,26 +1,3 @@
-<script lang="ts" setup>
-import { defineComponent, ref, computed, reactive } from "vue";
-
-import { useDrag } from "@/builder/hooks/UseDrag";
-
-import Input from "../../../../../components/input/Input.vue";
-import Select from "../../../../../components/select/Select.vue";
-import Switch from "../../../../../modules/global/switch/Switch.vue";
-
-const { state, setProperty, setValueProperty } = useDrag();
-
-const currentItem = computed(() => {
-  if (state.lastSelectedItemId !== undefined) {
-    let currentItem = undefined;
-    state.itemList.forEach((perItem) => {
-      if (perItem.id == state.lastSelectedItemId) currentItem = perItem;
-    });
-    return currentItem;
-  }
-  return undefined;
-});
-</script>
-
 <template>
   <div class="propertytype">
     <Input
@@ -28,25 +5,24 @@ const currentItem = computed(() => {
       :properties="{
         header: 'Header Name',
         placeholder: 'Header name...',
+        startingText: inputValues.header,
       }"
-      @onInputChanged="(newValue) => setProperty('header', newValue)"
+      @onInputChanged="(newValue) => (inputValues.header = newValue)"
     />
     <Input
       type="text"
       :properties="{
         header: 'Placeholder Name',
         placeholder: 'Placeholder name...',
+        startingText: inputValues.placeholder,
       }"
-      @onInputChanged="(newValue) => setProperty('placeholder', newValue)"
+      @onInputChanged="(newValue) => (inputValues.placeholder = newValue)"
     />
     <div class="values">
       <p class="values__title">Select Values</p>
-      <div
-        v-if="currentItem.properties && currentItem.properties.values"
-        class="values__item"
-      >
+      <div v-if="inputValues.values.length > 0" class="values__item">
         <div
-          v-for="value in currentItem.properties.values"
+          v-for="value in inputValues.values"
           :key="value.id"
           class="values__inner"
         >
@@ -54,14 +30,21 @@ const currentItem = computed(() => {
             :properties="{
               header: `Value ${value.id}`,
               placeholder: 'Value...',
+              startingText: value.value,
             }"
             @onInputChanged="
               (newValue) =>
-                setValueProperty({ type: 'Change', key: value.id, newValue })
+                inputValues.values.forEach((item) => {
+                  item.id == value.id ? (item.value = newValue) : null;
+                })
             "
           />
           <div
-            @click="setValueProperty({ type: 'Del', key: value.id })"
+            @click="
+              inputValues.values.forEach((item, index) =>
+                item.id == value.id ? inputValues.values.splice(index, 1) : null
+              )
+            "
             class="values__item-btn"
           >
             Del
@@ -70,7 +53,13 @@ const currentItem = computed(() => {
       </div>
       <div class="values__add">
         <div
-          @click="setValueProperty({ type: 'Push' })"
+          @click="
+            inputValues.values.push({
+              id: availableId,
+              value: '',
+            });
+            availableId++;
+          "
           class="values__add-btn"
         >
           Add New Value
@@ -99,6 +88,120 @@ const currentItem = computed(() => {
     />
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, computed, ref, reactive, watch } from "vue";
+import { useDrag } from "@/builder/hooks/UseDrag";
+
+import Input from "../../../../../components/input/Input.vue";
+import Select from "../../../../../components/select/Select.vue";
+import Switch from "../../../../../modules/global/switch/Switch.vue";
+
+export enum Type {
+  text = "Text",
+  number = "Number",
+  date = "Date",
+  time = "Time",
+  select = "Select",
+  checkBox = "CheckBox",
+}
+
+export enum Size {
+  half = "Half",
+  full = "Full",
+}
+
+interface InputValue {
+  type: Type;
+  properties: Properties;
+  style?: Style;
+}
+
+interface Properties {
+  startingText?: string;
+  placeholder?: string;
+  header?: string;
+}
+
+interface Style {
+  input?: { height?: string };
+}
+
+interface SwitchValues {
+  title: string;
+  keys: SwitchKeys[];
+  activeKey: SwitchKeys;
+}
+
+enum SwitchKeys {
+  full = "Full",
+  half = "Half",
+}
+
+export default defineComponent({
+  components: {
+    Input,
+    Select,
+    Switch,
+  },
+  setup() {
+    const { state, setProperty } = useDrag();
+
+    const inputValues = reactive({
+      header: undefined,
+      placeholder: undefined,
+      values: [],
+    });
+
+    const availableId = computed(() => {
+      let availableId = 1;
+      if (inputValues.values.length < 1) return availableId;
+      inputValues.values.forEach((item) => {
+        if (item.id > availableId) availableId = item.id;
+      });
+      return availableId + 1;
+    });
+
+    const currentItem = computed(() => {
+      if (state.lastSelectedItemId !== undefined) {
+        let currentItem = undefined;
+        state.itemList.forEach((perItem) => {
+          if (perItem.id == state.lastSelectedItemId) currentItem = perItem;
+        });
+        setInputValues(currentItem.properties);
+        return currentItem;
+      }
+      return undefined;
+    });
+
+    const setInputValues = (properties) => {
+      if (properties) {
+        inputValues.header = properties.header || undefined;
+        inputValues.placeholder = properties.placeholder || undefined;
+        inputValues.values = properties.values || [];
+      } else {
+        inputValues.header = undefined;
+        inputValues.placeholder = undefined;
+        inputValues.values = [];
+      }
+    };
+
+    watch(inputValues, () => {
+      setProperty("header", inputValues.header);
+      setProperty("placeholder", inputValues.placeholder);
+      setProperty("values", inputValues.values);
+    });
+
+    return {
+      state,
+      setProperty,
+      currentItem,
+      inputValues,
+      availableId,
+    };
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 @import "../NavbarProperty.scss";

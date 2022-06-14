@@ -42,7 +42,7 @@ enum ItemSize {
     full = 'Full'
 }
 
-const state = reactive<State>({
+export const state = reactive<State>({
     itemList: [],
     availableItemId: 0,
     lastOveredItemId: undefined,
@@ -194,13 +194,13 @@ export const useDrag = () => {
     }
 
     const setProperty = (key: string, value: any) => {
-        console.log('in')
-        state.itemList.forEach((perItem: Item) => {
+        state.itemList.forEach((perItem: Item, index: number) => {
             // TODO: write an enum
             if (perItem.id == state.lastSelectedItemId) {
                 if (!perItem.properties) perItem.properties = {}
                 // @ts-ignore
                 perItem.properties[key] = value
+                // state.itemList[index].properties[key] = value
             }
         })
     }
@@ -213,6 +213,7 @@ export const useDrag = () => {
         return availableItemId
     }
 
+    // BENİ DÜZELT
     const setValueProperty = ({ type, newValue, key }: { type: 'Push' | 'Del' | 'Change', newValue?: string, key?: number }) => {
         state.itemList.forEach((perItem: Item, index) => {
             if (perItem.id == state.lastSelectedItemId) {
