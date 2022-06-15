@@ -4,6 +4,11 @@
     display: flex;
     flex-direction: column;
 
+    &__btn-disable {
+        background-color: rgba(29, 119, 117, 0.6) !important;
+        pointer-events: none;
+    }
+
     &__header {
         display: flex;
         align-items: center;
@@ -91,6 +96,13 @@
         box-shadow: 0px 1px 10px #1d7775;
     }
 
+    &__noitem {
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        width: 560px;
+    }
+
     &__describe {
         display: flex;
         flex-direction: column;
@@ -153,6 +165,11 @@
                     transition: 0s ease background-color;
                     background-color: #be1234;
                 }
+            }
+
+            &-blur {
+                pointer-events: none;
+                color: rgba(220, 20, 60,0.4) !important;
             }
         }
     }

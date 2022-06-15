@@ -7,6 +7,7 @@ enum DataTransferKey {
     id = 'itemId'
 }
 
+// TODO: look
 enum ItemTypes {
     text = 'Text',
     number = 'Number',
@@ -17,10 +18,12 @@ enum ItemTypes {
 
 interface State {
     itemList: Item[];
+    currentForm?: Form;
     availableItemId: number;
     lastOveredItemId?: string;
     lastSelectedItemId?: number;
     layoutItemClassName: string;
+    updatedFormName?: string;
 }
 
 interface Item {
@@ -43,12 +46,41 @@ enum ItemSize {
     full = 'Full'
 }
 
+// Form
+interface Form {
+    id: number;
+    name: string;
+    description?: string;
+    nameChangable?: boolean;
+    deletable?: boolean;
+    canStyleChangable?: boolean;
+    canValidationChangable?: boolean;
+    itemList: Item[];
+}
+
+interface Item {
+    id: number;
+    type: ItemTypes;
+    properties?: ItemProperties;
+}
+
+interface ItemProperties {
+    startingText?: string;
+    placeholder?: string;
+    header?: string;
+    size?: ItemSize;
+    values?: { id: number, value: string }[];
+    activeValue?: { id: number; value: string };
+}
+
 export const state = reactive<State>({
     itemList: [],
+    currentForm: undefined,
     availableItemId: 0,
     lastOveredItemId: undefined,
     lastSelectedItemId: undefined,
-    layoutItemClassName: ''
+    layoutItemClassName: '',
+    updatedFormName: undefined
 })
 
 export const useDrag = () => {
@@ -261,6 +293,24 @@ export const useDrag = () => {
         state.layoutItemClassName = className
     }
 
+    const setNewForm = (form?: Form) => {
+        if (form == undefined) {
+            state.itemList = []
+            state.currentForm = undefined
+            state.availableItemId = 0
+            return
+        }
+        state.itemList = form.itemList ? Object.assign([], form.itemList) : []
+        state.currentForm = form
+        // Find currentAvailableId 
+        state.itemList.length > 0 ? state.itemList.forEach(perItem => {
+            if (perItem.id >= state.availableItemId) state.availableItemId = perItem.id + 1
+        }) : state.availableItemId = 0
+    }
+
+    const updateCurrentFormName = (newFormName: string) => {
+        state.updatedFormName = newFormName
+    }
 
     // Return
     return {
@@ -276,6 +326,8 @@ export const useDrag = () => {
         getProperties,
         removeItem,
         setProperty,
-        setValueProperty
+        setValueProperty,
+        setNewForm,
+        updateCurrentFormName
     }
 }

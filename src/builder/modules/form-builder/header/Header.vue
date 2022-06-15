@@ -4,7 +4,13 @@
         <div class="header__title">
             <h2 class="header__title-text">Form Name:</h2>
             <div class="header__title-input">
-                <input v-model="formName" placeholder="Please write form name..." type="text" class="header__title-input-item">
+                <input 
+                    :disabled="state.currentForm?.nameChangable == false" 
+                    v-model="formName" 
+                    placeholder="Please write form name..." 
+                    type="text" 
+                    class="header__title-input-item"
+                >
                 <img src="../../../assets/header/search.svg" alt="" class="header__title-input-img">
             </div>
         </div>
