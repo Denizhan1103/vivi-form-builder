@@ -17,8 +17,8 @@ interface ComponentProperties {
 interface Properties {
     title?: string;
     placeholder?: string;
-    options?: Option[];
-    activeOption?: string | number;
+    values?: Option[];
+    activeValue?: string | number;
 }
 
 export default {
@@ -26,7 +26,7 @@ export default {
         properties: {
             type: Object as PropType<Properties>,
             required: false,
-            default: { title: undefined, placeholder: undefined, options: [], activeOption: undefined }
+            default: { title: undefined, placeholder: undefined, values: [], activeValue: undefined }
         },
         validation: {
             type: Object as PropType<Validation>,
@@ -36,10 +36,10 @@ export default {
     },
     setup(props: ComponentProperties, { emit }: any) {
 
-        const onChange = (optionKey: string) => {
-            if (props.properties && props.properties.options) {
-                props.properties.options.forEach((option: Option) => {
-                    if (String(option.id) == optionKey) emit('onChange', option)
+        const onChange = (valueId: string) => {
+            if (props.properties && props.properties.values) {
+                props.properties.values.forEach((value: Option) => {
+                    if (String(value.id) == valueId) emit('onChange', value)
                 })
             }
         }

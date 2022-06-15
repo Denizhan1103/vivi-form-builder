@@ -4,7 +4,7 @@
     <div class="select__inner">
       <select
         @change="(event) => onChange(event.target.value)"
-        :disabled="!properties.options || properties.options.length < 1"
+        :disabled="!properties.values || properties.values.length < 1"
         class="select__input"
       >
         <option
@@ -17,15 +17,15 @@
           {{ properties.placeholder }}
         </option>
         <option
-          v-for="option in properties.options"
-          :key="option"
+          v-for="value in properties.values"
+          :key="value"
           class="select__input-item"
-          :value="option.id"
+          :value="value.id"
           :selected="
-            properties.activeOption && option.id == properties.activeOption
+            properties.activeValue && value.id == properties.activeValue
           "
         >
-          {{ option.value }}
+          {{ value.value }}
         </option>
       </select>
     </div>

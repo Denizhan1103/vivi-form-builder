@@ -1,5 +1,10 @@
 import type { PropType } from "vue";
 
+import Input from "../../components/input/Input.vue"
+import Select from "../../components/select/Select.vue"
+import CheckBox from "../../components/check-box/CheckBox.vue"
+import TextArea from "../../components/text-area/TextArea.vue"
+
 interface Form {
     id: number;
     name: string;
@@ -46,6 +51,12 @@ interface ComponentProperties {
 }
 
 export default {
+    components: {
+        Input,
+        TextArea,
+        Select,
+        CheckBox
+    },
     props: {
         form: {
             type: Object as PropType<Form>,

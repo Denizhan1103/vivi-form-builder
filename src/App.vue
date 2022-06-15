@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <div class="text">Vivi Form Builder Test</div>
-    <div @click="parserExpanse = true" class="parser__active">Active Parser</div>
+    <div @click="parserExpanse = true" class="parsers__active">Active Parser</div>
     <ViviBuilder 
       class="builder" 
       :options="{newItemCreatable: true, formList}"
@@ -10,10 +10,10 @@
       @onFormUpdate="(updatedForm) => updateForm(updatedForm)"
     />
   </div>
-  <div v-if="parserExpanse" class="parser">
-    <div @click="parserExpanse = false" class="parser__btn">X</div>
-    <div class="parser__area">
-      <ViviParser :form="formList[0]"/>
+  <div v-if="parserExpanse" class="parsers">
+    <div @click="parserExpanse = false" class="parsers__btn">X</div>
+    <div class="parsers__area">
+      <ViviParser :form="formList[1]"/>
     </div>
   </div>
 </template>
@@ -44,11 +44,62 @@ export default defineComponent({
         canStyleChangable: true,
         canValidationChangable: true,
         itemList: [
-          {id:0, type: 'Text', properties:{header:'Alooo'}},
-          {id:1, type: 'TextArea', properties:{header:'Alooo1'}},
-          {id:2, type: 'Select', properties:{header:'Alooo2'}},
-          {id:3, type: 'CheckBox', properties:{header:'Alooo3'}}
-        ]
+    {
+        "id": 0,
+        "type": "Text",
+        "properties": {
+            "header": "Alooo"
+        }
+    },
+    {
+        "id": 1,
+        "type": "TextArea",
+        "properties": {
+            "header": "Alooo1"
+        }
+    },
+    {
+        "id": 2,
+        "type": "Select",
+        "properties": {
+            "header": "Alooo2",
+            "values": [
+                {
+                    "id": 1,
+                    "value": "f"
+                },
+                {
+                    "id": 2,
+                    "value": "f"
+                }
+            ],
+            "size": "Full"
+        }
+    },
+    {
+        "id": 3,
+        "type": "CheckBox",
+        "properties": {
+            "header": "Alooo3",
+            "values": [
+                {
+                    "id": 1,
+                    "value": "s"
+                },
+                {
+                    "id": 2,
+                    "value": "g"
+                },
+                {
+                    "id": 3,
+                    "value": "e"
+                }
+            ],
+            "activeValue": 1,
+            "size": "Full"
+        }
+    }
+]
       },
     ])
 
