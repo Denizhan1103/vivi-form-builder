@@ -5,6 +5,8 @@
       class="builder" 
       :options="{newItemCreatable: true, formList}"
       @onFormDelete="(formId) => deleteForm(formId)"
+      @onFormAdd="(newForm) => addForm(newForm)"
+      @onFormUpdate="(updatedForm) => updateForm(updatedForm)"
     />
   </div>
 </template>
@@ -44,9 +46,23 @@ export default defineComponent({
       })
     }
 
+    const addForm = (newForm:any) => {
+      let availableId = 1
+      formList.value.forEach(item => item.id >= availableId ? availableId = item.id + 1 : null)
+      formList.value.push({...newForm,id:availableId})
+    }
+
+    const updateForm = (updatedForm:any) => {
+      formList.value.forEach((item,index) => {
+        if(item.id == updatedForm.id) formList.value[index] =  updatedForm.value
+      })
+    }
+
     return {
       formList,
-      deleteForm
+      deleteForm,
+      addForm,
+      updateForm
     }
   },
 })

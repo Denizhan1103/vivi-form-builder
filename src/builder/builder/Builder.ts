@@ -62,6 +62,17 @@ interface ComponentProperties {
     options: Options;
 }
 
+interface CreatedForm {
+    id?: number;
+    name: string;
+    description?: string;
+    nameChangable?: boolean;
+    deletable?: boolean;
+    canStyleChangable?: boolean;
+    canValidationChangable?: boolean;
+    itemList: Item[];
+}
+
 export default {
     components: {
         Main,
@@ -87,12 +98,26 @@ export default {
 
         provide('appState', appState)
 
+        const onFormUpdate = (updatedForm: CreatedForm) => {
+            emit('onFormUpdate', updatedForm)
+            appState.currentPage = CurrentPage.main
+        }
+
+        const onFormAdd = (newForm: CreatedForm) => {
+            emit('onFormAdd', newForm)
+            appState.currentPage = CurrentPage.main
+        }
+
         onMounted(() => {
             eventBus.on('onFormDelete', (formId: number) => emit('onFormDelete', formId))
+            eventBus.on('onFormUpdate', (updatedForm: CreatedForm) => onFormUpdate(updatedForm))
+            eventBus.on('onFormAdd', (newForm: CreatedForm) => onFormAdd(newForm))
         })
 
         onUnmounted(() => {
             eventBus.on('onFormDelete', (formId: number) => emit('onFormDelete', formId))
+            eventBus.on('onFormUpdate', (updatedForm: CreatedForm) => onFormUpdate(updatedForm))
+            eventBus.on('onFormAdd', (newForm: CreatedForm) => onFormAdd(newForm))
         })
 
         return {

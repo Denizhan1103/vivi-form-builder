@@ -14,7 +14,7 @@
                 <img src="../../../assets/header/search.svg" alt="" class="header__title-input-img">
             </div>
         </div>
-        <Button @onButtonClicked="$emit('onCreateForm')" width="136px">Create Form</Button>
+        <Button @onButtonClicked="applyCurrentForm()" width="136px">Apply Current Form</Button>
     </div>
 </template>
 

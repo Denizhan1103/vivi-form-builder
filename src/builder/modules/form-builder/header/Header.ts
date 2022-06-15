@@ -8,19 +8,20 @@ export default {
         Button
     },
     setup() {
-        const { state, updateCurrentFormName } = useDrag()
+        const { state, updateCurrentFormName, applyCurrentForm } = useDrag()
 
         const formName = ref<string>(state.currentForm?.name || '')
 
         watch(formName, (newValue: string) => {
-            if (state.currentForm?.nameChangable == true) {
+            if (state.currentForm?.nameChangable == true || !state.currentForm) {
                 updateCurrentFormName(newValue)
             }
         })
 
         return {
             formName,
-            state
+            state,
+            applyCurrentForm
         }
     },
 }

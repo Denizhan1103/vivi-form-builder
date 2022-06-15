@@ -36,7 +36,6 @@ export default {
             optionList.value?.forEach((perItem: Value) => {
                 if (perItem.id >= currentId) currentId = perItem.id + 1
             })
-            console.log(currentId)
             return currentId
         })
 

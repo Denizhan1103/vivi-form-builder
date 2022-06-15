@@ -23,7 +23,6 @@ export default {
         const appState = inject('appState') as AppState
 
         const routeToMain = () => {
-            console.log('Alo')
             appState.currentPage = CurrentPage.main
         }
 

@@ -1,4 +1,5 @@
 import { reactive } from "vue"
+import eventBus from "../utils/EventBus";
 
 import { findParentNode } from "../utils/FindParentNode";
 
@@ -49,6 +50,17 @@ enum ItemSize {
 // Form
 interface Form {
     id: number;
+    name: string;
+    description?: string;
+    nameChangable?: boolean;
+    deletable?: boolean;
+    canStyleChangable?: boolean;
+    canValidationChangable?: boolean;
+    itemList: Item[];
+}
+
+interface CreatedForm {
+    id?: number;
     name: string;
     description?: string;
     nameChangable?: boolean;
@@ -294,6 +306,7 @@ export const useDrag = () => {
     }
 
     const setNewForm = (form?: Form) => {
+        state.updatedFormName = undefined
         if (form == undefined) {
             state.itemList = []
             state.currentForm = undefined
@@ -312,6 +325,24 @@ export const useDrag = () => {
         state.updatedFormName = newFormName
     }
 
+    const applyCurrentForm = () => {
+        if ((state.currentForm && state.currentForm.name) && !state.updatedFormName) {
+            state.updatedFormName = state.currentForm.name
+        }
+        if (state.updatedFormName) {
+            const currentForm: CreatedForm = {
+                name: state.updatedFormName,
+                itemList: state.itemList
+            }
+
+            if (state.currentForm && state.currentForm.id) {
+                eventBus.dispatch('onFormUpdate', { id: state.currentForm.id, value: { ...currentForm, id: state.currentForm.id } })
+            } else {
+                eventBus.dispatch('onFormAdd', currentForm)
+            }
+        }
+    }
+
     // Return
     return {
         state: virtualState,
@@ -328,6 +359,7 @@ export const useDrag = () => {
         setProperty,
         setValueProperty,
         setNewForm,
-        updateCurrentFormName
+        updateCurrentFormName,
+        applyCurrentForm
     }
 }

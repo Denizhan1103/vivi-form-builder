@@ -1,6 +1,5 @@
 <template>
   <div class="navbarproperty">
-    {{ currentItem }}
     <div
       v-if="state.lastSelectedItemId == undefined"
       class="navbarproperty__noitem"
