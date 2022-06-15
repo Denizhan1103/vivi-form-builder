@@ -1,27 +1,29 @@
 <template>
   <div class="select">
-    <div class="select__title">{{ title }}</div>
+    <div class="select__title">{{ properties.title || "Header Text" }}</div>
     <div class="select__inner">
       <select
         @change="(event) => onChange(event.target.value)"
-        :disabled="!options"
+        :disabled="!properties.options || properties.options.length < 1"
         class="select__input"
       >
         <option
-          v-if="placeholder"
+          v-if="properties.placeholder"
           value=""
           class="select__input-item select__input-placeholder"
           disabled
           selected
         >
-          {{ placeholder }}
+          {{ properties.placeholder }}
         </option>
         <option
-          v-for="option in options"
+          v-for="option in properties.options"
           :key="option"
           class="select__input-item"
           :value="option.id"
-          :selected="activeOption && option.id == activeOption"
+          :selected="
+            properties.activeOption && option.id == properties.activeOption
+          "
         >
           {{ option.value }}
         </option>

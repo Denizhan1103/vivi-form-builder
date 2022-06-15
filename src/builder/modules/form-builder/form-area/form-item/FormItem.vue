@@ -35,16 +35,11 @@
             v-if="item.type == 'TextArea'"
             :properties="item.properties"
           />
-          <Select
-            v-if="item.type == 'Select'"
+          <Select v-if="item.type == 'Select'" :properties="item.properties" />
+          <CheckBox
+            v-if="item.type == 'CheckBox'"
             :properties="item.properties"
-            :title="
-              item.properties && item.properties.header
-                ? item.properties.header
-                : undefined
-            "
           />
-          <CheckBox v-if="item.type == 'CheckBox'" />
           <Input
             v-if="
               item.type !== 'Select' &&

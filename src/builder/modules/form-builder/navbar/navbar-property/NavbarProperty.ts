@@ -1,10 +1,9 @@
-import { onMounted, reactive, ref, watch } from "vue"
+import { reactive, watch } from "vue"
 
 import Input from "@/builder/components/input/Input.vue"
 import Switch from "@/builder/modules/global/switch/Switch.vue"
 import Select from "@/builder/components/select/Select.vue";
-
-import Select2 from "./property-types/Select.vue"
+import OptionList from "@/builder/components/option-list/OptionList.vue";
 
 import { useDrag } from "@/builder/hooks/UseDrag";
 import { computed } from "@vue/reactivity";
@@ -23,31 +22,18 @@ export enum Size {
     full = 'Full'
 }
 
-interface InputValue {
-    type: Type;
-    properties: Properties;
-    style?: Style;
+interface Value {
+    id: number;
+    value: string;
 }
 
-interface Properties {
-    startingText?: string;
-    placeholder?: string;
+interface InputValues {
     header?: string;
-}
-
-interface Style {
-    input?: { height?: string };
-}
-
-interface SwitchValues {
-    title: string;
-    keys: SwitchKeys[];
-    activeKey: SwitchKeys;
-}
-
-enum SwitchKeys {
-    full = 'Full',
-    half = 'Half'
+    placeholder?: string;
+    startingText?: string;
+    values?: Value[];
+    activeValue?: Value;
+    size: Size
 }
 
 export default {
@@ -55,11 +41,11 @@ export default {
         Input,
         Switch,
         Select,
-        Select2
+        OptionList
     },
     setup() {
 
-        const { state, getProperties, setProperties } = useDrag()
+        const { state, setProperty } = useDrag()
 
         const currentItem = computed(() => {
             if (state.lastSelectedItemId !== undefined) {
@@ -67,109 +53,59 @@ export default {
                 state.itemList.forEach((perItem) => {
                     if (perItem.id == state.lastSelectedItemId) currentItem = perItem
                 })
+                // @ts-ignore
+                if (currentItem && currentItem.properties) updateInputValues(currentItem.properties)
+                // @ts-ignore
+                if (currentItem && !currentItem.properties) clearInputValues()
                 return currentItem
             }
             return undefined
         })
 
-        const inputValues = ref<InputValue[]>([
-            {
-                type: Type.text,
-                properties: {
-                    startingText: undefined,
-                    placeholder: 'Header name...',
-                    header: 'Input header name'
-                },
-                style: {
-                    input: { height: "28px" }
-                }
-            },
-            {
-                type: Type.text,
-                properties: {
-                    startingText: undefined,
-                    placeholder: 'Placeholder name...',
-                    header: 'Input placeholder name'
-                },
-                style: {
-                    input: { height: "28px" }
-                }
-            },
-            {
-                type: Type.text,
-                properties: {
-                    startingText: undefined,
-                    placeholder: 'Input starting text...',
-                    header: 'Input Starting text'
-                },
-                style: {
-                    input: { height: "28px" }
-                }
-            },
-        ])
+        const updateInputValues = (itemProperties: InputValues) => {
+            inputValues.header = itemProperties.header || undefined
+            inputValues.placeholder = itemProperties.placeholder || undefined
+            inputValues.startingText = itemProperties.startingText || undefined
+            inputValues.values = itemProperties.values || []
+            inputValues.activeValue = itemProperties.activeValue || undefined
+            inputValues.size = itemProperties.size || Size.full
+            // currentItem değiştiği zaman inputValues i update edecek
+        }
 
-        const switchValues = reactive<SwitchValues>({
-            title: 'Input Size',
-            keys: [SwitchKeys.full, SwitchKeys.half],
-            activeKey: SwitchKeys.full
+        const clearInputValues = () => {
+            inputValues.header = undefined
+            inputValues.placeholder = undefined
+            inputValues.startingText = undefined
+            inputValues.values = []
+            inputValues.activeValue = undefined
+            inputValues.size = Size.full
+        }
+
+        const inputValues = reactive<InputValues>({
+            header: undefined,
+            placeholder: undefined,
+            startingText: undefined,
+            values: [],
+            activeValue: undefined,
+            size: Size.full
         })
 
-        const getInputProperties = () => {
-            const itemProperties = getProperties()
-            if (itemProperties !== undefined) {
-                inputValues.value[0].properties.startingText = itemProperties.header
-                inputValues.value[1].properties.startingText = itemProperties.placeholder
-                inputValues.value[2].properties.startingText = itemProperties.startingText
-                // @ts-ignore
-                switchValues.activeKey = itemProperties.size
-            } else {
-                resetInputProperties()
-            }
+        const updateState = () => {
+            setProperty('header', inputValues.header)
+            setProperty('placeholder', inputValues.placeholder)
+            setProperty('startingText', inputValues.startingText)
+            setProperty('values', inputValues.values)
+            setProperty('activeValue', inputValues.activeValue)
+            setProperty('size', inputValues.size)
+            // inputValues değiştiği zaman state yi update edecek
         }
 
-        const resetInputProperties = () => {
-            inputValues.value[0].properties.startingText = undefined
-            inputValues.value[1].properties.startingText = undefined
-            inputValues.value[2].properties.startingText = undefined
-            switchValues.activeKey = SwitchKeys.full
-        }
-
-        getInputProperties()
-
-        const setInputProperties = (index: number, newValue: string) => {
-            inputValues.value[index].properties.startingText = newValue
-            setProperties({
-                header: inputValues.value[0].properties.startingText,
-                placeholder: inputValues.value[1].properties.startingText,
-                startingText: inputValues.value[2].properties.startingText,
-                // @ts-ignore
-                size: switchValues.activeKey
-            })
-        }
-
-        const setSwitchStatus = (newValue: string) => {
-            // @ts-ignore
-            switchValues.activeKey = newValue
-            setProperties({
-                header: inputValues.value[0].properties.startingText,
-                placeholder: inputValues.value[1].properties.startingText,
-                startingText: inputValues.value[2].properties.startingText,
-                // @ts-ignore
-                size: switchValues.activeKey
-            })
-        }
-
-        watch(state, () => {
-            getInputProperties()
-        })
+        watch(inputValues, () => updateState())
 
         return {
-            inputValues,
             state,
-            setInputProperties,
-            switchValues,
-            setSwitchStatus,
-            currentItem
+            currentItem,
+            inputValues
         }
     },
 }

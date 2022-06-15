@@ -10,26 +10,22 @@ interface Validation {
 }
 
 interface ComponentProperties {
-    title?: string;
-    options: Option[];
-    activeOption?: number;
+    properties: Properties;
     validation?: Validation;
+}
+
+interface Properties {
+    title?: string;
+    options?: Option[];
+    activeOption?: number;
 }
 
 export default {
     props: {
-        title: {
-            type: String,
+        properties: {
+            type: Object as PropType<Properties>,
             required: false,
-            default: 'Header Text'
-        },
-        options: {
-            type: Array as PropType<Option[]>,
-            required: true
-        },
-        activeOption: {
-            type: Number,
-            required: false
+            default: { title: undefined, options: [], activeOption: undefined }
         },
         validation: {
             type: Object as PropType<Validation>,
@@ -45,11 +41,11 @@ export default {
         })
 
         watch(props, () => {
-            if (props.activeOption) currentActiveOption.value = props.activeOption
+            if (props.properties.activeOption) currentActiveOption.value = props.properties.activeOption
         })
 
         onMounted(() => {
-            if (props.activeOption) currentActiveOption.value = props.activeOption
+            if (props.properties.activeOption) currentActiveOption.value = props.properties.activeOption
         })
 
         return {

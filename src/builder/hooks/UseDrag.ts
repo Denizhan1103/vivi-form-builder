@@ -35,6 +35,7 @@ interface ItemProperties {
     header?: string;
     size?: ItemSize;
     values?: { id: number, value: string }[];
+    activeValue?: { id: number; value: string };
 }
 
 enum ItemSize {
