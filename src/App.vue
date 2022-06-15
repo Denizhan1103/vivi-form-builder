@@ -1,6 +1,7 @@
 <template>
   <div class="layout">
     <div class="text">Vivi Form Builder Test</div>
+    <div @click="parserExpanse = true" class="parser__active">Active Parser</div>
     <ViviBuilder 
       class="builder" 
       :options="{newItemCreatable: true, formList}"
@@ -9,6 +10,12 @@
       @onFormUpdate="(updatedForm) => updateForm(updatedForm)"
     />
   </div>
+  <div v-if="parserExpanse" class="parser">
+    <div @click="parserExpanse = false" class="parser__btn">X</div>
+    <div class="parser__area">
+      <ViviParser :form="formList[0]"/>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -16,6 +23,8 @@ import { defineComponent,ref } from 'vue'
 
 export default defineComponent({
   setup() {
+    const parserExpanse = ref<boolean>(false)
+
     const formList = ref([
       {
         id: 1,
@@ -35,7 +44,10 @@ export default defineComponent({
         canStyleChangable: true,
         canValidationChangable: true,
         itemList: [
-          {id:0, type: 'Text', properties:{header:'Alooo'}}
+          {id:0, type: 'Text', properties:{header:'Alooo'}},
+          {id:1, type: 'TextArea', properties:{header:'Alooo1'}},
+          {id:2, type: 'Select', properties:{header:'Alooo2'}},
+          {id:3, type: 'CheckBox', properties:{header:'Alooo3'}}
         ]
       },
     ])
@@ -56,13 +68,15 @@ export default defineComponent({
       formList.value.forEach((item,index) => {
         if(item.id == updatedForm.id) formList.value[index] =  updatedForm.value
       })
+      console.log(updatedForm)
     }
 
     return {
       formList,
       deleteForm,
       addForm,
-      updateForm
+      updateForm,
+      parserExpanse
     }
   },
 })

@@ -1,4 +1,5 @@
 import Builder from "./builder/Builder.vue"
+import Parser from "./modules/parser/Parser.vue"
 
 export default {
     // Todo fix typing
@@ -6,6 +7,7 @@ export default {
         Vue.mixin({
             created() {
                 Vue.component('ViviBuilder', Builder)
+                Vue.component('ViviParser', Parser)
             }
         })
     }

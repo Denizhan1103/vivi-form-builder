@@ -4,27 +4,27 @@
     <div class="radio__inner">
       <div
         class="radio__item"
-        v-for="option in properties.options"
-        :key="option.key"
-        @click="currentActiveOption = option.key"
+        v-for="value in properties.values"
+        :key="value.id"
+        @click="currentActiveOption = value.id"
       >
         <div
           class="radio__item-icon"
           :class="{
-            'radio__item-icon-selected': option.key == currentActiveOption,
+            'radio__item-icon-selected': value.id == currentActiveOption,
           }"
         ></div>
         <div
           class="radio__item-text"
           :class="{
-            'radio__item-text-selected': option.key == currentActiveOption,
+            'radio__item-text-selected': value.id == currentActiveOption,
           }"
         >
-          {{ option.value }}
+          {{ value.value }}
         </div>
       </div>
       <div
-        v-if="!properties.options || properties.options.length < 1"
+        v-if="!properties.values || properties.values.length < 1"
         class="radio__nooption"
       >
         Any option is not set

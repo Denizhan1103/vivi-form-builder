@@ -1,4 +1,4 @@
-import { reactive, watch } from "vue"
+import { onMounted, reactive, watch } from "vue"
 
 import Input from "@/builder/components/input/Input.vue"
 import Switch from "@/builder/modules/global/switch/Switch.vue"
@@ -69,7 +69,6 @@ export default {
             inputValues.values = itemProperties.values || []
             inputValues.activeValue = itemProperties.activeValue || undefined
             inputValues.size = itemProperties.size || Size.full
-            // currentItem değiştiği zaman inputValues i update edecek
         }
 
         const clearInputValues = () => {
@@ -97,7 +96,6 @@ export default {
             setProperty('values', inputValues.values)
             setProperty('activeValue', inputValues.activeValue)
             setProperty('size', inputValues.size)
-            // inputValues değiştiği zaman state yi update edecek
         }
 
         watch(inputValues, () => updateState())

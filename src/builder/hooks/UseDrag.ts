@@ -14,7 +14,9 @@ enum ItemTypes {
     number = 'Number',
     date = 'Date',
     time = 'Time',
-    textArea = 'Text Area'
+    textArea = 'TextArea',
+    select = 'Select',
+    checkBox = 'CheckBox'
 }
 
 interface State {
