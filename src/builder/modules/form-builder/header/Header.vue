@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <img @click="$emit('onGoBack')" src="../../../assets/header/arrow-back.svg" alt="" class="header__arrow">
+        <img @click="onGoBack()" src="../../../assets/header/arrow-back.svg" alt="" class="header__arrow">
         <div class="header__title">
             <h2 class="header__title-text">Form Name:</h2>
             <div class="header__title-input">
@@ -14,7 +14,7 @@
                 <img src="../../../assets/header/search.svg" alt="" class="header__title-input-img">
             </div>
         </div>
-        <Button @onButtonClicked="applyCurrentForm()" width="136px">Apply Current Form</Button>
+        <Button class="header__btn" @onButtonClicked="applyCurrentForm()" width="136px">Apply Current Form</Button>
     </div>
 </template>
 

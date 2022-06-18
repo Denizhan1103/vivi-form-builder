@@ -8,10 +8,12 @@
             <Input 
                 v-if="item.type !== 'TextArea' && item.type !== 'Select' && item.type !== 'CheckBox'"
                 :properties="item.properties"
+                :preventDefault="true"
             />
             <TextArea 
                 v-if="item.type == 'TextArea'"
                 :properties="item.properties"
+                :preventDefault="true"
                 />
             <Select 
                 v-if="item.type == 'Select'"

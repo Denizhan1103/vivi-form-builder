@@ -34,7 +34,7 @@
       />
       <Select 
         v-if="currentItem.type == 'Select' || currentItem.type == 'CheckBox'"
-        :properties="{title:'Starting Item', placeholder: 'Starting Item...', options: inputValues.values, activeOption: inputValues.activeValue}"
+        :properties="{header:'Starting Item', placeholder: 'Starting Item...', values: inputValues.values, activeValue: inputValues.activeValue}"
         @onChange="(newValue) => inputValues.activeValue = newValue.id"
       />
       <Switch 

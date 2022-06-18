@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <div class="select__title">{{ properties.title || "Header Text" }}</div>
+    <div class="select__title">{{ properties.header || "Header Text" }}</div>
     <div class="select__inner">
       <select
         @change="(event) => onChange(event.target.value)"
@@ -8,7 +8,6 @@
         class="select__input"
       >
         <option
-          v-if="properties.placeholder"
           value=""
           class="select__input-item select__input-placeholder"
           disabled
@@ -18,12 +17,10 @@
         </option>
         <option
           v-for="value in properties.values"
-          :key="value"
+          :key="value.id"
           class="select__input-item"
           :value="value.id"
-          :selected="
-            properties.activeValue && value.id == properties.activeValue
-          "
+          :selected="properties.activeValue && value.id == properties.activeValue"
         >
           {{ value.value }}
         </option>

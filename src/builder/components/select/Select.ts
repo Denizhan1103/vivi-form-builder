@@ -1,4 +1,4 @@
-import type { Prop, PropType } from "vue";
+import { onMounted, ref, watch, type PropType } from "vue";
 
 interface Validation {
     enabled: boolean
@@ -15,10 +15,10 @@ interface ComponentProperties {
 }
 
 interface Properties {
-    title?: string;
+    header?: string;
     placeholder?: string;
     values?: Option[];
-    activeValue?: string | number;
+    activeValue?: number;
 }
 
 export default {
@@ -26,7 +26,7 @@ export default {
         properties: {
             type: Object as PropType<Properties>,
             required: false,
-            default: { title: undefined, placeholder: undefined, values: [], activeValue: undefined }
+            default: { header: undefined, placeholder: undefined, values: [], activeValue: undefined }
         },
         validation: {
             type: Object as PropType<Validation>,
@@ -35,6 +35,7 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
+        const activeValue = ref<number>(-1)
 
         const onChange = (valueId: string) => {
             if (props.properties && props.properties.values) {
@@ -44,8 +45,19 @@ export default {
             }
         }
 
+        watch(props, () => {
+            if (props.properties.activeValue) activeValue.value = props.properties.activeValue
+        })
+
+        onMounted(() => {
+            if (props.properties.activeValue) {
+                activeValue.value = props.properties.activeValue
+            }
+        })
+
         return {
-            onChange
+            onChange,
+            activeValue
         }
     },
 }

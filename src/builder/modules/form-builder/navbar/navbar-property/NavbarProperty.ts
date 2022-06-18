@@ -1,4 +1,4 @@
-import { onMounted, reactive, watch } from "vue"
+import { onMounted, reactive, watch, ref } from "vue"
 
 import Input from "@/builder/components/input/Input.vue"
 import Switch from "@/builder/modules/global/switch/Switch.vue"
@@ -33,7 +33,7 @@ interface InputValues {
     startingText?: string;
     values?: Value[];
     activeValue?: Value;
-    size: Size
+    size?: Size
 }
 
 export default {
@@ -44,8 +44,16 @@ export default {
         OptionList
     },
     setup() {
-
         const { state, setProperty } = useDrag()
+
+        const inputValues = reactive<InputValues>({
+            header: undefined,
+            placeholder: undefined,
+            startingText: undefined,
+            values: [],
+            activeValue: undefined,
+            size: Size.full
+        })
 
         const currentItem = computed(() => {
             if (state.lastSelectedItemId !== undefined) {
@@ -79,15 +87,6 @@ export default {
             inputValues.activeValue = undefined
             inputValues.size = Size.full
         }
-
-        const inputValues = reactive<InputValues>({
-            header: undefined,
-            placeholder: undefined,
-            startingText: undefined,
-            values: [],
-            activeValue: undefined,
-            size: Size.full
-        })
 
         const updateState = () => {
             setProperty('header', inputValues.header)

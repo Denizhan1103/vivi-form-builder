@@ -2,6 +2,7 @@
     scroll-behavior: smooth;
     flex: 1;
     overflow: auto;
+    position: relative;
 
     &__scroll {
         scroll-behavior: smooth;
@@ -47,3 +48,4 @@
         }
     }
 }
+

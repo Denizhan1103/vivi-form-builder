@@ -22,7 +22,9 @@
         justify-content: space-between;
 
         &-describe {
-    
+            max-width: max-content;
+            overflow: hidden;
+
             &-title {
                 font-size: 18px;
                 color: #1D7775;
@@ -195,6 +197,28 @@
             border: 2px solid #FFFFFF;
             color: #FFFFFF;
             font-size: 25px;
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .main {
+        position: relative;
+
+        &__header {
+            flex-direction: column;
+            justify-content: center;
+            padding: 4px 0;
+
+            &-describe {
+                text-align: center;
+            }
+
+            &-navbar {
+                position: absolute;
+                bottom: 8px;
+                z-index: 9;
+            }
         }
     }
 }

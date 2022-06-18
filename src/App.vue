@@ -103,6 +103,8 @@ export default defineComponent({
       },
     ])
 
+        console.log(formList.value[1])
+
     const deleteForm = (formId:number) => {
       formList.value.forEach((perForm,index) => {
         if(perForm.id == formId) formList.value.splice(index,1)

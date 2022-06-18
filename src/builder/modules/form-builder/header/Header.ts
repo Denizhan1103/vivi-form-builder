@@ -7,7 +7,7 @@ export default {
     components: {
         Button
     },
-    setup() {
+    setup(props: any, { emit }: any) {
         const { state, updateCurrentFormName, applyCurrentForm } = useDrag()
 
         const formName = ref<string>(state.currentForm?.name || '')
@@ -18,10 +18,15 @@ export default {
             }
         })
 
+        const onGoBack = () => {
+            emit('onGoBack')
+        }
+
         return {
             formName,
             state,
-            applyCurrentForm
+            applyCurrentForm,
+            onGoBack
         }
     },
 }
