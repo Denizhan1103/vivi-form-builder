@@ -49,3 +49,12 @@
     }
 }
 
+
+@media only screen and (max-width: 664px) {
+    .formlayout {
+
+        &__scroll {
+            min-width: inherit;
+        }
+    }
+}

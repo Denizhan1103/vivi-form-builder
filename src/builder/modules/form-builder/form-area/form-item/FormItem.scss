@@ -182,23 +182,31 @@
             background: #FFF;
             transition: 0.3s ease transform;
             transform: translateX(88%);
+
+            &:hover {
+                transform: translateX(0);
+
+                &::before {
+                    display: none;
+                }
+            }
+
+            &::before {
+                content: "<";
+                color: #000;
+                position: absolute;
+                left: 2px;
+                font-weight: 800;
+                font-size: 16px;
+                transform: scaleY(1.5);
+            }
         }
 
         &__input {
+            padding-right: 20px;
 
             &-size {
-                background: #FFF;
-                height: 102%;
-                position: absolute;
-                border-top-left-radius: 6px;
-                border-bottom-left-radius: 6px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                right: 0;
-                transition: 0.3s ease transform;
-                transform: translateX(70%);
-                border: 1px solid #D9D9D9;
+                display: none;
             }
         }
     }
