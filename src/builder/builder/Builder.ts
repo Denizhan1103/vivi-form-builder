@@ -24,7 +24,7 @@ interface Form {
 }
 
 interface Item {
-    id: number;
+    queue: number;
     type: ItemTypes;
     properties?: ItemProperties;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="navbarproperty">
     <div
-      v-if="state.lastSelectedItemId == undefined"
+      v-if="state.selectedItemId == undefined"
       class="navbarproperty__noitem"
     >
       <p class="navbarproperty__noitem-text">You are not selected any item.</p>

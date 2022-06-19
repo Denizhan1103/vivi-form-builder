@@ -1,15 +1,15 @@
 <template>
   <div
     class="formitem"
-    :class="{ formitem__selected: state.lastSelectedItemId == item.id }"
+    :class="{ formitem__selected: state.selectedItemId == item.queue }"
   >
     <div
       draggable="true"
       @dragstart="(event) => onDragStart({ event, isLayoutItem: true })"
       @click="
-        state.lastSelectedItemId == item.id
+        state.selectedItemId == item.queue
           ? clearSelectedItem()
-          : setLastSelectedItem(item.id)
+          : setSelectedItem(item.queue)
       "
       class="formitem__draggable"
     >
@@ -22,7 +22,8 @@
         "
         class="formitem__layer"
       ></div>
-      <p class="formitem__id">{{ item.id }}</p>
+      <!--QUEUE --> 
+      <p class="formitem__id">{{ item.queue }}</p>
       <div class="formitem__input">
         <div
           class="formitem__input-item"
@@ -61,10 +62,10 @@
       </div>
     </div>
     <div class="formitem__navbar">
-      <p @click="setCurrentEditItem(item.id)" class="formitem__navbar-item">
+      <p @click="setCurrentEditItem(item.queue)" class="formitem__navbar-item">
         Edit
       </p>
-      <p @click="removeItem(item.id)" class="formitem__navbar-item">Delete</p>
+      <p @click="removeItem(item.queue)" class="formitem__navbar-item">Delete</p>
     </div>
   </div>
 </template>

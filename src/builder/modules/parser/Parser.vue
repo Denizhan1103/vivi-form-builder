@@ -2,11 +2,13 @@
     <div class="parser">
         <div 
             v-for="item in form.itemList" 
-            :key="item.id" 
+            :key="item.queue" 
             class="parser__item"
         >
+        {{item}}
             <Input 
                 v-if="item.type !== 'TextArea' && item.type !== 'Select' && item.type !== 'CheckBox'"
+                :type="item.type"
                 :properties="item.properties"
                 :preventDefault="true"
             />

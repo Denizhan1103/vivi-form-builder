@@ -1,4 +1,4 @@
-import type { PropType } from "vue";
+import { type PropType, ref } from "vue";
 
 import Input from "../../components/input/Input.vue"
 import Select from "../../components/select/Select.vue"
@@ -64,9 +64,11 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
+        const emittingObjects = ref({})
+
         console.log(props.form)
         return {
-
+            emittingObjects
         }
     },
 }
