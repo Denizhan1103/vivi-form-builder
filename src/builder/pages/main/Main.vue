@@ -8,6 +8,7 @@
       <div class="main__header-navbar">
         <Button 
           width="136px"
+          :class="{'main__btn-disable': !appState.options.newItemCreatable}"
           @onButtonClicked="routeToBuilder()"
         >Create New One</Button>
       </div>
@@ -15,17 +16,38 @@
     <div class="main__content">
       <p class="main__content-title">Your forms;</p>
       <div class="main__content-items">
-        <div class="item" v-for="item in 8" :key="item">
+        <div 
+          v-if="!appState.options.formList || appState.options.formList.length < 1" 
+          class="item__noitem item"
+        >
+          You have 0 item!
+        </div>
+        <div v-else class="item" v-for="form in appState.options.formList" :key="form.id">
           <div class="item__describe">
-            <div class="item__describe-title">Form {{item}}</div>
-            <div class="item__describe-description">Description</div>
+            <div class="item__describe-title">{{form.name}}</div>
+            <div class="item__describe-description">{{form.description || 'Not set any description'}}</div>
           </div>
           <div class="item__navbar">
-            <p class="item__navbar-item">Edit</p>
-            <p class="item__navbar-item">Delete</p>
+            <p 
+              class="item__navbar-item"
+              @click="routeToBuilder(form.id)"
+            >
+              Edit
+            </p>
+            <p 
+              :class="{'item__navbar-item-blur': form.deletable == false}" 
+              class="item__navbar-item"
+              @click="deleteForm(form.id)"
+            >
+              Delete
+            </p>
           </div>
         </div>
-        <div @click="routeToBuilder()" class="item item__add">
+        <div 
+          :class="{'main__btn-disable': !appState.options.newItemCreatable}"
+          @click="routeToBuilder()" 
+          class="item item__add"
+        >
           <span>+</span> Add new item
         </div>
       </div>

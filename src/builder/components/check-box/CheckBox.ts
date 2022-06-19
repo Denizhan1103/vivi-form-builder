@@ -1,7 +1,7 @@
 import { onMounted, ref, watch, type PropType } from "vue";
 
-interface Option {
-    key: number | string;
+interface Value {
+    id: number | string;
     value: string;
 }
 
@@ -10,26 +10,22 @@ interface Validation {
 }
 
 interface ComponentProperties {
-    title?: string;
-    options: Option[];
-    activeOption?: number;
+    properties: Properties;
     validation?: Validation;
+}
+
+interface Properties {
+    title?: string;
+    values?: Value[];
+    activeValue?: number;
 }
 
 export default {
     props: {
-        title: {
-            type: String,
+        properties: {
+            type: Object as PropType<Properties>,
             required: false,
-            default: 'Header Text'
-        },
-        options: {
-            type: Array as PropType<Option[]>,
-            required: true
-        },
-        activeOption: {
-            type: Number,
-            required: false
+            default: { title: undefined, values: [], activeValue: undefined }
         },
         validation: {
             type: Object as PropType<Validation>,
@@ -41,15 +37,15 @@ export default {
         const currentActiveOption = ref<number>(-1)
 
         watch(currentActiveOption, (newValue: number) => {
-            emit('optionChanged', newValue)
+            emit('onActiveChanged', newValue)
         })
 
         watch(props, () => {
-            if (props.activeOption) currentActiveOption.value = props.activeOption
+            if (props.properties.activeValue) currentActiveOption.value = props.properties.activeValue
         })
 
         onMounted(() => {
-            if (props.activeOption) currentActiveOption.value = props.activeOption
+            if (props.properties.activeValue) currentActiveOption.value = props.properties.activeValue
         })
 
         return {

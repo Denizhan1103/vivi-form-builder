@@ -1,4 +1,6 @@
+import { useDrag } from "@/builder/hooks/UseDrag";
 import eventBus from "@/builder/utils/EventBus";
+import { computed } from "@vue/reactivity";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import NavbarHeader from "../navbar-header/NavbarHeader.vue"
@@ -29,12 +31,19 @@ export default {
     },
     setup() {
 
-        const navbarHeaders = ref<NavbarHeader[]>([
-            { type: NavbarHeaderNames.inputs, name: 'Inputs' },
-            { type: NavbarHeaderNames.property, name: 'Property' },
-            { type: NavbarHeaderNames.style, name: 'Style' },
-            { type: NavbarHeaderNames.validation, name: 'Validation' }
-        ])
+        const { state } = useDrag()
+
+        const navbarHeaders = computed<NavbarHeader[]>(() => {
+            const headers = [
+                { type: NavbarHeaderNames.inputs, name: 'Inputs' },
+                { type: NavbarHeaderNames.property, name: 'Property' },
+            ]
+
+            if (state.currentForm == undefined || state.currentForm?.canStyleChangable == true) headers.push({ type: NavbarHeaderNames.style, name: 'Style' })
+            if (state.currentForm == undefined || state.currentForm?.canValidationChangable == true) headers.push({ type: NavbarHeaderNames.validation, name: 'Validation' })
+
+            return headers
+        })
 
         const selectedHeaderItem = ref<NavbarHeaderNames>(NavbarHeaderNames.inputs)
 

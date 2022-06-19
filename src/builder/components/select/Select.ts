@@ -1,40 +1,32 @@
-import type { PropType } from "vue";
+import { onMounted, ref, watch, type PropType } from "vue";
 
 interface Validation {
     enabled: boolean
 }
 
 interface Option {
-    key: number;
+    id: number;
     value: string;
 }
 
 interface ComponentProperties {
-    title?: string;
-    placeholder?: string;
-    options: Option[];
-    activeOption?: string | number;
+    properties: Properties;
     validation?: Validation;
+}
+
+interface Properties {
+    header?: string;
+    placeholder?: string;
+    values?: Option[];
+    activeValue?: number;
 }
 
 export default {
     props: {
-        title: {
-            type: String,
+        properties: {
+            type: Object as PropType<Properties>,
             required: false,
-            default: 'Header Text'
-        },
-        placeholder: {
-            type: String,
-            required: false
-        },
-        options: {
-            type: Array as PropType<Option[]>,
-            required: true
-        },
-        activeOption: {
-            type: [String, Number],
-            required: false
+            default: { header: undefined, placeholder: undefined, values: [], activeValue: undefined }
         },
         validation: {
             type: Object as PropType<Validation>,
@@ -43,15 +35,29 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
+        const activeValue = ref<number>(-1)
 
-        const onChange = (optionkey: string) => {
-            props.options.forEach((option: Option) => {
-                if (String(option.key) == optionkey) emit('onChange', option)
-            })
+        const onChange = (valueId: string) => {
+            if (props.properties && props.properties.values) {
+                props.properties.values.forEach((value: Option) => {
+                    if (String(value.id) == valueId) emit('onChange', value)
+                })
+            }
         }
 
+        watch(props, () => {
+            if (props.properties.activeValue) activeValue.value = props.properties.activeValue
+        })
+
+        onMounted(() => {
+            if (props.properties.activeValue) {
+                activeValue.value = props.properties.activeValue
+            }
+        })
+
         return {
-            onChange
+            onChange,
+            activeValue
         }
     },
 }

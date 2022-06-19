@@ -20,6 +20,11 @@
     &__inputs {
         display: flex;
         flex-direction: column;
+    }
+
+    &__type {
+        display: flex;
+        flex-direction: column;
         gap: 8px;
     }
 }

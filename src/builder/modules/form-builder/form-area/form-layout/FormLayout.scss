@@ -2,6 +2,7 @@
     scroll-behavior: smooth;
     flex: 1;
     overflow: auto;
+    position: relative;
 
     &__scroll {
         scroll-behavior: smooth;
@@ -44,6 +45,16 @@
         &-img {
             width: 48px;
             height: 48px;
+        }
+    }
+}
+
+
+@media only screen and (max-width: 664px) {
+    .formlayout {
+
+        &__scroll {
+            min-width: inherit;
         }
     }
 }

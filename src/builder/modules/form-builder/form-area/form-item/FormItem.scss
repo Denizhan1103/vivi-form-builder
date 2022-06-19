@@ -9,6 +9,7 @@
     cursor: pointer;
     grid-column: auto / span 2;
     transition: 0.3s ease all;
+    position: relative;
 
     &:nth-child(2n+1) {
         background-color: #efefef;
@@ -167,6 +168,45 @@
                     transition: 0s ease background-color;
                     background-color: #be1234;
                 }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 664px) {
+    .formitem {
+
+        &__navbar {
+            position: absolute;
+            right: 0;
+            background: #FFF;
+            transition: 0.3s ease transform;
+            transform: translateX(88%);
+
+            &:hover {
+                transform: translateX(0);
+
+                &::before {
+                    display: none;
+                }
+            }
+
+            &::before {
+                content: "<";
+                color: #000;
+                position: absolute;
+                left: 2px;
+                font-weight: 800;
+                font-size: 16px;
+                transform: scaleY(1.5);
+            }
+        }
+
+        &__input {
+            padding-right: 20px;
+
+            &-size {
+                display: none;
             }
         }
     }

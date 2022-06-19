@@ -1,6 +1,6 @@
 <template>
     <div @drop="(e) => onDrop(e)" @dragover="(e) => allowDrop(e)" id="formlayout" class="formlayout">
-        <div id="formlayout" class="formlayout__scroll">
+        <div v-if="state.itemList && state.itemList.length > 0" id="formlayout" class="formlayout__scroll">
             <FormItem v-for="perItem in state.itemList" :key="perItem.id" :id="perItem.id" :item="perItem"/>  
         </div>
         <!-- <div class="formlayout__trash">

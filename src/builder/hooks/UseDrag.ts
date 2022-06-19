@@ -1,4 +1,5 @@
 import { reactive } from "vue"
+import eventBus from "../utils/EventBus";
 
 import { findParentNode } from "../utils/FindParentNode";
 
@@ -7,20 +8,25 @@ enum DataTransferKey {
     id = 'itemId'
 }
 
+// TODO: look
 enum ItemTypes {
     text = 'Text',
     number = 'Number',
     date = 'Date',
     time = 'Time',
-    textArea = 'Text Area'
+    textArea = 'TextArea',
+    select = 'Select',
+    checkBox = 'CheckBox'
 }
 
 interface State {
     itemList: Item[];
+    currentForm?: Form;
     availableItemId: number;
     lastOveredItemId?: string;
     lastSelectedItemId?: number;
     layoutItemClassName: string;
+    updatedFormName?: string;
 }
 
 interface Item {
@@ -34,6 +40,8 @@ interface ItemProperties {
     placeholder?: string;
     header?: string;
     size?: ItemSize;
+    values?: { id: number, value: string }[];
+    activeValue?: { id: number; value: string };
 }
 
 enum ItemSize {
@@ -41,12 +49,52 @@ enum ItemSize {
     full = 'Full'
 }
 
-const state = reactive<State>({
+// Form
+interface Form {
+    id: number;
+    name: string;
+    description?: string;
+    nameChangable?: boolean;
+    deletable?: boolean;
+    canStyleChangable?: boolean;
+    canValidationChangable?: boolean;
+    itemList: Item[];
+}
+
+interface CreatedForm {
+    id?: number;
+    name: string;
+    description?: string;
+    nameChangable?: boolean;
+    deletable?: boolean;
+    canStyleChangable?: boolean;
+    canValidationChangable?: boolean;
+    itemList: Item[];
+}
+
+interface Item {
+    id: number;
+    type: ItemTypes;
+    properties?: ItemProperties;
+}
+
+interface ItemProperties {
+    startingText?: string;
+    placeholder?: string;
+    header?: string;
+    size?: ItemSize;
+    values?: { id: number, value: string }[];
+    activeValue?: { id: number; value: string };
+}
+
+export const state = reactive<State>({
     itemList: [],
+    currentForm: undefined,
     availableItemId: 0,
     lastOveredItemId: undefined,
     lastSelectedItemId: undefined,
-    layoutItemClassName: ''
+    layoutItemClassName: '',
+    updatedFormName: undefined
 })
 
 export const useDrag = () => {
@@ -192,6 +240,54 @@ export const useDrag = () => {
         })
     }
 
+    const setProperty = (key: string, value: any) => {
+        state.itemList.forEach((perItem: Item, index: number) => {
+            // TODO: write an enum
+            if (perItem.id == state.lastSelectedItemId) {
+                if (!perItem.properties) perItem.properties = {}
+                // @ts-ignore
+                perItem.properties[key] = value
+                // state.itemList[index].properties[key] = value
+            }
+        })
+    }
+
+    const findAvailableKeyValue = (values: { id: number, value: string }[]) => {
+        let availableItemId = 1
+        values.forEach((perItem) => {
+            if (perItem.id >= availableItemId) availableItemId = perItem.id + 1
+        })
+        return availableItemId
+    }
+
+    // BENİ DÜZELT
+    const setValueProperty = ({ type, newValue, key }: { type: 'Push' | 'Del' | 'Change', newValue?: string, key?: number }) => {
+        state.itemList.forEach((perItem: Item, index) => {
+            if (perItem.id == state.lastSelectedItemId) {
+                if (!perItem.properties) perItem.properties = {}
+                if (!perItem.properties.values) perItem.properties.values = []
+
+                if (type == 'Push') {
+                    const values = Object.assign([], perItem.properties.values)
+                    values.push({ id: findAvailableKeyValue(perItem.properties.values), value: '' })
+                    perItem.properties.values = values
+                    // perItem.properties.values.push({ id: findAvailableKeyValue(perItem.properties.values), value: '' })
+
+                }
+                if (type == 'Del' && key) {
+                    perItem.properties.values.forEach((item, index) => {
+                        if (item.id == key) perItem.properties?.values?.splice(index, 1)
+                    })
+                }
+                if (type == 'Change') {
+                    perItem.properties.values.forEach((item) => {
+                        if (item.id == key) item.value = newValue || ''
+                    })
+                }
+            }
+        })
+    }
+
     const getProperties = (): ItemProperties | undefined => {
         let currentItem: ItemProperties | undefined = undefined;
         state.itemList.forEach((perItem: Item) => {
@@ -211,6 +307,43 @@ export const useDrag = () => {
         state.layoutItemClassName = className
     }
 
+    const setNewForm = (form?: Form) => {
+        state.updatedFormName = undefined
+        if (form == undefined) {
+            state.itemList = []
+            state.currentForm = undefined
+            state.availableItemId = 0
+            return
+        }
+        state.itemList = form.itemList ? Object.assign([], form.itemList) : []
+        state.currentForm = form
+        // Find currentAvailableId 
+        state.itemList.length > 0 ? state.itemList.forEach(perItem => {
+            if (perItem.id >= state.availableItemId) state.availableItemId = perItem.id + 1
+        }) : state.availableItemId = 0
+    }
+
+    const updateCurrentFormName = (newFormName: string) => {
+        state.updatedFormName = newFormName
+    }
+
+    const applyCurrentForm = () => {
+        if ((state.currentForm && state.currentForm.name) && !state.updatedFormName) {
+            state.updatedFormName = state.currentForm.name
+        }
+        if (state.updatedFormName) {
+            const currentForm: CreatedForm = {
+                name: state.updatedFormName,
+                itemList: state.itemList
+            }
+
+            if (state.currentForm && state.currentForm.id) {
+                eventBus.dispatch('onFormUpdate', { id: state.currentForm.id, value: { ...currentForm, id: state.currentForm.id } })
+            } else {
+                eventBus.dispatch('onFormAdd', currentForm)
+            }
+        }
+    }
 
     // Return
     return {
@@ -224,6 +357,11 @@ export const useDrag = () => {
         clearSelectedItem,
         setProperties,
         getProperties,
-        removeItem
+        removeItem,
+        setProperty,
+        setValueProperty,
+        setNewForm,
+        updateCurrentFormName,
+        applyCurrentForm
     }
 }

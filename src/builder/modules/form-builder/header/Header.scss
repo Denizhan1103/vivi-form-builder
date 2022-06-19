@@ -65,3 +65,33 @@
         }
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .header {
+
+        &__title {
+            justify-content: center;
+        }
+
+        &__arrow,
+        &__btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            z-index: 9;
+        }
+
+        &__arrow {
+            margin-right: 0;
+            right: 150px;
+            bottom: 12px;
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .header__title {
+        flex-direction: column;
+        gap: 6px;
+    }
+}

@@ -1,3 +1,4 @@
+import { useDrag } from "@/builder/hooks/UseDrag";
 import type { PropType } from "vue";
 
 enum NavbarHeaderNames {
@@ -25,6 +26,5 @@ export default {
         }
     },
     setup() {
-
     },
 }

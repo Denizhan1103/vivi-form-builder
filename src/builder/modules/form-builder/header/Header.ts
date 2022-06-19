@@ -1,23 +1,32 @@
+import { useDrag } from "@/builder/hooks/UseDrag"
 import { ref, watch } from "vue"
 import Button from "../../global/button/Button.vue"
 
-interface ComponentProperties {
-
-}
 
 export default {
     components: {
         Button
     },
-    setup(props: ComponentProperties, { emit }: any) {
-        const formName = ref<string>('')
+    setup(props: any, { emit }: any) {
+        const { state, updateCurrentFormName, applyCurrentForm } = useDrag()
+
+        const formName = ref<string>(state.currentForm?.name || '')
 
         watch(formName, (newValue: string) => {
-            emit('onFormNameChanged', newValue)
+            if (state.currentForm?.nameChangable == true || !state.currentForm) {
+                updateCurrentFormName(newValue)
+            }
         })
 
+        const onGoBack = () => {
+            emit('onGoBack')
+        }
+
         return {
-            formName
+            formName,
+            state,
+            applyCurrentForm,
+            onGoBack
         }
     },
 }

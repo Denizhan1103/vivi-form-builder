@@ -61,4 +61,5 @@ export interface ComponentProperties {
     type: Type;
     style: Style;
     properties: Properties;
+    preventDefault: boolean;
 }

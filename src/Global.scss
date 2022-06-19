@@ -29,7 +29,7 @@ body,
   font-size: 20px;
   font-weight: 800;
   color: #1D7775;
-  margin-bottom: 40px;
+  margin-bottom: 8px;
   text-shadow: 0 0 6px rgb(255 255 255 / 40%);
 }
 
@@ -38,4 +38,59 @@ body,
   height: 600px;
   background-color: #FFFFFF;
   border-radius: 6px;
+}
+
+.parsers {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.4);
+  display: grid;
+  place-items: center;
+
+  &__active {
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+    text-shadow: 0 0 6px rgb(255 255 255 / 40%);
+    background: #1D7775;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease background-color;
+
+    &:hover {
+      background: #155b5a;
+    }
+
+    }
+
+  &__btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-weight: 800;
+    color: #1D7775;
+    cursor: pointer;
+    background: white;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: 0.2s ease all;
+    font-size: 16px;
+
+    &:hover {
+      background: rgb(180, 180, 180);
+    }
+  }
+
+  &__area {
+    width: 400px;
+    padding: 8px;
+    background: #fff;
+    border-radius: 6px;
+  }
+
 }
