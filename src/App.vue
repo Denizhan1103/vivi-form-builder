@@ -121,7 +121,6 @@ export default defineComponent({
       formList.value.forEach((item,index) => {
         if(item.id == updatedForm.id) formList.value[index] =  updatedForm.value
       })
-      console.log(updatedForm)
     }
 
     return {

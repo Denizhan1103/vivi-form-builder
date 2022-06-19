@@ -21,7 +21,7 @@
         @onInputChanged="(newValue) => inputValues.placeholder = newValue"
       />
       <Input 
-        type="Text" 
+        :type="currentItem.type" 
         v-if="currentItem.type !== 'CheckBox' && currentItem.type !== 'Select'" 
         :properties="{header:'Starting Text',placeholder:'Starting Text...',startingText: inputValues.startingText}" 
         :style="{input:{height: '28px'}}"

@@ -26,9 +26,7 @@ export default {
         const inputText = ref<string>((props.properties && props.properties.startingText) ? props.properties.startingText : '')
 
         watch(props, (newValue) => {
-            if (newValue.properties && newValue.properties.startingText) {
-                inputText.value = newValue.properties.startingText
-            }
+            inputText.value = (newValue.properties && newValue.properties.startingText) ? newValue.properties.startingText : ''
         })
 
         watch(inputText, (newValue: string) => {

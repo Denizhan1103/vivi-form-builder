@@ -4,6 +4,7 @@
     <div v-if="optionList.length > 0" class="option__item">
       <div v-for="value in optionList" :key="value.id" class="option__inner">
         <Input
+          type="Text"
           :properties="{
             header: `Value ${value.id}`,
             placeholder: 'Value...',

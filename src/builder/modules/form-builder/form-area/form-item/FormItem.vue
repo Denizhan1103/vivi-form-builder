@@ -46,6 +46,7 @@
               item.type !== 'TextArea' &&
               item.type !== 'CheckBox'
             "
+            :type="item.type"
             :properties="item.properties"
           />
         </div>
