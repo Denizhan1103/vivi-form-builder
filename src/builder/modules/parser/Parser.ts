@@ -72,30 +72,3 @@ export default {
         }
     }
 }
-
-// export default {
-//     components: {
-//         Input,
-//         TextArea,
-//         Select,
-//         CheckBox
-//     },
-//     props: {
-//         form: {
-//             type: Object as PropType<Form>,
-//             required: true
-//         },
-//     },
-//     setup(props: ComponentProperties, { emit }: any) {
-//         const emittingObjects = ref<any>({})
-
-//         watch(emittingObjects, (newValue: any) => {
-//             console.log('ALOO')
-//             emit('onInputsUpdated', newValue)
-//         })
-
-//         return {
-//             emittingObjects
-//         }
-//     },
-// }
