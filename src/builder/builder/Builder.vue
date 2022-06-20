@@ -13,6 +13,6 @@ import Builder from "./Builder";
 export default defineComponent(Builder);
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./Builder.scss";
 </style>
