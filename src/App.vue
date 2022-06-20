@@ -13,7 +13,7 @@
   <div v-if="parserExpanse" class="parsers">
     <div @click="parserExpanse = false" class="parsers__btn">X</div>
     <div class="parsers__area">
-      <ViviParser :form="formList[1]"/>
+      <ViviParser :form="formList[1]" @onInputsUpdated="(newValue) => updateParserItems(newValue)"/>
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ import { defineComponent,ref } from 'vue'
 export default defineComponent({
   setup() {
     const parserExpanse = ref<boolean>(false)
+    const parserItems = ref<any>({})
 
     const formList = ref([
       {
@@ -127,12 +128,18 @@ export default defineComponent({
       })
     }
 
+    const updateParserItems = (newValues:any) => {
+      parserItems.value = newValues
+    }
+
     return {
       formList,
       deleteForm,
       addForm,
       updateForm,
-      parserExpanse
+      parserExpanse,
+      parserItems,
+      updateParserItems
     }
   },
 })
