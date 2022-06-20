@@ -45,19 +45,19 @@ export default defineComponent({
         canValidationChangable: true,
         itemList: [
           {
-              id: 0,
-              queue: 0,
-              type: "Text",
-              properties: {
-                  header: "Alooo"
-              }
-          },
-          {
               id: 1,
               queue: 1,
               type: "TextArea",
               properties: {
                   header: "Alooo1"
+              }
+          },
+          {
+              id: 0,
+              queue: 0,
+              type: "Text",
+              properties: {
+                  header: "Alooo"
               }
           },
           {

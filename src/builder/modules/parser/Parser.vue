@@ -1,8 +1,8 @@
 <template>
     <div class="parser">
         <div 
-            v-for="item in form.itemList" 
-            :key="item.queue" 
+            v-for="item in form.itemList.sort((a,b) => a.queue - b.queue)" 
+            :key="item.id" 
             class="parser__item"
         >
         {{item}}
