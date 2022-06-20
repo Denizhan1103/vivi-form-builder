@@ -44,62 +44,66 @@ export default defineComponent({
         canStyleChangable: true,
         canValidationChangable: true,
         itemList: [
-    {
-        "id": 0,
-        "type": "Text",
-        "properties": {
-            "header": "Alooo"
-        }
-    },
-    {
-        "id": 1,
-        "type": "TextArea",
-        "properties": {
-            "header": "Alooo1"
-        }
-    },
-    {
-        "id": 2,
-        "type": "Select",
-        "properties": {
-            "header": "Alooo2",
-            "values": [
-                {
-                    "id": 1,
-                    "value": "f"
-                },
-                {
-                    "id": 2,
-                    "value": "f"
-                }
-            ],
-            "size": "Full"
-        }
-    },
-    {
-        "id": 3,
-        "type": "CheckBox",
-        "properties": {
-            "header": "Alooo3",
-            "values": [
-                {
-                    "id": 1,
-                    "value": "s"
-                },
-                {
-                    "id": 2,
-                    "value": "g"
-                },
-                {
-                    "id": 3,
-                    "value": "e"
-                }
-            ],
-            "activeValue": 1,
-            "size": "Full"
-        }
-    }
-]
+          {
+              id: 0,
+              queue: 0,
+              type: "Text",
+              properties: {
+                  header: "Alooo"
+              }
+          },
+          {
+              id: 1,
+              queue: 1,
+              type: "TextArea",
+              properties: {
+                  header: "Alooo1"
+              }
+          },
+          {
+              id: 2,
+              queue: 2,
+              type: "Select",
+              properties: {
+                  header: "Alooo2",
+                  values: [
+                      {
+                          id: 1,
+                          value: "f"
+                      },
+                      {
+                          id: 2,
+                          value: "f"
+                      }
+                  ],
+                  size: "Full"
+              }
+          },
+          {
+              id: 3,
+              queue: 3,
+              type: "CheckBox",
+              properties: {
+                  header: "Alooo3",
+                  values: [
+                      {
+                          id: 1,
+                          value: "s"
+                      },
+                      {
+                          id: 2,
+                          value: "g"
+                      },
+                      {
+                          id: 3,
+                          value: "e"
+                      }
+                  ],
+                  activeValue: 1,
+                  size: "Full"
+              }
+          }
+        ]
       },
     ])
 
