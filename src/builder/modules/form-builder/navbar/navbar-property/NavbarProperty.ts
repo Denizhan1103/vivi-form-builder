@@ -56,10 +56,10 @@ export default {
         })
 
         const currentItem = computed(() => {
-            if (state.lastSelectedItemId !== undefined) {
+            if (state.selectedItemId !== undefined) {
                 let currentItem = undefined
                 state.itemList.forEach((perItem) => {
-                    if (perItem.id == state.lastSelectedItemId) currentItem = perItem
+                    if (perItem.queue == state.selectedItemId) currentItem = perItem
                 })
                 // @ts-ignore
                 if (currentItem && currentItem.properties) updateInputValues(currentItem.properties)

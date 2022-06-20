@@ -5,7 +5,7 @@ import { findParentNode } from "../utils/FindParentNode";
 
 enum DataTransferKey {
     type = 'type',
-    id = 'itemId'
+    queue = 'queue'
 }
 
 // TODO: look
@@ -22,17 +22,11 @@ enum ItemTypes {
 interface State {
     itemList: Item[];
     currentForm?: Form;
-    availableItemId: number;
-    lastOveredItemId?: string;
-    lastSelectedItemId?: number;
+    availableItemQueue: number;
+    lastOveredItemQueue?: string;
+    selectedItemId?: number;
     layoutItemClassName: string;
     updatedFormName?: string;
-}
-
-interface Item {
-    id: number;
-    type: ItemTypes;
-    properties?: ItemProperties;
 }
 
 interface ItemProperties {
@@ -74,6 +68,7 @@ interface CreatedForm {
 
 interface Item {
     id: number;
+    queue: number;
     type: ItemTypes;
     properties?: ItemProperties;
 }
@@ -90,9 +85,9 @@ interface ItemProperties {
 export const state = reactive<State>({
     itemList: [],
     currentForm: undefined,
-    availableItemId: 0,
-    lastOveredItemId: undefined,
-    lastSelectedItemId: undefined,
+    availableItemQueue: 0,
+    lastOveredItemQueue: undefined,
+    selectedItemId: undefined,
     layoutItemClassName: '',
     updatedFormName: undefined
 })
@@ -105,30 +100,42 @@ export const useDrag = () => {
     // Drop
     const onDrop = (event: any) => {
         const currentItemType: ItemTypes = event.dataTransfer.getData(DataTransferKey.type)
-        const currentItemId: number = event.dataTransfer.getData(DataTransferKey.id)
+        const currentItemQueue: number = event.dataTransfer.getData(DataTransferKey.queue)
 
         // Routing
         if (currentItemType && event.target.id == 'formlayout') addItemToLast(currentItemType)
-        else if (currentItemType && state.lastOveredItemId) addItemToLoc(currentItemType)
-        else if (currentItemId) changeItemLoc(currentItemId)
+        else if (currentItemType && state.lastOveredItemQueue) addItemToLoc(currentItemType)
+        else if (currentItemQueue) changeItemLoc(currentItemQueue)
         // Finalizing
         clearItemEffects()
         sortAllItems()
-        state.lastOveredItemId = undefined
+        state.lastOveredItemQueue = undefined
     }
 
     const addItemToLast = (currentItemType: ItemTypes) => {
-        state.itemList.push({ id: state.availableItemId, type: currentItemType })
-        state.availableItemId++
+        state.itemList.push({ id: findAvailableId(), queue: state.availableItemQueue, type: currentItemType })
+        state.availableItemQueue++
     }
 
     const addItemToLoc = (currentItemType: ItemTypes) => {
         for (const item of state.itemList) {
-            if (item.id >= Number(state.lastOveredItemId) + 1) item.id = item.id + 1
+            if (item.queue >= Number(state.lastOveredItemQueue) + 1) item.queue = item.queue + 1
         }
 
-        state.itemList.push({ id: Number(state.lastOveredItemId) + 1, type: currentItemType })
-        state.availableItemId++
+        state.itemList.push({ id: findAvailableId(), queue: Number(state.lastOveredItemQueue) + 1, type: currentItemType })
+        state.availableItemQueue++
+    }
+
+    const findAvailableId = (): number => {
+        let availableId = 1
+
+        if (state.itemList.length > 0) {
+            state.itemList.forEach(item => {
+                item.id >= availableId ? availableId = item.id + 1 : null
+            })
+        }
+
+        return availableId
     }
 
     // TODO: refactor this code also has some bugs  
@@ -138,39 +145,39 @@ export const useDrag = () => {
 
         // Getting selectedLayoutItem & overedLayoutItem
         for (const [index, item] of state.itemList.entries()) {
-            if (item.id == currentItemId) {
+            if (item.queue == currentItemId) {
                 selectedLayoutItem = item
                 state.itemList.splice(index, 1)
             }
             // Üstüne bırakılan itemin 1 altındaki itemi almak için +1 var
-            if (item.id == Number(state.lastOveredItemId) + 1) overedLayoutItem = item
+            if (item.queue == Number(state.lastOveredItemQueue) + 1) overedLayoutItem = item
         }
 
         // Fixed : TODO: fix issue when item dropped into first upper item
         if (selectedLayoutItem && overedLayoutItem) {
-            if (selectedLayoutItem.id == overedLayoutItem.id) {
+            if (selectedLayoutItem.queue == overedLayoutItem.queue) {
                 state.itemList.push(selectedLayoutItem)
                 return true
             }
         }
 
         // If item dropped into itself
-        if (!overedLayoutItem && selectedLayoutItem) overedLayoutItem = { ...selectedLayoutItem, id: selectedLayoutItem.id + 1, type: selectedLayoutItem.type }
+        if (!overedLayoutItem && selectedLayoutItem) overedLayoutItem = { ...selectedLayoutItem, queue: selectedLayoutItem.queue + 1, type: selectedLayoutItem.type }
 
-        // Calc all of layout item new id
+        // Calc all of layout item new queue
         for (const item of state.itemList) {
             if (overedLayoutItem && selectedLayoutItem) {
-                if ((item.id >= Number(overedLayoutItem.id) && item.id < Number(selectedLayoutItem.id))) {
-                    item.id = item.id + 1
+                if ((item.queue >= Number(overedLayoutItem.queue) && item.queue < Number(selectedLayoutItem.queue))) {
+                    item.queue = item.queue + 1
                 }
-                if (item.id < Number(overedLayoutItem.id) && item.id >= Number(selectedLayoutItem.id)) {
-                    item.id = item.id - 1
+                if (item.queue < Number(overedLayoutItem.queue) && item.queue >= Number(selectedLayoutItem.queue)) {
+                    item.queue = item.queue - 1
                 }
             }
         }
 
         if (overedLayoutItem && selectedLayoutItem) {
-            state.itemList.push({ ...selectedLayoutItem, id: overedLayoutItem.id - 1, type: selectedLayoutItem.type })
+            state.itemList.push({ ...selectedLayoutItem, queue: overedLayoutItem.queue - 1, type: selectedLayoutItem.type })
         }
 
     }
@@ -183,7 +190,7 @@ export const useDrag = () => {
     const onDragEnter = ({ event, className }: { event: any; className: string; }) => {
         const targetNode = findParentNode({ targetNode: event.target, parentClassName: 'formitem' })
         targetNode.classList.add(className)
-        state.lastOveredItemId = targetNode.id
+        state.lastOveredItemQueue = targetNode.getAttribute('queue')
         setLayoutItemClassName(className)
     }
 
@@ -202,48 +209,49 @@ export const useDrag = () => {
     // TODO: FIX TYPING
     const onDragStart = ({ event, isLayoutItem }: { event: any, isLayoutItem: boolean }) => {
         clearSelectedItem()
-        if (isLayoutItem) event.dataTransfer.setData(DataTransferKey.id, findParentNode({ targetNode: event.target, parentClassName: 'formitem' }).id)
+        if (isLayoutItem) event.dataTransfer.setData(DataTransferKey.queue, findParentNode({ targetNode: event.target, parentClassName: 'formitem' }).getAttribute('queue'))
+        // Change Id to Type From Dom
         else event.dataTransfer.setData('type', event.target.id)
     }
 
     // Selection
-    const setLastSelectedItem = (itemId: number) => {
-        state.lastSelectedItemId = itemId
+    const setSelectedItem = (itemId: number) => {
+        state.selectedItemId = itemId
     }
 
     const clearSelectedItem = () => {
-        state.lastSelectedItemId = undefined
+        state.selectedItemId = undefined
     }
 
     // Remove
     const removeItem = (itemId: number) => {
         // Remove Item
         state.itemList.forEach((perItem: Item, index: number) => {
-            if (perItem.id == itemId) state.itemList.splice(index, 1)
+            if (perItem.queue == itemId) state.itemList.splice(index, 1)
         })
 
         // Set new index
         state.itemList.forEach((perItem: Item) => {
-            if (perItem.id > itemId) perItem.id--
+            if (perItem.queue > itemId) perItem.queue--
         })
 
         sortAllItems()
         clearSelectedItem()
-        state.availableItemId--
+        state.availableItemQueue--
     }
 
     // Properties
     // TODO: refactor this code
     const setProperties = (itemProperty: ItemProperties) => {
         state.itemList.forEach((perItem: Item) => {
-            if (perItem.id == state.lastSelectedItemId) perItem.properties = itemProperty
+            if (perItem.queue == state.selectedItemId) perItem.properties = itemProperty
         })
     }
 
     const setProperty = (key: string, value: any) => {
         state.itemList.forEach((perItem: Item, index: number) => {
             // TODO: write an enum
-            if (perItem.id == state.lastSelectedItemId) {
+            if (perItem.queue == state.selectedItemId) {
                 if (!perItem.properties) perItem.properties = {}
                 // @ts-ignore
                 perItem.properties[key] = value
@@ -255,7 +263,7 @@ export const useDrag = () => {
     const getProperties = (): ItemProperties | undefined => {
         let currentItem: ItemProperties | undefined = undefined;
         state.itemList.forEach((perItem: Item) => {
-            if (perItem.id == state.lastSelectedItemId) {
+            if (perItem.queue == state.selectedItemId) {
                 currentItem = perItem.properties
             }
         })
@@ -264,7 +272,7 @@ export const useDrag = () => {
 
     // General
     const sortAllItems = () => {
-        state.itemList = state.itemList.sort((a, b) => a.id - b.id)
+        state.itemList = state.itemList.sort((a, b) => a.queue - b.queue)
     }
 
     const setLayoutItemClassName = (className: string) => {
@@ -276,15 +284,15 @@ export const useDrag = () => {
         if (form == undefined) {
             state.itemList = []
             state.currentForm = undefined
-            state.availableItemId = 0
+            state.availableItemQueue = 0
             return
         }
         state.itemList = form.itemList ? Object.assign([], form.itemList) : []
         state.currentForm = form
         // Find currentAvailableId 
         state.itemList.length > 0 ? state.itemList.forEach(perItem => {
-            if (perItem.id >= state.availableItemId) state.availableItemId = perItem.id + 1
-        }) : state.availableItemId = 0
+            if (perItem.queue >= state.availableItemQueue) state.availableItemQueue = perItem.queue + 1
+        }) : state.availableItemQueue = 0
     }
 
     const updateCurrentFormName = (newFormName: string) => {
@@ -317,7 +325,7 @@ export const useDrag = () => {
         onDragLeave,
         onDragStart,
         allowDrop,
-        setLastSelectedItem,
+        setSelectedItem,
         clearSelectedItem,
         setProperties,
         getProperties,

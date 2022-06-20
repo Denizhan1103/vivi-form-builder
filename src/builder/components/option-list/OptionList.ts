@@ -31,6 +31,7 @@ export default {
     setup(props: ComponentProperties, { emit }: any) {
         const optionList = ref(props.properties.options)
 
+        // QUEUE
         const availableId = computed<number>(() => {
             let currentId = 1
             optionList.value?.forEach((perItem: Value) => {

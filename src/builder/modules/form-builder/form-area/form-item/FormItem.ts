@@ -50,10 +50,10 @@ export default {
         }
     },
     setup() {
-        const { state, onDragEnter, onDragLeave, onDragStart, setLastSelectedItem, clearSelectedItem, removeItem } = useDrag()
+        const { state, onDragEnter, onDragLeave, onDragStart, setSelectedItem, clearSelectedItem, removeItem } = useDrag()
 
-        const setCurrentEditItem = (itemId: number) => {
-            setLastSelectedItem(itemId)
+        const setCurrentEditItem = (itemQueue: number) => {
+            setSelectedItem(itemQueue)
             eventBus.dispatch('changeActiveNavbar', 'Property')
         }
 
@@ -62,7 +62,7 @@ export default {
             onDragEnter,
             onDragLeave,
             onDragStart,
-            setLastSelectedItem,
+            setSelectedItem,
             clearSelectedItem,
             setCurrentEditItem,
             removeItem

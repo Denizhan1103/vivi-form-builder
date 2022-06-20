@@ -13,7 +13,7 @@
   <div v-if="parserExpanse" class="parsers">
     <div @click="parserExpanse = false" class="parsers__btn">X</div>
     <div class="parsers__area">
-      <ViviParser :form="formList[1]"/>
+      <ViviParser :form="formList[1]" @onInputsUpdated="(newValue) => updateParserItems(newValue)"/>
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ import { defineComponent,ref } from 'vue'
 export default defineComponent({
   setup() {
     const parserExpanse = ref<boolean>(false)
+    const parserItems = ref<any>({})
 
     const formList = ref([
       {
@@ -44,66 +45,68 @@ export default defineComponent({
         canStyleChangable: true,
         canValidationChangable: true,
         itemList: [
-    {
-        "id": 0,
-        "type": "Text",
-        "properties": {
-            "header": "Alooo"
-        }
-    },
-    {
-        "id": 1,
-        "type": "TextArea",
-        "properties": {
-            "header": "Alooo1"
-        }
-    },
-    {
-        "id": 2,
-        "type": "Select",
-        "properties": {
-            "header": "Alooo2",
-            "values": [
-                {
-                    "id": 1,
-                    "value": "f"
-                },
-                {
-                    "id": 2,
-                    "value": "f"
-                }
-            ],
-            "size": "Full"
-        }
-    },
-    {
-        "id": 3,
-        "type": "CheckBox",
-        "properties": {
-            "header": "Alooo3",
-            "values": [
-                {
-                    "id": 1,
-                    "value": "s"
-                },
-                {
-                    "id": 2,
-                    "value": "g"
-                },
-                {
-                    "id": 3,
-                    "value": "e"
-                }
-            ],
-            "activeValue": 1,
-            "size": "Full"
-        }
-    }
-]
+          {
+              id: 1,
+              queue: 1,
+              type: "TextArea",
+              properties: {
+                  header: "Alooo1"
+              }
+          },
+          {
+              id: 0,
+              queue: 0,
+              type: "Text",
+              properties: {
+                  header: "Alooo"
+              }
+          },
+          {
+              id: 2,
+              queue: 2,
+              type: "Select",
+              properties: {
+                  header: "Alooo2",
+                  values: [
+                      {
+                          id: 1,
+                          value: "f"
+                      },
+                      {
+                          id: 2,
+                          value: "f"
+                      }
+                  ],
+                  size: "Full"
+              }
+          },
+          {
+              id: 3,
+              queue: 3,
+              type: "CheckBox",
+              properties: {
+                  header: "Alooo3",
+                  values: [
+                      {
+                          id: 1,
+                          value: "s"
+                      },
+                      {
+                          id: 2,
+                          value: "g"
+                      },
+                      {
+                          id: 3,
+                          value: "e"
+                      }
+                  ],
+                  activeValue: 1,
+                  size: "Full"
+              }
+          }
+        ]
       },
     ])
-
-        console.log(formList.value[1])
 
     const deleteForm = (formId:number) => {
       formList.value.forEach((perForm,index) => {
@@ -123,12 +126,18 @@ export default defineComponent({
       })
     }
 
+    const updateParserItems = (newValues:any) => {
+      parserItems.value = newValues
+    }
+
     return {
       formList,
       deleteForm,
       addForm,
       updateForm,
-      parserExpanse
+      parserExpanse,
+      parserItems,
+      updateParserItems
     }
   },
 })

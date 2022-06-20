@@ -1,4 +1,4 @@
-import type { PropType } from "vue";
+import { type PropType, ref, watch, reactive } from "vue";
 
 import Input from "../../components/input/Input.vue"
 import Select from "../../components/select/Select.vue"
@@ -46,9 +46,6 @@ enum ItemTypes {
     checkBox = 'CheckBox'
 }
 
-interface ComponentProperties {
-    form: Form;
-}
 
 export default {
     components: {
@@ -61,12 +58,17 @@ export default {
         form: {
             type: Object as PropType<Form>,
             required: true
-        }
+        },
     },
-    setup(props: ComponentProperties, { emit }: any) {
-        console.log(props.form)
-        return {
+    setup(componentProperties: any, { emit }: any) {
+        const emittingObjects = reactive<any>({})
 
+        watch(emittingObjects, (newValue: any) => {
+            emit('onInputsUpdated', newValue)
+        })
+
+        return {
+            emittingObjects
         }
-    },
+    }
 }

@@ -14,7 +14,7 @@
                 <img src="../../../assets/header/search.svg" alt="" class="header__title-input-img">
             </div>
         </div>
-        <Button class="header__btn" @onButtonClicked="applyCurrentForm()" width="136px">Apply Current Form</Button>
+        <Button class="header__btn" @onButtonClicked="applyCurrentForm()" width="136px">Save Current Form</Button>
     </div>
 </template>
 
