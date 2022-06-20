@@ -22,7 +22,7 @@ enum ItemTypes {
 interface State {
     itemList: Item[];
     currentForm?: Form;
-    availableItemId: number;
+    availableItemQueue: number;
     lastOveredItemQueue?: string;
     selectedItemId?: number;
     layoutItemClassName: string;
@@ -67,6 +67,7 @@ interface CreatedForm {
 }
 
 interface Item {
+    id: number;
     queue: number;
     type: ItemTypes;
     properties?: ItemProperties;
@@ -84,7 +85,7 @@ interface ItemProperties {
 export const state = reactive<State>({
     itemList: [],
     currentForm: undefined,
-    availableItemId: 0,
+    availableItemQueue: 0,
     lastOveredItemQueue: undefined,
     selectedItemId: undefined,
     layoutItemClassName: '',
@@ -112,8 +113,8 @@ export const useDrag = () => {
     }
 
     const addItemToLast = (currentItemType: ItemTypes) => {
-        state.itemList.push({ queue: state.availableItemId, type: currentItemType })
-        state.availableItemId++
+        state.itemList.push({ id: findAvailableId(), queue: state.availableItemQueue, type: currentItemType })
+        state.availableItemQueue++
     }
 
     const addItemToLoc = (currentItemType: ItemTypes) => {
@@ -121,8 +122,20 @@ export const useDrag = () => {
             if (item.queue >= Number(state.lastOveredItemQueue) + 1) item.queue = item.queue + 1
         }
 
-        state.itemList.push({ queue: Number(state.lastOveredItemQueue) + 1, type: currentItemType })
-        state.availableItemId++
+        state.itemList.push({ id: findAvailableId(), queue: Number(state.lastOveredItemQueue) + 1, type: currentItemType })
+        state.availableItemQueue++
+    }
+
+    const findAvailableId = (): number => {
+        let availableId = 1
+
+        if (state.itemList.length > 0) {
+            state.itemList.forEach(item => {
+                item.id >= availableId ? availableId = item.id + 1 : null
+            })
+        }
+
+        return availableId
     }
 
     // TODO: refactor this code also has some bugs  
@@ -224,7 +237,7 @@ export const useDrag = () => {
 
         sortAllItems()
         clearSelectedItem()
-        state.availableItemId--
+        state.availableItemQueue--
     }
 
     // Properties
@@ -271,15 +284,15 @@ export const useDrag = () => {
         if (form == undefined) {
             state.itemList = []
             state.currentForm = undefined
-            state.availableItemId = 0
+            state.availableItemQueue = 0
             return
         }
         state.itemList = form.itemList ? Object.assign([], form.itemList) : []
         state.currentForm = form
         // Find currentAvailableId 
         state.itemList.length > 0 ? state.itemList.forEach(perItem => {
-            if (perItem.queue >= state.availableItemId) state.availableItemId = perItem.queue + 1
-        }) : state.availableItemId = 0
+            if (perItem.queue >= state.availableItemQueue) state.availableItemQueue = perItem.queue + 1
+        }) : state.availableItemQueue = 0
     }
 
     const updateCurrentFormName = (newFormName: string) => {
