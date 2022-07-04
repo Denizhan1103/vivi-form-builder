@@ -4,7 +4,7 @@
     <div @click="parserExpanse = true" class="parsers__active">Active Parser</div>
     <ViviBuilder 
       class="builder" 
-      :options="{newItemCreatable: true, formList}"
+      :options="{newItemCreatable: false, formList}"
       @onFormDelete="(formId) => deleteForm(formId)"
       @onFormAdd="(newForm) => addForm(newForm)"
       @onFormUpdate="(updatedForm) => updateForm(updatedForm)"

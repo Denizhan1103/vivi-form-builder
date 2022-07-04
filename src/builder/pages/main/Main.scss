@@ -7,6 +7,7 @@
     &__btn-disable {
         background-color: rgba(29, 119, 117, 0.6) !important;
         pointer-events: none;
+        display: none !important;
     }
 
     &__header {
