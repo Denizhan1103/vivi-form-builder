@@ -11,7 +11,7 @@
                     type="text" 
                     class="header__title-input-item"
                 >
-                <img src="../../../assets/header/search.svg" alt="" class="header__title-input-img">
+                <img src="../../../assets/header/form.svg" alt="" class="header__title-input-img">
             </div>
         </div>
         <Button class="header__btn" @onButtonClicked="applyCurrentForm()" width="136px">Save Current Form</Button>
