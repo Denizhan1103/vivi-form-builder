@@ -10,6 +10,7 @@ import eventBus from "../utils/EventBus";
 interface Options {
     newItemCreatable: boolean;
     formList: Form[];
+    messages: any;
 }
 
 interface Form {
@@ -83,7 +84,7 @@ export default {
         options: {
             type: Object as PropType<Options>,
             required: false,
-            default: { newItemCreatable: true, formList: [] }
+            default: { newItemCreatable: true, formList: [], messages: {} }
         }
     },
     setup(props: ComponentProperties, { emit }: any) {

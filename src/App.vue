@@ -4,7 +4,7 @@
     <div @click="parserExpanse = true" class="parsers__active">Active Parser</div>
     <ViviBuilder 
       class="builder" 
-      :options="{newItemCreatable: false, formList}"
+      :options="{newItemCreatable: true, formList, messages: messages}"
       @onFormDelete="(formId) => deleteForm(formId)"
       @onFormAdd="(newForm) => addForm(newForm)"
       @onFormUpdate="(updatedForm) => updateForm(updatedForm)"
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent,ref } from 'vue'
+import { defineComponent,reactive,ref } from 'vue'
 
 export default defineComponent({
   setup() {
@@ -108,6 +108,10 @@ export default defineComponent({
       },
     ])
 
+    const messages = reactive({
+
+    })
+
     const deleteForm = (formId:number) => {
       formList.value.forEach((perForm,index) => {
         if(perForm.id == formId) formList.value.splice(index,1)
@@ -137,7 +141,8 @@ export default defineComponent({
       updateForm,
       parserExpanse,
       parserItems,
-      updateParserItems
+      updateParserItems,
+      messages
     }
   },
 })
