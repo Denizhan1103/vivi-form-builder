@@ -11,7 +11,7 @@ export interface AppState {
     options: Options;
 }
 
-interface Options {
+export interface Options {
     newItemCreatable: boolean;
     formList: Form[];
     messages: Messages;

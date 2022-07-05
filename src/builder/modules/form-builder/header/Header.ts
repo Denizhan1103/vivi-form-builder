@@ -6,15 +6,14 @@ import { useMessages } from "@/builder/hooks/UseMessages"
 import Button from "../../global/button/Button.vue"
 
 import type { AppState } from "@/builder/interfaces/AppState"
+import { computed } from "@vue/reactivity"
 
 export default {
     components: {
         Button
     },
     setup(props: any, { emit }: any) {
-        const { options } = inject('appState') as AppState
-        // console.log(options.messages.builderPageMessages?.header?.formName)
-        console.log(useMessages('builderPageMessages.header'))
+        const messages = useMessages('builderPageMessages.header')
 
         const { state, updateCurrentFormName, applyCurrentForm } = useDrag()
 
@@ -33,7 +32,7 @@ export default {
         return {
             formName,
             state,
-            options,
+            messages,
             applyCurrentForm,
             onGoBack
         }

@@ -9,7 +9,7 @@ interface MainPageMessages {
     headerDescription?: string;
     createNewOne?: string;
     yourForms?: string;
-    notSetDescription?: string;
+    notSetItemDescription?: string;
     editItem?: string;
     deleteItem?: string;
     addNewItem?: string;
@@ -33,7 +33,7 @@ interface Header {
 }
 
 interface Layout {
-    underTheConstructor?: string;
+    underConstructor?: string;
     dragDrop?: string;
     editButton?: string;
     deleteButton?: string;
@@ -59,6 +59,7 @@ interface PropertyField {
     inputSizeHalf?: string;
     inputValuesTitle?: string;
     inputValuesItemTitle?: string;
+    inputValuesItemPlaceholder?: string;
     inputValuesDeleteButton?: string;
     inputValuesAddButton?: string;
     notSelectAnyItem?: string;
@@ -79,4 +80,5 @@ interface InputField {
 interface DefaultInputProperties {
     title?: string;
     placeholder?: string;
+    checkboxPlaceholder?: string;
 }

@@ -2,19 +2,19 @@
     <div class="header">
         <img @click="onGoBack()" src="../../../assets/header/arrow-back.svg" alt="" class="header__arrow">
         <div class="header__title">
-            <h2 class="header__title-text">{{options.messages.builderPageMessages?.header?.formName || 'Form Name'}}:</h2>
+            <h2 class="header__title-text">{{ messages.formName}}:</h2>
             <div class="header__title-input">
                 <input 
                     :disabled="state.currentForm?.nameChangable == false" 
                     v-model="formName" 
-                    placeholder="Please write form name..." 
+                    :placeholder="messages.formInputPlaceholder" 
                     type="text" 
                     class="header__title-input-item"
                 >
                 <img src="../../../assets/header/form.svg" alt="" class="header__title-input-img">
             </div>
         </div>
-        <Button class="header__btn" @onButtonClicked="applyCurrentForm()" width="136px">Save Current Form</Button>
+        <Button class="header__btn" @onButtonClicked="applyCurrentForm()" width="136px">{{messages.saveFormButton || 'Save Current Form'}}</Button>
     </div>
 </template>
 
