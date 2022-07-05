@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { defineComponent,reactive,ref } from 'vue'
+import type {Messages} from "./builder/interfaces/Messages"
 
 export default defineComponent({
   setup() {
@@ -108,8 +109,15 @@ export default defineComponent({
       },
     ])
 
-    const messages = reactive({
-
+    const messages = reactive<Messages>({
+      builderPageMessages: {
+        header: {
+          formName: 'Yesss'
+        },
+        layout: {
+          dragDrop: 'Alooo'
+        }
+      }
     })
 
     const deleteForm = (formId:number) => {

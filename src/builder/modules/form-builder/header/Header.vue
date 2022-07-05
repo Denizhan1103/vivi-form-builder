@@ -2,7 +2,7 @@
     <div class="header">
         <img @click="onGoBack()" src="../../../assets/header/arrow-back.svg" alt="" class="header__arrow">
         <div class="header__title">
-            <h2 class="header__title-text">Form Name:</h2>
+            <h2 class="header__title-text">{{options.messages.builderPageMessages?.header?.formName || 'Form Name'}}:</h2>
             <div class="header__title-input">
                 <input 
                     :disabled="state.currentForm?.nameChangable == false" 

@@ -7,10 +7,12 @@ import ComponentTest from "../pages/component-test/ComponentTest.vue"
 import { CurrentPage } from "../interfaces/AppState"
 import eventBus from "../utils/EventBus";
 
+import type { Messages } from "./interfaces/Messages"
+
 interface Options {
     newItemCreatable: boolean;
     formList: Form[];
-    messages: any;
+    messages: Messages;
 }
 
 interface Form {
