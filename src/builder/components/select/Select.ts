@@ -1,3 +1,4 @@
+import { useMessages } from "@/builder/hooks/UseMessages";
 import { onMounted, ref, watch, type PropType } from "vue";
 
 interface Validation {
@@ -35,6 +36,8 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
+        const messages = useMessages('defaultInputs')
+
         const activeValue = ref<number>(-1)
 
         const onChange = (valueId: string) => {
@@ -57,7 +60,8 @@ export default {
 
         return {
             onChange,
-            activeValue
+            activeValue,
+            messages
         }
     },
 }

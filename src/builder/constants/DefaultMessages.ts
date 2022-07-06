@@ -1,17 +1,18 @@
 import type { Messages } from "../interfaces/Messages";
 
 const messages: Messages = {
-    mainPageMessages: {
+    mainPage: {
         headerTitle: 'Welcome to form builder',
         headerDescription: 'You can create form how you want!',
-        createNewOne: 'Create New One',
+        createFormButton: 'Create New One',
         yourForms: 'Your Forms',
-        notSetItemDescription: 'Not set any description',
-        editItem: 'Edit',
-        deleteItem: 'Delete',
-        addNewItem: 'Add New Item'
+        haveZeroForm: 'You have 0 form!',
+        notSetFormDescription: 'Not set any description',
+        updateFormButton: 'Edit',
+        deleteFormButton: 'Delete',
+        addFormButton: 'Add New Item'
     },
-    builderPageMessages: {
+    builderPage: {
         header: {
             formName: 'Form Name',
             formInputPlaceholder: 'Please write form name...',
@@ -20,8 +21,15 @@ const messages: Messages = {
         layout: {
             underConstructor: 'Under The Constructor',
             dragDrop: 'Drag & Drop Here',
-            editButton: 'Edit',
-            deleteButton: 'Delete'
+            updateButton: 'Edit',
+            deleteButton: 'Delete',
+            addHere: 'Add Here'
+        },
+        fieldNames: {
+            inputs: 'Inputs',
+            properties: 'Properties',
+            styles: 'Styles',
+            validations: 'Validation'
         },
         inputField: {
             textInput: 'Text',
@@ -30,7 +38,7 @@ const messages: Messages = {
             timeInput: 'Time',
             textAreaInput: 'Text Area',
             selectInput: 'Select',
-            checkboxInput: 'Check Box'
+            checkBoxInput: 'Check Box'
         },
         propertyField: {
             titleTitle: 'Title',
@@ -39,6 +47,8 @@ const messages: Messages = {
             placeholderPlaceholder: 'Placeholder...',
             startingTextTitle: 'Starting Text',
             startingTextPlaceholder: 'Starting Text...',
+            startingItemTitle: 'Starting Item',
+            startingItemPlaceholder: 'Starting Item...',
             inputSizeTitle: 'Input Size',
             inputSizeFull: 'Full',
             inputSizeHalf: 'Half',
@@ -52,10 +62,11 @@ const messages: Messages = {
         styleField: {},
         validationField: {}
     },
-    defaultInputProperties: {
+    defaultInputs: {
         title: 'Header Text',
         placeholder: 'Placeholder...',
-        checkboxPlaceholder: 'Any option is not set'
+        checkboxPlaceholder: 'Any option is not set',
+        validation: 'Under the constructor'
     }
 }
 

@@ -1,23 +1,25 @@
 export interface Messages {
-    mainPageMessages?: MainPageMessages;
-    builderPageMessages?: BuilderPageMessages;
-    defaultInputProperties?: DefaultInputProperties;
+    mainPage?: MainPage;
+    builderPage?: BuilderPage;
+    defaultInputs?: DefaultInputs;
 }
 
-interface MainPageMessages {
+interface MainPage {
     headerTitle?: string;
     headerDescription?: string;
-    createNewOne?: string;
+    createFormButton?: string;
     yourForms?: string;
-    notSetItemDescription?: string;
-    editItem?: string;
-    deleteItem?: string;
-    addNewItem?: string;
+    notSetFormDescription?: string;
+    updateFormButton?: string;
+    deleteFormButton?: string;
+    addFormButton?: string;
+    haveZeroForm?: string;
 }
 
-interface BuilderPageMessages {
+interface BuilderPage {
     header?: Header;
     layout?: Layout;
+    fieldNames?: FieldNames;
     inputField?: InputField;
     propertyField?: PropertyField;
     styleField?: StyleField;
@@ -35,8 +37,16 @@ interface Header {
 interface Layout {
     underConstructor?: string;
     dragDrop?: string;
-    editButton?: string;
+    updateButton?: string;
     deleteButton?: string;
+    addHere?: string;
+}
+
+interface FieldNames {
+    inputs?: string;
+    properties?: string;
+    styles?: string;
+    validations?: string;
 }
 
 interface ValidationField {
@@ -54,6 +64,8 @@ interface PropertyField {
     placeholderPlaceholder?: string;
     startingTextTitle?: string;
     startingTextPlaceholder?: string;
+    startingItemTitle?: string;
+    startingItemPlaceholder?: string;
     inputSizeTitle?: string;
     inputSizeFull?: string;
     inputSizeHalf?: string;
@@ -72,13 +84,14 @@ interface InputField {
     timeInput?: string;
     textAreaInput?: string;
     selectInput?: string;
-    checkboxInput?: string;
+    checkBoxInput?: string;
 }
 
 // Inputs 
 
-interface DefaultInputProperties {
+interface DefaultInputs {
     title?: string;
     placeholder?: string;
+    validation?: string;
     checkboxPlaceholder?: string;
 }

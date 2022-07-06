@@ -4,6 +4,7 @@ import { CurrentPage, type AppState } from "../../interfaces/AppState"
 import Button from "@/builder/modules/global/button/Button.vue"
 import eventBus from "@/builder/utils/EventBus"
 import { useDrag } from "@/builder/hooks/UseDrag"
+import { useMessages } from "@/builder/hooks/UseMessages"
 
 export default {
     components: {
@@ -11,6 +12,8 @@ export default {
     },
     setup() {
         const appState = inject('appState') as AppState
+
+        const messages = useMessages('mainPage')
 
         const { setNewForm } = useDrag()
 
@@ -36,7 +39,8 @@ export default {
         return {
             appState,
             routeToBuilder,
-            deleteForm
+            deleteForm,
+            messages
         }
     },
 }

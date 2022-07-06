@@ -5,7 +5,7 @@
         </div>
         <div v-if="state.itemList.length == 0" id="formlayout" class="formlayout__noitem">
             <img src="../../../../assets/form-layout/drag.svg" id="formlayout" alt="" class="formlayout__noitem-icon">
-            <p class="formlayout__noitem-text" id="formlayout">Drag & Drop Here</p>
+            <p class="formlayout__noitem-text" id="formlayout">{{ messages.dragDrop }}</p>
         </div>
     </div>
 </template>

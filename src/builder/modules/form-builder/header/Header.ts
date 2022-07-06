@@ -5,15 +5,12 @@ import { useMessages } from "@/builder/hooks/UseMessages"
 
 import Button from "../../global/button/Button.vue"
 
-import type { AppState } from "@/builder/interfaces/AppState"
-import { computed } from "@vue/reactivity"
-
 export default {
     components: {
         Button
     },
     setup(props: any, { emit }: any) {
-        const messages = useMessages('builderPageMessages.header')
+        const messages = useMessages('builderPage.header')
 
         const { state, updateCurrentFormName, applyCurrentForm } = useDrag()
 

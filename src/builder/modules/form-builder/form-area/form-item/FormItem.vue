@@ -54,18 +54,18 @@
         <div class="formitem__input-size">
           <span class="formitem__input-size-item">{{
             item.properties && item.properties.size
-              ? item.properties.size
-              : "Full"
+              ? item.properties.size == 'Full' ? sizeTypeMessages.inputSizeFull : sizeTypeMessages.inputSizeHalf
+              : sizeTypeMessages.inputSizeFull
           }}</span>
-          <span class="formitem__input-size-item">{{ item.type }}</span>
+          <span class="formitem__input-size-item">{{ currentItemType }}</span>
         </div>
       </div>
     </div>
     <div class="formitem__navbar">
       <p @click="setCurrentEditItem(item.queue)" class="formitem__navbar-item">
-        Edit
+        {{ messages.updateButton }}
       </p>
-      <p @click="removeItem(item.queue)" class="formitem__navbar-item">Delete</p>
+      <p @click="removeItem(item.queue)" class="formitem__navbar-item">{{ messages.deleteButton }}</p>
     </div>
   </div>
 </template>

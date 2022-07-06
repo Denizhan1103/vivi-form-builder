@@ -5,7 +5,7 @@ import type { Options, AppState } from "../interfaces/AppState"
 
 export const useMessages = (path?: string): any => {
     const { options } = inject('appState') as AppState
-    return path ? seperatePath(options, path) : options.messages
+    return path ? seperatePath(options, path) : options.messages || {}
 }
 
 const seperatePath = (options: Options, path: string): any => {
@@ -25,6 +25,8 @@ const calculatePathObject = (options: Options, path: string[], currentObject: an
 }
 
 const mergeWithDefault = (currentObject: any, defaultObject: any) => {
+    if (!currentObject) currentObject = {}
+    if (!defaultObject) defaultObject = {}
     // @ts-ignore
     for (let defaultEntries of Object.entries(defaultObject)) {
         if (!currentObject[defaultEntries[0]]) currentObject[defaultEntries[0]] = defaultEntries[1]

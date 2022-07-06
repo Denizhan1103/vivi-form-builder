@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <div class="select__title">{{ properties.header || "Header Text" }}</div>
+    <div class="select__title">{{ properties.header || messages.title }}</div>
     <div class="select__inner">
       <select
         @change="(event) => onChange(event.target.value)"
@@ -13,7 +13,7 @@
           disabled
           selected
         >
-          {{ properties.placeholder }}
+          {{ properties.placeholder || messages.placeholder }}
         </option>
         <option
           v-for="value in properties.values"
@@ -26,7 +26,7 @@
         </option>
       </select>
     </div>
-    <div v-if="validation.enabled" class="select__validation">Validation</div>
+    <div v-if="validation.enabled" class="select__validation"> {{ messages.validation }} </div>
   </div>
 </template>
 

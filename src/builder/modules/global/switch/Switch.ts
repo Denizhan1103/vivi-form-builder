@@ -1,5 +1,10 @@
 import type { PropType } from "vue";
 
+interface Accessor {
+    name: string;
+    accessor: string;
+}
+
 export default {
     props: {
         title: {
@@ -7,7 +12,7 @@ export default {
             required: true
         },
         keys: {
-            type: Array as PropType<string[]>,
+            type: Array as PropType<Accessor[]>,
             required: true
         },
         activeKey: {

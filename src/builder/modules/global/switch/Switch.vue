@@ -5,12 +5,12 @@
             <div class="switch__area">
                 <div 
                     v-for="item in keys" 
-                    :key="item"
+                    :key="item.accessor"
                     class="switch__item"
-                    :class="{'switch__active': activeKey == item}"
-                    @click="$emit('onSwitch',item)"
+                    :class="{'switch__active': activeKey == item.accessor}"
+                    @click="$emit('onSwitch',item.accessor)"
                 >
-                    {{item}}
+                    {{ item.name }}
                 </div>
             </div>
         </div>
