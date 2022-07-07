@@ -7,6 +7,7 @@ import OptionList from "@/builder/components/option-list/OptionList.vue";
 
 import { useDrag } from "@/builder/hooks/UseDrag";
 import { computed } from "@vue/reactivity";
+import { useMessages } from "@/builder/hooks/UseMessages";
 
 export enum Type {
     text = 'Text',
@@ -45,6 +46,7 @@ export default {
     },
     setup() {
         const { state, setProperty } = useDrag()
+        const messages = useMessages('builderPage.propertyField')
 
         const inputValues = reactive<InputValues>({
             header: undefined,
@@ -102,7 +104,8 @@ export default {
         return {
             state,
             currentItem,
-            inputValues
+            inputValues,
+            messages
         }
     },
 }

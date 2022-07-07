@@ -1,13 +1,17 @@
-import { useDrag } from "@/builder/hooks/UseDrag"
-import { ref, watch } from "vue"
-import Button from "../../global/button/Button.vue"
+import { inject, ref, watch } from "vue"
 
+import { useDrag } from "@/builder/hooks/UseDrag"
+import { useMessages } from "@/builder/hooks/UseMessages"
+
+import Button from "../../global/button/Button.vue"
 
 export default {
     components: {
         Button
     },
     setup(props: any, { emit }: any) {
+        const messages = useMessages('builderPage.header')
+
         const { state, updateCurrentFormName, applyCurrentForm } = useDrag()
 
         const formName = ref<string>(state.currentForm?.name || '')
@@ -25,6 +29,7 @@ export default {
         return {
             formName,
             state,
+            messages,
             applyCurrentForm,
             onGoBack
         }

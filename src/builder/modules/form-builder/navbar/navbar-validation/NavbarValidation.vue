@@ -1,6 +1,6 @@
 <template>
     <div class="navbarvalidation">
-        <p class="navbarvalidation__text">Under the constructor</p>
+        <p class="navbarvalidation__text">{{ messages.underConstructor }}</p>
     </div>
 </template>
 

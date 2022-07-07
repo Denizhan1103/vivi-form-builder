@@ -1,7 +1,6 @@
 <template>
     <div class="navbarstyle">
-        <Select :options="[{key:1,value:'Alo1'},{key:2,value:'Alo2'}]" :activeOption="2"/>
-        <Radio title="aloo" :options="[{key:1,value:'Alo1'},{key:2,value:'Alo2'}]" activeOption="2"/>
+        <p class="navbarstyle__text">{{ messages.underConstructor }}</p>
     </div>
 </template>
 

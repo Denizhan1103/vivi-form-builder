@@ -1,3 +1,4 @@
+import { useMessages } from "@/builder/hooks/UseMessages";
 import { onMounted, ref, watch, type PropType } from "vue";
 
 interface Value {
@@ -34,6 +35,8 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
+        const messages = useMessages('defaultInputs')
+
         const currentActiveOption = ref<number>(-1)
 
         watch(currentActiveOption, (newValue: number) => {
@@ -49,7 +52,8 @@ export default {
         })
 
         return {
-            currentActiveOption
+            currentActiveOption,
+            messages
         }
     },
 }

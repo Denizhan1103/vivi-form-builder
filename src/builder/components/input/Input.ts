@@ -1,3 +1,4 @@
+import { useMessages } from "@/builder/hooks/UseMessages";
 import { ref, watch, type PropType } from "vue";
 import type { Type, Properties, Style, Validation, ComponentProperties } from "../ComponentInterfaces"
 
@@ -24,6 +25,7 @@ export default {
     },
     setup(props: ComponentProperties, { emit }: any) {
         const inputText = ref<string>((props.properties && props.properties.startingText) ? props.properties.startingText : '')
+        const messages = useMessages('defaultInputs')
 
         watch(props, (newValue) => {
             inputText.value = (newValue.properties && newValue.properties.startingText) ? newValue.properties.startingText : ''
@@ -34,7 +36,8 @@ export default {
         })
 
         return {
-            inputText
+            inputText,
+            messages
         }
     },
 }

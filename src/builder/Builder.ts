@@ -7,9 +7,12 @@ import ComponentTest from "../pages/component-test/ComponentTest.vue"
 import { CurrentPage } from "../interfaces/AppState"
 import eventBus from "../utils/EventBus";
 
+import type { Messages } from "./interfaces/Messages"
+
 interface Options {
     newItemCreatable: boolean;
     formList: Form[];
+    messages: Messages;
 }
 
 interface Form {
@@ -83,7 +86,7 @@ export default {
         options: {
             type: Object as PropType<Options>,
             required: false,
-            default: { newItemCreatable: true, formList: [] }
+            default: { newItemCreatable: true, formList: [], messages: {} }
         }
     },
     setup(props: ComponentProperties, { emit }: any) {

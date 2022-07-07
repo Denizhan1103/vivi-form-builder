@@ -7,6 +7,8 @@ import TextArea from "@/builder/components/text-area/TextArea.vue";
 import Select from "@/builder/components/select/Select.vue";
 import CheckBox from "@/builder/components/check-box/CheckBox.vue";
 import eventBus from "@/builder/utils/EventBus";
+import { useMessages } from "@/builder/hooks/UseMessages";
+import { computed } from "@vue/reactivity";
 
 enum ItemTypes {
     text = 'Text',
@@ -36,6 +38,10 @@ enum ItemSize {
     full = 'Full'
 }
 
+interface ComponentProperties {
+    item: Item;
+}
+
 export default {
     components: {
         Input,
@@ -49,8 +55,20 @@ export default {
             required: true
         }
     },
-    setup() {
+    setup(props: ComponentProperties) {
         const { state, onDragEnter, onDragLeave, onDragStart, setSelectedItem, clearSelectedItem, removeItem } = useDrag()
+
+        const messages = useMessages('builderPage.layout')
+        const inputTypeMessages = useMessages('builderPage.inputField')
+        const sizeTypeMessages = useMessages('builderPage.propertyField')
+
+        const currentItemType = computed<string>(() => {
+            for (const perInput of Object.keys(inputTypeMessages)) {
+                const currentKey = perInput.replace('Input', '').charAt(0).toUpperCase() + perInput.replace('Input', '').substring(1)
+                if (currentKey == props.item.type) return inputTypeMessages[perInput]
+            }
+            return props.item.type
+        })
 
         const setCurrentEditItem = (itemQueue: number) => {
             setSelectedItem(itemQueue)
@@ -65,7 +83,11 @@ export default {
             setSelectedItem,
             clearSelectedItem,
             setCurrentEditItem,
-            removeItem
+            removeItem,
+            messages,
+            inputTypeMessages,
+            sizeTypeMessages,
+            currentItemType
         }
     },
 }

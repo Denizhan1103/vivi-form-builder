@@ -1,6 +1,6 @@
 <template>
   <div class="radio">
-    <div class="radio__title">{{ properties.header || "Header Text" }}</div>
+    <div class="radio__title">{{ properties.header || messages.title }}</div>
     <div class="radio__inner">
       <div
         class="radio__item"
@@ -27,10 +27,10 @@
         v-if="!properties.values || properties.values.length < 1"
         class="radio__nooption"
       >
-        Any option is not set
+        {{ messages.checkboxPlaceholder }}
       </div>
     </div>
-    <div v-if="validation.enabled" class="radio__validation">Validation</div>
+    <div v-if="validation.enabled" class="radio__validation">{{ messages.validation }}</div>
   </div>
 </template>
 

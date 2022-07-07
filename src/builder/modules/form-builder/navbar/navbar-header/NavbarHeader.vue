@@ -5,7 +5,7 @@
             :key="headerItem.type" 
             class="navbarheader__item"
             :class="{'navbarheader__item-selected': selectedHeaderItem == headerItem.type}"
-            @click="$emit('itemSelected', headerItem.type)"
+            @click="(event) => {event.target.scrollIntoView(); $emit('itemSelected', headerItem.type)}"
             >
             {{headerItem.name}}
         </div>

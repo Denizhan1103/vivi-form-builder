@@ -1,6 +1,7 @@
 import Button from "@/builder/modules/global/button/Button.vue"
 
 import { useDrag } from "@/builder/hooks/UseDrag"
+import { useMessages } from "@/builder/hooks/UseMessages";
 
 enum ItemTypes {
     text = 'Text',
@@ -22,17 +23,17 @@ export default {
         Button
     },
     setup() {
-
         const { onDragStart } = useDrag()
+        const messages = useMessages('builderPage.inputField')
 
         const buttonList: ButtonItem[] = [
-            { id: ItemTypes.text, name: 'Text' },
-            { id: ItemTypes.number, name: 'Number' },
-            { id: ItemTypes.date, name: 'Date' },
-            { id: ItemTypes.time, name: 'Time' },
-            { id: ItemTypes.textArea, name: 'Text Area' },
-            { id: ItemTypes.select, name: 'Select' },
-            { id: ItemTypes.checkBox, name: 'Check Box' }
+            { id: ItemTypes.text, name: messages.textInput },
+            { id: ItemTypes.number, name: messages.numberInput },
+            { id: ItemTypes.date, name: messages.dateInput },
+            { id: ItemTypes.time, name: messages.timeInput },
+            { id: ItemTypes.textArea, name: messages.textAreaInput },
+            { id: ItemTypes.select, name: messages.selectInput },
+            { id: ItemTypes.checkBox, name: messages.checkBoxInput }
         ]
 
         return {

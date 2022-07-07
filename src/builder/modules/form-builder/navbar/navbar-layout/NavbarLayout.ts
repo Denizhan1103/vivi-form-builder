@@ -1,4 +1,5 @@
 import { useDrag } from "@/builder/hooks/UseDrag";
+import { useMessages } from "@/builder/hooks/UseMessages";
 import eventBus from "@/builder/utils/EventBus";
 import { computed } from "@vue/reactivity";
 import { onMounted, onUnmounted, ref } from "vue";
@@ -30,17 +31,18 @@ export default {
         NavbarValidation
     },
     setup() {
+        const messages = useMessages('builderPage.fieldNames')
 
         const { state } = useDrag()
 
         const navbarHeaders = computed<NavbarHeader[]>(() => {
             const headers = [
-                { type: NavbarHeaderNames.inputs, name: 'Inputs' },
-                { type: NavbarHeaderNames.property, name: 'Property' },
+                { type: NavbarHeaderNames.inputs, name: messages.inputs },
+                { type: NavbarHeaderNames.property, name: messages.properties },
             ]
 
-            if (state.currentForm == undefined || state.currentForm?.canStyleChangable == true) headers.push({ type: NavbarHeaderNames.style, name: 'Style' })
-            if (state.currentForm == undefined || state.currentForm?.canValidationChangable == true) headers.push({ type: NavbarHeaderNames.validation, name: 'Validation' })
+            if (state.currentForm == undefined || state.currentForm?.canStyleChangable == true) headers.push({ type: NavbarHeaderNames.style, name: messages.styles })
+            if (state.currentForm == undefined || state.currentForm?.canValidationChangable == true) headers.push({ type: NavbarHeaderNames.validation, name: messages.validations })
 
             return headers
         })

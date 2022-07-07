@@ -1,3 +1,4 @@
+import { useMessages } from "@/builder/hooks/UseMessages";
 import { computed } from "@vue/reactivity";
 import { ref, watch, type PropType } from "vue";
 
@@ -29,6 +30,8 @@ export default {
         }
     },
     setup(props: ComponentProperties, { emit }: any) {
+        const messages = useMessages('builderPage.propertyField')
+
         const optionList = ref(props.properties.options)
 
         // QUEUE
@@ -46,7 +49,8 @@ export default {
 
         return {
             optionList,
-            availableId
+            availableId,
+            messages
         }
     },
 }

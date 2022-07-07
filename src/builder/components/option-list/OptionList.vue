@@ -1,13 +1,13 @@
 <template>
   <div class="option">
-    <p class="option__title">{{ properties.title || "Select Values" }}</p>
+    <p class="option__title">{{ properties.title || messages.inputValuesTitle }}</p>
     <div v-if="optionList.length > 0" class="option__item">
       <div v-for="value in optionList" :key="value.id" class="option__inner">
         <Input
           type="Text"
           :properties="{
-            header: `Value ${value.id}`,
-            placeholder: 'Value...',
+            header: `${messages.inputValuesItemTitle} ${value.id}`,
+            placeholder: messages.inputValuesItemPlaceholder,
             startingText: value.value,
           }"
           @onInputChanged="
@@ -25,7 +25,7 @@
           "
           class="option__item-btn"
         >
-          Del
+          {{ messages.inputValuesDeleteButton }}
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
         "
         class="option__add-btn"
       >
-        Add New Value
+        {{ messages.inputValuesAddButton }}
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@
     &__btn-disable {
         background-color: rgba(29, 119, 117, 0.6) !important;
         pointer-events: none;
+        display: none !important;
     }
 
     &__header {
@@ -20,6 +21,14 @@
         border-bottom-right-radius: 6px;
         height: 70px;
         justify-content: space-between;
+
+        &-navbar {
+
+            &-btn {
+                padding: 0 6px;
+                box-sizing: content-box;
+            }
+        }
 
         &-describe {
             max-width: max-content;
@@ -84,7 +93,7 @@
     border-radius: 6px;
     display: flex;
     justify-content: space-between;
-    padding: 0 8px;
+    padding-left: 8px;
     cursor: pointer;
     transition: 0.2s ease border, box-shadow;
     width: 280px;
@@ -129,7 +138,7 @@
         border-left: 1px solid #D9D9D9;
         border-top-left-radius: 6px;
         border-bottom-left-radius: 6px;
-        width: 60px;
+        min-width: 60px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -197,6 +206,7 @@
             border: 2px solid #FFFFFF;
             color: #FFFFFF;
             font-size: 25px;
+            padding-bottom: 1px;
         }
     }
 }
