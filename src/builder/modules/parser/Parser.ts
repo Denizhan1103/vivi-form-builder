@@ -106,7 +106,7 @@ export default {
                     if(_value) return _value
                 }
             }
-            return ''
+            return
         }
 
         return {
