@@ -1,12 +1,12 @@
 <template>
     <div 
-        v-if="renderType == RenderType.formVertical || renderType == RenderType.formHorizontal"
+        v-if="renderType == RenderType.form"
         class="parser"
     >
         <div 
             v-for="item in form.itemList.sort((a,b) => a.queue - b.queue)" 
             :key="item.id" 
-            class="parser__item"
+            class="parser__formitem"
         >
             <Input 
                 v-if="item.type !== 'TextArea' && item.type !== 'Select' && item.type !== 'CheckBox'"
@@ -32,24 +32,19 @@
         </div>
     </div>
     <ul 
-        v-if="renderType == RenderType.listVertical || renderType == RenderType.listHorizontal"
+        v-if="renderType == RenderType.list"
         class="parser"
     >
         <li 
             v-for="item in form.itemList.sort((a,b) => a.queue - b.queue)" 
             :key="item.id" 
-            class="parser__item"
+            class="parser__listitem"
         >
             <div class="parser__item-header">{{ item.properties && item.properties.header ? item.properties.header : messages.title }}:</div>
-            <span class="parser__item-value">{{ startValues[item.id] }}</span>
+            <span v-if="item.type == 'Select' || item.type == 'CheckBox'" class="parser__item-value"> {{ calculateValue(item) }}</span>
+            <span v-else class="parser__item-value">{{ startValues[item.id] }}</span>
         </li>
     </ul>
-    <div 
-        v-if="renderType == RenderType.tableVertical || renderType == RenderType.tableHorizontal"
-        class="parser"
-    >
-    table
-    </div>
 </template>
 
 <script lang="ts">

@@ -29,7 +29,7 @@ interface ItemProperties {
     header?: string;
     size?: ItemSize;
     values?: { id: number, value: string }[];
-    activeValue?: { id: number; value: string };
+    activeValue?: number;
 }
 
 enum ItemSize {
@@ -48,12 +48,8 @@ enum ItemTypes {
 }
 
 enum RenderType {
-    formVertical = 'formVertical',
-    formHorizontal = 'formHorizontal',
-    listVertical = 'listVertical',
-    listHorizontal = 'listHorizontal',
-    tableVertical = 'tableVertical',
-    tableHorizontal = 'tableHorizontal'
+    form = 'form',
+    list = 'list',
 }
 
 interface ComponentProperties {
@@ -82,7 +78,7 @@ export default {
         renderType: {
             type: String as PropType<RenderType>,
             required: false,
-            default: RenderType.formVertical
+            default: RenderType.form
         }
     },
     setup(componentProperties:ComponentProperties , { emit }: any) {
@@ -93,9 +89,30 @@ export default {
             emit('onInputsUpdated', newValue)
         })
 
+        const calculateValue = (item: Item) => {
+            const startValueId = componentProperties.startValues[item.id]
+            if(startValueId) {
+                let _value = undefined
+                item.properties?.values?.forEach(({id,value}) => {
+                    if(id == startValueId) _value = value
+                })
+                if(_value) return _value
+            } else {
+                if(item.properties && item.properties.values && item.properties.activeValue) {
+                    let _value = undefined
+                    item.properties.values.forEach(({id,value})=> {
+                        if(id == item.properties?.activeValue) _value = value
+                    })
+                    if(_value) return _value
+                }
+            }
+            return ''
+        }
+
         return {
             emittingObjects,
             messages,
+            calculateValue,
             RenderType
         }
     }
