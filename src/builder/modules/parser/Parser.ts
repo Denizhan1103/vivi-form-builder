@@ -46,6 +46,29 @@ enum ItemTypes {
     checkBox = 'CheckBox'
 }
 
+enum RenderType {
+    formVertical = 'FormVertical',
+    formHorizontal = 'FormHorizontal',
+    textVertical = 'TextVertical',
+    textHorizontal = 'TextHorizontal',
+    tableVertical = 'TableVertical',
+    tableHorizontal = 'TableHorizontal'
+}
+
+interface CustomStyle {
+    leftSpacing?: `${string}px`;
+    border?: `${string}px ${string} ${string}`;
+    borderWidth?: string;
+    borderType?: string;
+    borderColor?: string;
+}
+
+interface ComponentProperties {
+    form: Form;
+    startValues?: any;
+    renderType?: RenderType;
+    customStyle?: CustomStyle
+}
 
 export default {
     components: {
@@ -59,8 +82,23 @@ export default {
             type: Object as PropType<Form>,
             required: true
         },
+        startValues: {
+            type: Object,
+            required: false,
+            default: {}
+        },
+        renderType: {
+            type: String as PropType<RenderType>,
+            required: false,
+            default: RenderType.formVertical
+        },
+        customStyle: {
+            type: Object as PropType<CustomStyle>,
+            required: false,
+            default: {}
+        } 
     },
-    setup(componentProperties: any, { emit }: any) {
+    setup(componentProperties:ComponentProperties , { emit }: any) {
         const emittingObjects = reactive<any>({})
 
         watch(emittingObjects, (newValue: any) => {

@@ -13,7 +13,7 @@
   <div v-if="parserExpanse" class="parsers">
     <div @click="parserExpanse = false" class="parsers__btn">X</div>
     <div class="parsers__area">
-      <ViviParser :form="formList[1]" @onInputsUpdated="(newValue) => updateParserItems(newValue)"/>
+      <ViviParser :form="formList[1]" :startValues="{0: 'Deneme', 2:1, 3:2}" @onInputsUpdated="(newValue) => updateParserItems(newValue)"/>
     </div>
   </div>
 </template>
