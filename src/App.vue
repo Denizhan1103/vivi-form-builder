@@ -193,6 +193,7 @@ export default defineComponent({
     }
 
     const updateForm = (updatedForm:any) => {
+      console.log(updatedForm)
       formList.value.forEach((item,index) => {
         if(item.id == updatedForm.id) formList.value[index] =  updatedForm.value
       })
