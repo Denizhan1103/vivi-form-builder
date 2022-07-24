@@ -1,10 +1,8 @@
 import { createApp, reactive } from 'vue'
 import App from './App.vue'
-import ViviFormBuilder from "./builder/App"
-import { setLocale } from "./builder/App"
-import type { Messages } from './builder/interfaces/Messages'
+import ViviFormBuilder, { setLocale } from "./builder"
 
-const messages = reactive<Messages>({
+const messages = reactive({
     mainPage: {
         headerTitle: 'Form buildere hoşgeldin',
         headerDescription: 'Hayalindeki formu yalnızca sürükleyerek oluşturabilirsin.',
