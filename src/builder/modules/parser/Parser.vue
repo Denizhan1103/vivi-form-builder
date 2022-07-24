@@ -1,5 +1,8 @@
 <template>
-    <div class="parser">
+    <div 
+        v-if="renderType == RenderType.formVertical || renderType == RenderType.formHorizontal"
+        class="parser"
+    >
         <div 
             v-for="item in form.itemList.sort((a,b) => a.queue - b.queue)" 
             :key="item.id" 
@@ -27,6 +30,25 @@
                 @onActiveChanged="(newValue) => emittingObjects[`itemId${item.id}`] = newValue"
             />
         </div>
+    </div>
+    <ul 
+        v-if="renderType == RenderType.listVertical || renderType == RenderType.listHorizontal"
+        class="parser"
+    >
+        <li 
+            v-for="item in form.itemList.sort((a,b) => a.queue - b.queue)" 
+            :key="item.id" 
+            class="parser__item"
+        >
+            <div class="parser__item-header">{{ item.properties && item.properties.header ? item.properties.header : messages.title }}:</div>
+            <span class="parser__item-value">{{ startValues[item.id] }}</span>
+        </li>
+    </ul>
+    <div 
+        v-if="renderType == RenderType.tableVertical || renderType == RenderType.tableHorizontal"
+        class="parser"
+    >
+    table
     </div>
 </template>
 
