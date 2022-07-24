@@ -1,12 +1,13 @@
 <template>
-    <div 
+    <button 
     :style="width.includes('px') ? `width: ${width};` : null" 
-    :class="width.includes('Full') ? 'button__full' : 'button__half'" 
+    :class="[width.includes('Full') ? 'button__full' : 'button__half']"
     class="button"
+    :disabled="disabled"
     @click="$emit('onButtonClicked')"
     >
         <slot></slot>
-    </div>
+    </button>
 </template>
 
 <script lang="ts">

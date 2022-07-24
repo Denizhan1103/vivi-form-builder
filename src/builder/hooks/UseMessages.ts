@@ -1,27 +1,32 @@
-import { inject } from "vue"
+import { inject, reactive } from "vue"
 
 import DefaultMessages from "../constants/DefaultMessages"
 import type { Options, AppState } from "../interfaces/AppState"
+import type { Messages } from "../interfaces/Messages"
+
+const customMessages = reactive<Messages>({})
 
 export const useMessages = (path?: string): any => {
-    const { options } = inject('appState') as AppState
-    return path ? seperatePath(options, path) : options.messages || {}
+    return path ? seperatePath(customMessages, path) : customMessages || DefaultMessages
 }
 
-const seperatePath = (options: Options, path: string): any => {
+export const setLocale = (messages:Messages) => {
+    Object.assign(customMessages,messages)
+}
+const seperatePath = (messages: Messages, path: string): any => {
     const seperatedPath = path.includes('.') ? path.split('.') : path
     // @ts-ignore
-    return typeof seperatedPath == 'object' ? calculatePathObject(options, seperatedPath) : mergeWithDefault(options.messages[seperatedPath], DefaultMessages[seperatedPath])
+    return typeof seperatedPath == 'object' ? calculatePathObject(messages, seperatedPath) : mergeWithDefault(messages[seperatedPath], DefaultMessages[seperatedPath])
 }
 
-const calculatePathObject = (options: Options, path: string[], currentObject: any = undefined, defaultObject?: any): any => {
+const calculatePathObject = (messages: Messages, path: string[], currentObject: any = undefined, defaultObject?: any): any => {
     // @ts-ignore
-    const _currentObject = currentObject ? currentObject[path[0]] : options.messages[path[0]]
+    const _currentObject = currentObject ? currentObject[path[0]] : messages[path[0]]
     // @ts-ignore
     const _defaultObject = defaultObject ? defaultObject[path[0]] : DefaultMessages[path[0]]
     path.shift()
 
-    return path.length > 0 ? calculatePathObject(options, path, _currentObject, _defaultObject) : mergeWithDefault(_currentObject, _defaultObject)
+    return path.length > 0 ? calculatePathObject(messages, path, _currentObject, _defaultObject) : mergeWithDefault(_currentObject, _defaultObject)
 }
 
 const mergeWithDefault = (currentObject: any, defaultObject: any) => {

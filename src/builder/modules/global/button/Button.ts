@@ -4,6 +4,11 @@ export default {
             type: String,
             required: false,
             default: 'Full'
+        },
+        disabled: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
     setup() {

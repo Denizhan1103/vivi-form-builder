@@ -1,5 +1,3 @@
-import type { Messages } from "./Messages";
-
 export enum CurrentPage {
     main = 'Main',
     builder = 'FormBuilder',
@@ -14,7 +12,6 @@ export interface AppState {
 export interface Options {
     newItemCreatable: boolean;
     formList: Form[];
-    messages: Messages;
 }
 
 interface Form {

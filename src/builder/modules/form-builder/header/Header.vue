@@ -14,7 +14,7 @@
                 <img src="../../../assets/header/form.svg" alt="" class="header__title-input-img">
             </div>
         </div>
-        <Button class="header__btn" @onButtonClicked="applyCurrentForm()" width="136px">{{messages.saveFormButton || 'Save Current Form'}}</Button>
+        <Button class="header__btn" :disabled="!isButtonEnable" @onButtonClicked="applyCurrentForm()" width="136px">{{messages.saveFormButton || 'Save Current Form'}}</Button>
     </div>
 </template>
 
