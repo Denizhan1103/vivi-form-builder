@@ -302,11 +302,16 @@ export const useDrag = () => {
             }
 
             if (state.currentForm && state.currentForm.id) {
-                eventBus.dispatch('onFormUpdate', { id: state.currentForm.id, value: { ...currentForm, id: state.currentForm.id } })
+                eventBus.dispatch('onFormUpdate',  { ...currentForm, id: state.currentForm.id })
             } else {
-                eventBus.dispatch('onFormAdd', currentForm)
+                eventBus.dispatch('onFormAdd', {...currentForm, id: findAvailableId()})
             }
         }
+    }
+
+    const checkCurrentForm = () => {
+        if(state.currentForm) return true
+        return state.updatedFormName && state.itemList.length > 0 ? true : false
     }
 
     // Return
@@ -325,6 +330,7 @@ export const useDrag = () => {
         setProperty,
         setNewForm,
         updateCurrentFormName,
-        applyCurrentForm
+        applyCurrentForm,
+        checkCurrentForm
     }
 }

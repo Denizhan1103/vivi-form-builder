@@ -12,9 +12,12 @@ export default {
     setup(props: any, { emit }: any) {
         const messages = useMessages('builderPage.header')
 
-        const { state, updateCurrentFormName, applyCurrentForm } = useDrag()
+        const { state, updateCurrentFormName, applyCurrentForm, checkCurrentForm } = useDrag()
 
         const formName = ref<string>(state.currentForm?.name || '')
+        const isButtonEnable = ref<boolean>(checkCurrentForm())
+
+        watch(state, () => isButtonEnable.value = checkCurrentForm())
 
         watch(formName, (newValue: string) => {
             if (state.currentForm?.nameChangable == true || !state.currentForm) {
@@ -30,6 +33,7 @@ export default {
             formName,
             state,
             messages,
+            isButtonEnable,
             applyCurrentForm,
             onGoBack
         }

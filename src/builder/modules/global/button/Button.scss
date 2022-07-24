@@ -10,6 +10,13 @@
     place-items: center;
     cursor: pointer;
     transition: 0.3s ease background-color;
+    outline: none;
+    border: transparent;
+
+    &:disabled {
+        pointer-events: none;
+        filter: opacity(0.8) grayscale(0.2);
+    }
 
     &:hover {
         background-color: #186462;

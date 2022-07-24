@@ -123,7 +123,9 @@ export default defineComponent({
 
     const updateForm = (updatedForm:any) => {
       formList.value.forEach((item,index) => {
-        if(item.id == updatedForm.id) formList.value[index] =  updatedForm.value
+        if(item.id == updatedForm.id) {
+          formList.value[index] = updatedForm
+        }
       })
     }
 
