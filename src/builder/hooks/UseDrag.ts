@@ -27,6 +27,7 @@ interface State {
     selectedItemId?: number;
     layoutItemClassName: string;
     updatedFormName?: string;
+    fieldHeaderRequired?: boolean;
 }
 
 interface ItemProperties {
@@ -52,6 +53,7 @@ interface Form {
     deletable?: boolean;
     canStyleChangable?: boolean;
     canValidationChangable?: boolean;
+    fieldHeaderRequired?: boolean;
     itemList: Item[];
 }
 
@@ -70,6 +72,7 @@ interface Item {
     id: string;
     queue: number;
     type: ItemTypes;
+    errorList?: any;
     properties?: ItemProperties;
 }
 
@@ -89,7 +92,8 @@ export const state = reactive<State>({
     lastOveredItemQueue: undefined,
     selectedItemId: undefined,
     layoutItemClassName: '',
-    updatedFormName: undefined
+    updatedFormName: undefined,
+    fieldHeaderRequired: undefined
 })
 
 export const useDrag = () => {
@@ -281,6 +285,7 @@ export const useDrag = () => {
         }
         state.itemList = form.itemList ? Object.assign([], form.itemList) : []
         state.currentForm = form
+        state.fieldHeaderRequired = form.fieldHeaderRequired
         // Find currentAvailableId 
         state.itemList.length > 0 ? state.itemList.forEach(perItem => {
             if (perItem.queue >= state.availableItemQueue) state.availableItemQueue = perItem.queue + 1
@@ -291,7 +296,32 @@ export const useDrag = () => {
         state.updatedFormName = newFormName
     }
 
+    const applyPropertiesRequirement = () => {
+        // Check field level 'fieldHeaderRequired' property
+        if(state.fieldHeaderRequired) {
+            let _headerValid:boolean = true
+            if(state.itemList.length == 0) return true
+            state.itemList.forEach(perItem => {
+                perItem.errorList = []
+                if(!(perItem.properties && perItem.properties.header && String(perItem.properties.header).replaceAll(' ','').length > 0)) {
+                    _headerValid = false
+                    perItem.errorList.push('Header name is required!')
+                }
+            })
+            if(!_headerValid) return false
+        }
+        return true
+    }
+
+    const clearRequirementsError = () => {
+        if(state.itemList.length == 0) return false
+        state.itemList.forEach(perItem => {
+            if(perItem.errorList) perItem.errorList = undefined
+        })
+    }
+
     const applyCurrentForm = () => {
+        if(!applyPropertiesRequirement()) return false
         if ((state.currentForm && state.currentForm.name) && !state.updatedFormName) {
             state.updatedFormName = state.currentForm.name
         }
@@ -300,7 +330,7 @@ export const useDrag = () => {
                 name: state.updatedFormName,
                 itemList: state.itemList
             }
-
+            clearRequirementsError()
             if (state.currentForm && state.currentForm.id) {
                 eventBus.dispatch('onFormUpdate',  { ...currentForm, id: state.currentForm.id })
             } else {
