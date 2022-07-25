@@ -35,7 +35,8 @@ export default defineComponent({
         deletable: true,
         canStyleChangable: false,
         canValidationChangable: false,
-        itemList: undefined
+        itemList: undefined,
+        fieldHeaderRequired: true
       },
       {
         id: 2,
