@@ -2,6 +2,7 @@ import { reactive } from "vue"
 import eventBus from "../utils/EventBus";
 
 import { findParentNode } from "../utils/FindParentNode";
+import { useMessages } from "./UseMessages";
 
 enum DataTransferKey {
     type = 'type',
@@ -95,6 +96,8 @@ export const state = reactive<State>({
     updatedFormName: undefined,
     fieldHeaderRequired: undefined
 })
+
+const messages = useMessages('errorList')
 
 export const useDrag = () => {
 
@@ -305,7 +308,7 @@ export const useDrag = () => {
                 perItem.errorList = []
                 if(!(perItem.properties && perItem.properties.header && String(perItem.properties.header).replaceAll(' ','').length > 0)) {
                     _headerValid = false
-                    perItem.errorList.push('Header name is required!')
+                    perItem.errorList.push(messages.headerRequired)
                 }
             })
             if(!_headerValid) return false
