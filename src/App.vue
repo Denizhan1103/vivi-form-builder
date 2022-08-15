@@ -17,7 +17,7 @@
     <div class="parsers__area">
       <ViviParser
         :form="formList[1]"
-        :startValues="{ 0: 'deneme', 1: 'deneme2', 2: 1 }"
+        :startValues="{ 0: 'deneme', 1: 'deneme2', 2: 1, 3: 2 }"
         renderType="form"
         @onInputsUpdated="(newValue) => updateParserItems(newValue)"
       />
